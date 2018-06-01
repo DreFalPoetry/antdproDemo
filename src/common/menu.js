@@ -156,13 +156,15 @@ const menuData = [
   // },
   // 添加新的菜单页面
   {
-    name:'新菜单项',
-    icon:'tags-o',
-    path:'newMenu',
-    children:[{
-      name:'新页面1',
-      path:'page1'
-    }]
+    name: '新菜单项',
+    icon: 'tags-o',
+    path: 'newMenu',
+    children: [
+      {
+        name: '新页面1',
+        path: 'page1',
+      },
+    ],
   },
   // ranAdd
   {
@@ -173,8 +175,8 @@ const menuData = [
       {
         name: 'My Campaign',
         path: 'myCampiagn',
-      }
-    ]
+      },
+    ],
   },
   {
     name: 'Report',
@@ -184,14 +186,14 @@ const menuData = [
       {
         name: 'Campaign Report',
         path: 'campaignReport',
-      }
-    ]
+      },
+    ],
   },
   {
     name: 'Settings',
     icon: 'setting',
     path: 'settings',
-  }
+  },
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {

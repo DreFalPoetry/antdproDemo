@@ -4,7 +4,25 @@ import { createBrowserHistory } from 'history';
 import moment from 'moment';
 import numeral from 'numeral';
 import { connect } from 'dva';
-import { Row, Col, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu ,Input,Button,Progress,InputNumber,DatePicker,Table} from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Select,
+  Icon,
+  Avatar,
+  List,
+  Tooltip,
+  Dropdown,
+  Menu,
+  Input,
+  Button,
+  Progress,
+  InputNumber,
+  DatePicker,
+  Table,
+} from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 //ranAdd
 const { Search } = Input;
@@ -14,11 +32,9 @@ const FormItem = Form.Item;
 @Form.create()
 export default class CampiagnReport extends PureComponent {
   state = {
-    data:[]
-  }
-  componentDidMount() {
-    
-  }
+    data: [],
+  };
+  componentDidMount() {}
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -95,9 +111,9 @@ export default class CampiagnReport extends PureComponent {
 
     return (
       <div>
-        <PageHeaderLayout></PageHeaderLayout>
+        <PageHeaderLayout />
         <Card bordered={false}>
-        <Form onSubmit={this.handleSearch} layout="inline">
+          <Form onSubmit={this.handleSearch} layout="inline">
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={8} sm={24}>
                 <FormItem label="规则编号">
@@ -121,7 +137,7 @@ export default class CampiagnReport extends PureComponent {
               <Col md={8} sm={24}>
                 <FormItem label="使用状态">
                   {getFieldDecorator('status3')(
-                    <Select placeholder="请选择" style={{width:'182px'}}>
+                    <Select placeholder="请选择" style={{ width: '182px' }}>
                       <Option value="0">关闭</Option>
                       <Option value="1">运行中</Option>
                     </Select>
@@ -140,7 +156,7 @@ export default class CampiagnReport extends PureComponent {
               </span>
             </div>
           </Form>
-          <Table columns={columns} dataSource={this.state.data} bordered/>
+          <Table columns={columns} dataSource={this.state.data} bordered />
         </Card>
       </div>
     );

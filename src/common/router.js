@@ -74,7 +74,9 @@ export const getRouterData = app => {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
     '/dashboard/analysis': {
-      component: dynamicWrapper(app, ['list','chart'], () => import('../routes/Dashboard/Analysis')),
+      component: dynamicWrapper(app, ['list', 'chart'], () =>
+        import('../routes/Dashboard/Analysis')
+      ),
     },
     // '/dashboard/monitor': {
     //   component: dynamicWrapper(app, ['monitor'], () => import('../routes/Dashboard/Monitor')),
@@ -87,27 +89,27 @@ export const getRouterData = app => {
     //   // name: '工作台',
     //   // authority: 'admin',
     // },
-    // '/form/basic-form': {
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
-    // },
-    // '/form/step-form': {
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
-    // },
-    // '/form/step-form/info': {
-    //   name: '分步表单（填写转账信息）',
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
-    // },
-    // '/form/step-form/confirm': {
-    //   name: '分步表单（确认转账信息）',
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
-    // },
-    // '/form/step-form/result': {
-    //   name: '分步表单（完成）',
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
-    // },
-    // '/form/advanced-form': {
-    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
-    // },
+    '/form/basic-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
+    },
+    '/form/step-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
+    },
+    '/form/step-form/info': {
+      name: '分步表单（填写转账信息）',
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
+    },
+    '/form/step-form/confirm': {
+      name: '分步表单（确认转账信息）',
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
+    },
+    '/form/step-form/result': {
+      name: '分步表单（完成）',
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
+    },
+    '/form/advanced-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
+    },
     // '/list/table-list': {
     //   component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
     // },
@@ -170,21 +172,23 @@ export const getRouterData = app => {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     // },
     //添加新菜单：
-    '/newMenu/page1':{
+    '/newMenu/page1': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/NewPage/Page1')),
     },
-    '/campiagn/myCampiagn':{
+    '/campiagn/myCampiagn': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/Campiagn/MyCampiagn')),
     },
-    '/campiagn/detail':{
+    '/campiagn/detail': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/Campiagn/CampiagnDetail')),
     },
-    '/report/campaignReport':{
+    '/report/campaignReport': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Report/CampaignReport')),
     },
-    '/settings':{
-      component: dynamicWrapper(app, ['list','chart'], () => import('../routes/Settings/BasicSettings')),
-    }
+    '/settings': {
+      component: dynamicWrapper(app, ['list', 'chart'], () =>
+        import('../routes/Settings/BasicSettings')
+      ),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

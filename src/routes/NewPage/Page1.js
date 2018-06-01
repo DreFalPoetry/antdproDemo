@@ -40,7 +40,7 @@ const formatWan = val => {
 }))
 export default class NewPageList extends PureComponent {
   componentDidMount() {
-    //首先调用list的fetch方法进行数据请求  
+    //首先调用list的fetch方法进行数据请求
     this.props.dispatch({
       type: 'list/fetch',
       payload: {
@@ -113,7 +113,7 @@ export default class NewPageList extends PureComponent {
 
     return (
       <div>
-        <PageHeaderLayout></PageHeaderLayout>
+        <PageHeaderLayout />
         <div className={styles.filterCardList}>
           <Card bordered={false}>
             <Form layout="inline">
@@ -196,7 +196,10 @@ export default class NewPageList extends PureComponent {
                     </Dropdown>,
                   ]}
                 >
-                  <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
+                  <Card.Meta
+                    avatar={<Avatar size="small" src={item.avatar} />}
+                    title={item.title}
+                  />
                   <div className={styles.cardItemContent}>
                     <CardInfo
                       activeUser={formatWan(item.activeUser)}
@@ -207,7 +210,10 @@ export default class NewPageList extends PureComponent {
               </List.Item>
             )}
           />
-          <ImageWrapper src="https://os.alipayobjects.com/rmsportal/mgesTPFxodmIwpi.png" desc="示意图"/>
+          <ImageWrapper
+            src="https://os.alipayobjects.com/rmsportal/mgesTPFxodmIwpi.png"
+            desc="示意图"
+          />
         </div>
       </div>
     );

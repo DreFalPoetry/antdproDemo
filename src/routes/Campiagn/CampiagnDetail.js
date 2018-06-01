@@ -2,7 +2,23 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
 import { connect } from 'dva';
-import { Row, Col, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu ,Input,Button,Progress,Table} from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Select,
+  Icon,
+  Avatar,
+  List,
+  Tooltip,
+  Dropdown,
+  Menu,
+  Input,
+  Button,
+  Progress,
+  Table,
+} from 'antd';
 
 //ranAdd
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -25,8 +41,6 @@ const description = (
     <Description term="备注">请于两个工作日内确认</Description>
   </DescriptionList>
 );
-
-
 
 const columns = [
   {
@@ -63,14 +77,13 @@ const columns = [
 ];
 
 //通过@connect进行model的数据传输
-@connect(({list, loading }) => ({
-    list,
-    loading: loading.models.list,
+@connect(({ list, loading }) => ({
+  list,
+  loading: loading.models.list,
 }))
-
 export default class MyCampiagnDetail extends Component {
   state = {
-    operationkey: 'tab1'
+    operationkey: 'tab1',
   };
   componentDidMount() {
     console.log(this.props.location.state);
@@ -88,7 +101,7 @@ export default class MyCampiagnDetail extends Component {
   render() {
     const { list: { list }, loading } = this.props;
     const { profile } = this.props;
-    const  advancedOperation1= [];
+    const advancedOperation1 = [];
 
     const contentList = {
       tab1: (
@@ -188,9 +201,27 @@ export default class MyCampiagnDetail extends Component {
       },
     ];
 
+    const breadcrumbList = [
+      {
+        title: 'HomePage',
+        href: '/',
+      },
+      {
+        title: 'Campiagn',
+      },
+      {
+        title: 'My Campaign',
+        href: '/campiagn/myCampiagn',
+      },
+      {
+        title: 'MyCampaignDetail',
+      },
+    ];
+
     return (
       <div>
         <PageHeaderLayout
+          breadcrumbList={breadcrumbList}
           title="104855 Amazon"
           logo={
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />
@@ -198,11 +229,7 @@ export default class MyCampiagnDetail extends Component {
           content={description}
           extraContent={extra}
         >
-          <Card
-            bordered={false}
-            tabList={tabList}
-            onTabChange={this.onOperationTabChange}
-          >
+          <Card bordered={false} tabList={tabList} onTabChange={this.onOperationTabChange}>
             {contentList[this.state.operationkey]}
           </Card>
         </PageHeaderLayout>

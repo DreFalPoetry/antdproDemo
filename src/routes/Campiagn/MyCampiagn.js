@@ -4,7 +4,22 @@ import { createBrowserHistory } from 'history';
 import moment from 'moment';
 import numeral from 'numeral';
 import { connect } from 'dva';
-import { Row, Col, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu ,Input,Button,Progress} from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Select,
+  Icon,
+  Avatar,
+  List,
+  Tooltip,
+  Dropdown,
+  Menu,
+  Input,
+  Button,
+  Progress,
+} from 'antd';
 
 //ranAdd
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -14,30 +29,28 @@ const { Option } = Select;
 const FormItem = Form.Item;
 
 //通过@connect进行model的数据传输
-@connect(({campaign, list, loading }) => ({
-    campaign,
-    list,
-    loading: loading.models.list,
+@connect(({ campaign, list, loading }) => ({
+  campaign,
+  list,
+  loading: loading.models.list,
 }))
-
 export default class MyCampiagn extends PureComponent {
   componentDidMount() {
     this.props.dispatch({
-        type: 'list/fetch',
-        payload: {
-          count: 5,
-        },
+      type: 'list/fetch',
+      payload: {
+        count: 5,
+      },
     });
   }
 
-  handleChange = (value) =>{
+  handleChange = value => {
     console.log(`selected ${value}`);
-  }
+  };
 
-  enterHandle = () =>{
-    this.props.history.push({ pathname: '/campiagn/detail', state: {'id':1} });
-  }
-  
+  enterHandle = () => {
+    this.props.history.push({ pathname: '/campiagn/detail', state: { id: 1 } });
+  };
 
   render() {
     const { list: { list }, loading } = this.props;
@@ -116,46 +129,54 @@ export default class MyCampiagn extends PureComponent {
 
     return (
       <div className={styles.campiagnHeader}>
-        <PageHeaderLayout></PageHeaderLayout>
+        <PageHeaderLayout />
         {/* 头部信息 */}
         <Card bordered={false}>
           <Row>
-            <Col sm={8} xs={24} style={{padding:'24px',borderRight:'1px solid #e8e8e8',textAlign:'center'}}>
+            <Col
+              sm={8}
+              xs={24}
+              style={{ padding: '24px', borderRight: '1px solid #e8e8e8', textAlign: 'center' }}
+            >
               <Info title="In-Progress" value="7 Campaigns" bordered />
             </Col>
-            <Col sm={8} xs={24} style={{padding:'24px',borderRight:'1px solid #e8e8e8',textAlign:'center'}}>
+            <Col
+              sm={8}
+              xs={24}
+              style={{ padding: '24px', borderRight: '1px solid #e8e8e8', textAlign: 'center' }}
+            >
               <Info title="Last 2 days" value="2 Updates" bordered />
             </Col>
-            <Col sm={8} xs={24} style={{padding:'24px',textAlign:'center'}}>
+            <Col sm={8} xs={24} style={{ padding: '24px', textAlign: 'center' }}>
               <Info title="Last 20 days" value="2 News" />
             </Col>
           </Row>
         </Card>
         {/* body体信息 */}
         <Card
-            bordered={false}
-            style={{ marginTop: 30 }}
-            bodyStyle={{ padding: '0 32px 40px 32px' }}
-            extra={extraContent}
-          >
-            <List
-              size="large"
-              rowKey="id"
-              loading={loading}
-              pagination={paginationProps}
-              dataSource={list}
-              renderItem={item => (
-                <List.Item actions={[<a onClick={this.enterHandle}>编辑</a>, <MoreBtn />]}>
-                  <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
-                  />
-                  <ListContent data={item} />
-                </List.Item>
-              )}
-            />
-          </Card>
+          bordered={false}
+          style={{ marginTop: 30 }}
+          bodyStyle={{ padding: '0 32px 40px 32px' }}
+          extra={extraContent}
+        >
+          <List
+            size="large"
+            rowKey="id"
+            loading={loading}
+            pagination={paginationProps}
+            dataSource={list}
+            renderItem={item => (
+              <List.Item actions={[<a onClick={this.enterHandle}>编辑</a>, <MoreBtn />]}>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                  title={<a href={item.href}>{item.title}</a>}
+                  description={item.subDescription}
+                />
+                <ListContent data={item} />
+              </List.Item>
+            )}
+          />
+        </Card>
       </div>
     );
   }

@@ -13,9 +13,9 @@ import {
   Tooltip,
   Menu,
   Dropdown,
-  List, 
+  List,
   Avatar,
-  Progress
+  Progress,
 } from 'antd';
 import numeral from 'numeral';
 import {
@@ -59,10 +59,12 @@ for (let i = 0; i < 7; i += 1) {
 }
 
 const Yuan = ({ children }) => (
-  <span dangerouslySetInnerHTML={{ __html: yuan(children) }} /> /* eslint-disable-line react/no-danger */
+  <span
+    dangerouslySetInnerHTML={{ __html: yuan(children) }}
+  /> /* eslint-disable-line react/no-danger */
 );
 
-@connect(({list, chart, loading }) => ({
+@connect(({ list, chart, loading }) => ({
   list,
   chart,
   loading: loading.effects['chart/fetch'],
@@ -321,8 +323,18 @@ export default class Analysis extends Component {
       </div>
     );
 
+    const breadcrumbList = [
+      {
+        title: '',
+      },
+    ];
+
     return (
-      <PageHeaderLayout content={pageHeaderContent} extraContent={extraContent}>
+      <PageHeaderLayout
+        content={pageHeaderContent}
+        extraContent={extraContent}
+        breadcrumbList={breadcrumbList}
+      >
         <Row gutter={24}>
           <Col {...topColResponsiveProps}>
             <ChartCard
@@ -457,160 +469,61 @@ export default class Analysis extends Component {
           </div>
         </Card>
 
-        <Card className={styles.campaignBrand} title="New Campaign" bordered={false} style={{ marginTop: 32 ,padding:0}}
-          bodyStyle={{ padding: '0px' }}>
-          <div className={stylesCard.cardList} style={{marginBottom:"0px"}}>
+        <Card
+          className={styles.campaignBrand}
+          title="New Campaign"
+          bordered={false}
+          style={{ marginTop: 32, padding: 0 }}
+          bodyStyle={{ padding: '0px' }}
+        >
+          <div className={stylesCard.cardList} style={{ marginBottom: '0px' }}>
             <List
-                rowKey="id"
-                loading={loading}
-                grid={{ gutter: 0, lg: 3, md: 2, sm: 1, xs: 1 }}
-                dataSource={[...list]}
-                renderItem={item =>
-                    <List.Item key={item.id} style={{marginBottom:0}}>
-                      <Card hoverable className={stylesCard.card}>
-                        <Card.Meta
-                          avatar={<img alt="" className={stylesCard.cardAvatar} src={item.avatar} />}
-                          title={<a href="#">{item.title}</a>}
-                          description={
-                            <Ellipsis className={stylesCard.item} lines={3}>
-                              {item.description}
-                            </Ellipsis>
-                          }
-                        />
-                      </Card>
-                    </List.Item>
-                }
-              />
-          </div>
-        </Card>
-
-        <Card className={styles.campaignBrand} title="Last 7 days updates" bordered={false} style={{ marginTop: 32 ,padding:0}}>
-           <List
-              size="large"
               rowKey="id"
               loading={loading}
-              dataSource={list}
+              grid={{ gutter: 0, lg: 3, md: 2, sm: 1, xs: 1 }}
+              dataSource={[...list]}
               renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
-                  />
-                  {/* <ListContent data={item} /> */}
+                <List.Item key={item.id} style={{ marginBottom: 0 }}>
+                  <Card hoverable className={stylesCard.card}>
+                    <Card.Meta
+                      avatar={<img alt="" className={stylesCard.cardAvatar} src={item.avatar} />}
+                      title={<a href="#">{item.title}</a>}
+                      description={
+                        <Ellipsis className={stylesCard.item} lines={3}>
+                          {item.description}
+                        </Ellipsis>
+                      }
+                    />
+                  </Card>
                 </List.Item>
               )}
             />
+          </div>
         </Card>
 
-        {/* <Row gutter={24}>
-          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Card
-              loading={loading}
-              bordered={false}
-              title="线上热门搜索"
-              extra={iconGroup}
-              style={{ marginTop: 24 }}
-            >
-              <Row gutter={68}>
-                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
-                  <NumberInfo
-                    subTitle={
-                      <span>
-                        搜索用户数
-                        <Tooltip title="指标文案">
-                          <Icon style={{ marginLeft: 8 }} type="info-circle-o" />
-                        </Tooltip>
-                      </span>
-                    }
-                    gap={8}
-                    total={numeral(12321).format('0,0')}
-                    status="up"
-                    subTotal={17.1}
-                  />
-                  <MiniArea line height={45} data={visitData2} />
-                </Col>
-                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
-                  <NumberInfo
-                    subTitle="人均搜索次数"
-                    total={2.7}
-                    status="down"
-                    subTotal={26.2}
-                    gap={8}
-                  />
-                  <MiniArea line height={45} data={visitData2} />
-                </Col>
-              </Row>
-              <Table
-                rowKey={record => record.index}
-                size="small"
-                columns={columns}
-                dataSource={searchData}
-                pagination={{
-                  style: { marginBottom: 0 },
-                  pageSize: 5,
-                }}
-              />
-            </Card>
-          </Col>
-          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Card
-              loading={loading}
-              className={styles.salesCard}
-              bordered={false}
-              title="销售额类别占比"
-              bodyStyle={{ padding: 24 }}
-              extra={
-                <div className={styles.salesCardExtra}>
-                  {iconGroup}
-                  <div className={styles.salesTypeRadio}>
-                    <Radio.Group value={salesType} onChange={this.handleChangeSalesType}>
-                      <Radio.Button value="all">全部渠道</Radio.Button>
-                      <Radio.Button value="online">线上</Radio.Button>
-                      <Radio.Button value="offline">门店</Radio.Button>
-                    </Radio.Group>
-                  </div>
-                </div>
-              }
-              style={{ marginTop: 24, minHeight: 509 }}
-            >
-              <h4 style={{ marginTop: 8, marginBottom: 32 }}>销售额</h4>
-              <Pie
-                hasLegend
-                subTitle="销售额"
-                total={
-                  () => <Yuan>{salesPieData.reduce((pre, now) => now.y + pre, 0)}</Yuan>
-                }
-                data={salesPieData}
-                valueFormat={value => <Yuan>{value}</Yuan>}
-                height={248}
-                lineWidth={4}
-              />
-            </Card>
-          </Col>
-        </Row> */}
-
-        {/* <Card
-          loading={loading}
-          className={styles.offlineCard}
+        <Card
+          className={styles.campaignBrand}
+          title="Last 7 days updates"
           bordered={false}
-          bodyStyle={{ padding: '0 0 32px 0' }}
-          style={{ marginTop: 32 }}
+          style={{ marginTop: 32, padding: 0 }}
         >
-          <Tabs activeKey={activeKey} onChange={this.handleTabChange}>
-            {offlineData.map(shop => (
-              <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
-                <div style={{ padding: '0 24px' }}>
-                  <TimelineChart
-                    height={400}
-                    data={offlineChartData}
-                    titleMap={{ y1: '客流量', y2: '支付笔数' }}
-                  />
-                </div>
-              </TabPane>
-            ))}
-          </Tabs>
-        </Card> */}
+          <List
+            size="large"
+            rowKey="id"
+            loading={loading}
+            dataSource={list}
+            renderItem={item => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                  title={<a href={item.href}>{item.title}</a>}
+                  description={item.subDescription}
+                />
+                {/* <ListContent data={item} /> */}
+              </List.Item>
+            )}
+          />
+        </Card>
       </PageHeaderLayout>
     );
   }
