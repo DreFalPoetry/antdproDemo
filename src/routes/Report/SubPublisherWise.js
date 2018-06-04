@@ -27,11 +27,11 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 //ranAdd
 const { Search } = Input;
 const { Option } = Select;
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const FormItem = Form.Item;
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 @Form.create()
-export default class CampiagnReport extends PureComponent {
+export default class SubPublisherWise extends PureComponent {
   state = {
     data: [],
   };
@@ -44,6 +44,10 @@ export default class CampiagnReport extends PureComponent {
       {
         title: 'Campaign',
         dataIndex: 'campaign',
+      },
+      {
+        title: 'Sub Publisher',
+        dataIndex: 'subPublisher',
       },
       {
         title: 'Clicks',
@@ -68,6 +72,10 @@ export default class CampiagnReport extends PureComponent {
       {
         title: 'KPI Required%',
         dataIndex: 'kpiRequired',
+      },
+      {
+        title: 'Optimize Advice',
+        dataIndex: 'optimizeAdvice',
       }
     ];
 
@@ -80,7 +88,7 @@ export default class CampiagnReport extends PureComponent {
               <Col md={8} sm={24}>
                 <FormItem label="Date Range">
                   {getFieldDecorator('date')(
-                    <RangePicker style={{ width: '250px' }}/>
+                    <RangePicker style={{ width: '250px' }} />
                   )}
                 </FormItem>
               </Col>
@@ -88,8 +96,8 @@ export default class CampiagnReport extends PureComponent {
                 <FormItem label="Campaign">
                   {getFieldDecorator('status3')(
                     <Select placeholder="请选择" style={{ width: '182px' }}>
-                      <Option value="0">123021</Option>
-                      <Option value="1">122302</Option>
+                      <Option value="0">12023</Option>
+                      <Option value="1">123012</Option>
                     </Select>
                   )}
                 </FormItem>

@@ -187,6 +187,10 @@ const menuData = [
         name: 'Campaign Report',
         path: 'campaignReport',
       },
+      {
+        name: 'Sub-Publisher Wise',
+        path: 'subPublisherWise',
+      }
     ],
   },
   {

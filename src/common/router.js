@@ -184,6 +184,9 @@ export const getRouterData = app => {
     '/report/campaignReport': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Report/CampaignReport')),
     },
+    '/report/subPublisherWise': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Report/SubPublisherWise')),
+    },
     '/settings': {
       component: dynamicWrapper(app, ['list', 'chart'], () =>
         import('../routes/Settings/BasicSettings')
