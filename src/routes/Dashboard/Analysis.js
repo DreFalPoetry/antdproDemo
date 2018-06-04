@@ -58,12 +58,6 @@ for (let i = 0; i < 7; i += 1) {
   });
 }
 
-const Yuan = ({ children }) => (
-  <span
-    dangerouslySetInnerHTML={{ __html: yuan(children) }}
-  /> /* eslint-disable-line react/no-danger */
-);
-
 @connect(({ list, chart, loading }) => ({
   list,
   chart,
@@ -144,7 +138,6 @@ export default class Analysis extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { rangePickerValue, salesType, currentTabKey } = this.state;
     const { list: { list }, chart, loading } = this.props;
     const {
@@ -182,17 +175,11 @@ export default class Analysis extends Component {
     const salesExtra = (
       <div className={styles.salesExtraWrap}>
         <div className={styles.salesExtra}>
-          <a className={this.isActive('today')} onClick={() => this.selectDate('today')}>
-            今日
-          </a>
-          <a className={this.isActive('week')} onClick={() => this.selectDate('week')}>
-            本周
-          </a>
           <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
-            本月
+            This Month
           </a>
           <a className={this.isActive('year')} onClick={() => this.selectDate('year')}>
-            全年
+            This Year
           </a>
         </div>
         <RangePicker
@@ -272,41 +259,6 @@ export default class Analysis extends Component {
       style: { marginBottom: 24 },
     };
 
-    //ranAdd
-    const pageHeaderContent = (
-      <div className={styleWorkSpace.pageHeaderContent}>
-        <div className={styleWorkSpace.avatar}>
-          <Avatar
-            size="large"
-            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
-          />
-        </div>
-        <div className={styleWorkSpace.content}>
-          <div className={styleWorkSpace.contentTitle}>早安，曲丽丽，祝你开心每一天！</div>
-          <div>交互专家 | 蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</div>
-        </div>
-      </div>
-    );
-
-    const extraContent = (
-      <div className={styleWorkSpace.extraContent}>
-        <div className={styleWorkSpace.statItem}>
-          <p>项目数</p>
-          <p>56</p>
-        </div>
-        <div className={styleWorkSpace.statItem}>
-          <p>团队内排名</p>
-          <p>
-            8<span> / 24</span>
-          </p>
-        </div>
-        <div className={styleWorkSpace.statItem}>
-          <p>项目访问</p>
-          <p>2,223</p>
-        </div>
-      </div>
-    );
-
     const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
       <div className={stylesBasic.listContent}>
         <div className={stylesBasic.listContentItem}>
@@ -323,51 +275,48 @@ export default class Analysis extends Component {
       </div>
     );
 
-    const breadcrumbList = [
-      {
-        title: '',
-      },
-    ];
-
     return (
-      <PageHeaderLayout
-        content={pageHeaderContent}
-        extraContent={extraContent}
-        breadcrumbList={breadcrumbList}
-      >
+      <div>
+        {/* 头部公告信息 */}
+        <div className={styleWorkSpace.pageHeaderContent}>
+          <div className={styles.announcement}>
+            <span>Announcement</span>
+            <i style={{fontStyle:"normal"}}>&nbsp;&nbsp;mark as read</i>
+          </div>
+          <div className={styles.headerInfoWrapper} style={{display:"flex"}}>
+            <div className={styleWorkSpace.avatar}>
+              <Avatar
+                size="large"
+                src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+              />
+            </div>
+            <div className={styleWorkSpace.content}>
+              <div className={styleWorkSpace.contentTitle}>早安，曲丽丽，祝你开心每一天！</div>
+              <div>交互专家 | 蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</div>
+            </div>
+          </div>
+        </div>
+        {/* 最近30天收益之类 */}
         <Row gutter={24}>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="总销售额"
-              action={
-                <Tooltip title="指标说明">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
-              }
-              total={() => <Yuan>126560</Yuan>}
-              footer={<Field label="日均销售额" value={`￥${numeral(12423).format('0,0')}`} />}
+              title="Last 30 days Revenue"
+              total={"$126560"}
+              footer={<Field label="daily avg." value={`$ ${numeral(413.00).format('0,0')}`} />}
               contentHeight={46}
             >
-              <Trend flag="up" style={{ marginRight: 16 }}>
-                周同比<span className={styles.trendText}>12%</span>
-              </Trend>
-              <Trend flag="down">
-                日环比<span className={styles.trendText}>11%</span>
-              </Trend>
+              <div style={{ marginRight: 16 }}>
+                increase<span className={styles.trendText}>20%</span>
+              </div>
             </ChartCard>
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="访问量"
-              action={
-                <Tooltip title="指标说明">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
-              }
-              total={numeral(8846).format('0,0')}
-              footer={<Field label="日访问量" value={numeral(1234).format('0,0')} />}
+              title="Last 30 days clicks"
+              total={numeral(123212123).format('0,0')}
+              footer={<Field label="daily avg." value={numeral(423232).format('0,0')} />}
               contentHeight={46}
             >
               <MiniArea color="#975FE4" data={visitData} />
@@ -376,59 +325,44 @@ export default class Analysis extends Component {
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="支付笔数"
-              action={
-                <Tooltip title="指标说明">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
-              }
-              total={numeral(6560).format('0,0')}
-              footer={<Field label="转化率" value="60%" />}
+              title="Last 30 days conversions"
+              total={numeral(100232).format('0,0')}
+              footer={<Field label="daily avg." value={numeral(3232).format('0,0')} />}
               contentHeight={46}
             >
-              <MiniBar data={visitData} />
+              <MiniArea data={visitData} />
             </ChartCard>
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="运营活动效果"
-              action={
-                <Tooltip title="指标说明">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
-              }
-              total="78%"
-              footer={
-                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                  <Trend flag="up" style={{ marginRight: 16 }}>
-                    周同比<span className={styles.trendText}>12%</span>
-                  </Trend>
-                  <Trend flag="down">
-                    日环比<span className={styles.trendText}>11%</span>
-                  </Trend>
-                </div>
-              }
+              title="Campaigns"
+              total="17 In-Progress"
+              footer={<Field label="Today Deliveried" value="23%" />}
               contentHeight={46}
             >
-              <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2" />
+              <div>Daily Cap   2032</div>
+              {/* <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2" /> */}
             </ChartCard>
           </Col>
         </Row>
 
+        {/* conversions */}
         <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{ marginBottom: 24 }}>
-              <TabPane tab="销售额" key="sales">
+              <TabPane tab="Conversions" key="sales">
                 <Row>
+                  {/* 转换趋势 */}
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={295} title="销售额趋势" data={salesData} />
+                      <Bar height={295} title="Conversion Trend" data={salesData} />
                     </div>
                   </Col>
+                  {/* 转换列表 */}
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>门店销售额排名</h4>
+                      <h4 className={styles.rankingTitle}>Top 10 Campaign</h4>
                       <ul className={styles.rankingList}>
                         {rankingListData.map((item, i) => (
                           <li key={item.title}>
@@ -442,16 +376,18 @@ export default class Analysis extends Component {
                   </Col>
                 </Row>
               </TabPane>
-              <TabPane tab="访问量" key="views">
+              <TabPane tab="Clicks" key="views">
                 <Row>
+                  {/* 点击量趋势 */}
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={292} title="访问量趋势" data={salesData} />
+                      <Bar height={292} title="Clicks Trend" data={salesData} />
                     </div>
                   </Col>
+                  {/* 点击量列表 */}
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>门店访问量排名</h4>
+                      <h4 className={styles.rankingTitle}>Top 10 Campaign</h4>
                       <ul className={styles.rankingList}>
                         {rankingListData.map((item, i) => (
                           <li key={item.title}>
@@ -468,7 +404,8 @@ export default class Analysis extends Component {
             </Tabs>
           </div>
         </Card>
-
+        
+        {/* New Campaign */}
         <Card
           className={styles.campaignBrand}
           title="New Campaign"
@@ -487,11 +424,17 @@ export default class Analysis extends Component {
                   <Card hoverable className={stylesCard.card}>
                     <Card.Meta
                       avatar={<img alt="" className={stylesCard.cardAvatar} src={item.avatar} />}
-                      title={<a href="#">{item.title}</a>}
+                      title={<span>{item.title}</span>}
                       description={
-                        <Ellipsis className={stylesCard.item} lines={3}>
-                          {item.description}
-                        </Ellipsis>
+                        <div>
+                          <Ellipsis className={stylesCard.item} lines={3}>
+                            {item.description}
+                          </Ellipsis>
+                          <div className={styles.footerTime}>
+                            <span>CPI/$3</span>
+                            <i style={{fontStyle:"normal"}}>12小时前</i>
+                          </div>
+                        </div>
                       }
                     />
                   </Card>
@@ -501,6 +444,7 @@ export default class Analysis extends Component {
           </div>
         </Card>
 
+        {/* Last 7 days updates */}
         <Card
           className={styles.campaignBrand}
           title="Last 7 days updates"
@@ -516,15 +460,18 @@ export default class Analysis extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.subDescription}
+                  description={
+                    <div>
+                       <div>{item.subDescription}</div>
+                       <div>2 hours ago</div>
+                    </div>
+                  }
                 />
-                {/* <ListContent data={item} /> */}
               </List.Item>
             )}
           />
         </Card>
-      </PageHeaderLayout>
+      </div>
     );
   }
 }
