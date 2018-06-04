@@ -139,6 +139,81 @@
     font-weight: bold;
   }
 }
+
+.cardList {
+  margin-bottom: -24px;
+
+  .card {
+    :global {
+      .ant-card-meta-title {
+        margin-bottom: 12px;
+        & > a {
+          color: @heading-color;
+          display: inline-block;
+          max-width: 100%;
+        }
+      }
+      .ant-card-actions {
+        background: #f7f9fa;
+      }
+      .ant-card-body:hover {
+        .ant-card-meta-title > a {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+  .item {
+    height: 64px;
+  }
+
+  :global {
+    .ant-list .ant-list-item-content-single {
+      max-width: 100%;
+    }
+  }
+}
+
+.cardAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 48px;
+}
+
+.pageHeaderContent {
+  // display: flex;
+  border: 1px solid #e5e5e5;
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  .avatar {
+    display: flex;
+    flex: 0 1 72px;
+    margin-bottom: 8px;
+   
+    & > span {
+      border-radius: 72px;
+      display: block;
+      width: 72px;
+      height: 72px;
+    }
+  }
+  .content {
+    position: relative;
+    top: 4px;
+    margin-left: 24px;
+    flex: 1 1 auto;
+    color: @text-color-secondary;
+    line-height: 22px;
+    .contentTitle {
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+      color: @heading-color;
+      margin-bottom: 12px;
+    }
+  }
+}
  
 
 @media screen and (max-width: @screen-lg) {

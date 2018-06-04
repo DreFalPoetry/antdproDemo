@@ -77,3 +77,8 @@ export async function fakeRegister(params) {
 export async function queryNotices() {
   return request('/api/notices');
 }
+
+//ranAdd 仪表盘部分获取数据排行信息--get请求
+export async function getConversionAndClicksData() {
+  return request('/api/conversionAndClicksData');
+}
