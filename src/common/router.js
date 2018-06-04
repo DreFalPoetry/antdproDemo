@@ -89,27 +89,27 @@ export const getRouterData = app => {
     //   // name: '工作台',
     //   // authority: 'admin',
     // },
-    '/form/basic-form': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
-    },
-    '/form/step-form': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
-    },
-    '/form/step-form/info': {
-      name: '分步表单（填写转账信息）',
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
-    },
-    '/form/step-form/confirm': {
-      name: '分步表单（确认转账信息）',
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
-    },
-    '/form/step-form/result': {
-      name: '分步表单（完成）',
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
-    },
-    '/form/advanced-form': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
-    },
+    // '/form/basic-form': {
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
+    // },
+    // '/form/step-form': {
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
+    // },
+    // '/form/step-form/info': {
+    //   name: '分步表单（填写转账信息）',
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
+    // },
+    // '/form/step-form/confirm': {
+    //   name: '分步表单（确认转账信息）',
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
+    // },
+    // '/form/step-form/result': {
+    //   name: '分步表单（完成）',
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
+    // },
+    // '/form/advanced-form': {
+    //   component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
+    // },
     // '/list/table-list': {
     //   component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
     // },
@@ -172,9 +172,10 @@ export const getRouterData = app => {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     // },
     //添加新菜单：
-    '/newMenu/page1': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/NewPage/Page1')),
-    },
+    // '/newMenu/page1': {
+    //   component: dynamicWrapper(app, ['list'], () => import('../routes/NewPage/Page1')),
+    // },
+    //功能添加
     '/campiagn/myCampiagn': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/Campiagn/MyCampiagn')),
     },

@@ -97,7 +97,7 @@ export default class MyCampiagn extends PureComponent {
         <div className={styles.detailsWrapper}>
           <div className={styles.listContentItem} style={{width:"40%",marginRight:"20px"}}>
             <span>Daily Cap</span>
-            <p>{owner}</p>
+            <p>150</p>
           </div>
           <div className={styles.listContentItem} style={{width:"40%"}}>
             <span>Price Model</span>
