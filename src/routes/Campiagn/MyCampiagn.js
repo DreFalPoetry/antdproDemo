@@ -94,37 +94,21 @@ export default class MyCampiagn extends PureComponent {
 
     const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
       <div className={styles.listContent}>
-        <div className={styles.listContentItem}>
-          <span>Owner</span>
-          <p>{owner}</p>
+        <div className={styles.detailsWrapper}>
+          <div className={styles.listContentItem} style={{width:"40%",marginRight:"20px"}}>
+            <span>Daily Cap</span>
+            <p>{owner}</p>
+          </div>
+          <div className={styles.listContentItem} style={{width:"40%"}}>
+            <span>Price Model</span>
+            <p>CPI/0.5$</p>
+          </div>
         </div>
         <div className={styles.listContentItem}>
-          <span>开始时间</span>
-          <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
-        </div>
-        <div className={styles.listContentItem}>
-          <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
+          <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
+          <span style={{marginLeft:20}}>18/5/31</span>
         </div>
       </div>
-    );
-
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a>编辑</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a>删除</a>
-        </Menu.Item>
-      </Menu>
-    );
-
-    const MoreBtn = () => (
-      <Dropdown overlay={menu}>
-        <a>
-          更多 <Icon type="down" />
-        </a>
-      </Dropdown>
     );
 
     return (
@@ -166,10 +150,10 @@ export default class MyCampiagn extends PureComponent {
             pagination={paginationProps}
             dataSource={list}
             renderItem={item => (
-              <List.Item actions={[<a onClick={this.enterHandle}>编辑</a>, <MoreBtn />]}>
+              <List.Item actions={[<a onClick={this.enterHandle}>Detail</a>]}>
                 <List.Item.Meta
                   avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                  title={<a href={item.href}>{item.title}</a>}
+                  title={<span>{item.title}</span>}
                   description={item.subDescription}
                 />
                 <ListContent data={item} />

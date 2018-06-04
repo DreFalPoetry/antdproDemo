@@ -30,50 +30,37 @@ const FormItem = Form.Item;
 const { Description } = DescriptionList;
 
 const description = (
-  <DescriptionList className={styles.headerList} size="small" col="2">
-    <Description term="创建人">曲丽丽</Description>
-    <Description term="订购产品">XX 服务</Description>
-    <Description term="创建时间">2017-07-07</Description>
-    <Description term="关联单据">
-      <a href="">12421</a>
-    </Description>
-    <Description term="生效日期">2017-07-07 ~ 2017-08-08</Description>
-    <Description term="备注">请于两个工作日内确认</Description>
+  <DescriptionList className={styles.headerList} size="small" col="1">
+    <Description term="Category">Shopping</Description>
+    <Description term="Lifetime cycle">2018-05-01 ~ 2018-05-31</Description>
+    <Description term="Fraud Demand"></Description>
+    <Description term="Fraud Description"></Description>
+    <Description term="KPI"></Description>
+    <Description term="KPI Description"></Description>
   </DescriptionList>
 );
 
 const columns = [
   {
-    title: '操作类型',
+    title: 'Type',
     dataIndex: 'type',
     key: 'type',
   },
   {
-    title: '操作人',
+    title: 'Change From',
     dataIndex: 'name',
     key: 'name',
   },
   {
-    title: '执行结果',
+    title: 'Change To',
     dataIndex: 'status',
     key: 'status',
-    render: text =>
-      text === 'agree' ? (
-        <Badge status="success" text="成功" />
-      ) : (
-        <Badge status="error" text="驳回" />
-      ),
   },
   {
-    title: '操作时间',
+    title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
-  },
-  {
-    title: '备注',
-    dataIndex: 'memo',
-    key: 'memo',
-  },
+  }
 ];
 
 //通过@connect进行model的数据传输
@@ -106,47 +93,25 @@ export default class MyCampiagnDetail extends Component {
     const contentList = {
       tab1: (
         <div>
-          <Card title="用户信息" style={{ marginBottom: 24 }}>
-            <DescriptionList style={{ marginBottom: 24 }}>
-              <Description term="用户姓名">付小小</Description>
-              <Description term="会员卡号">32943898021309809423</Description>
-              <Description term="身份证">3321944288191034921</Description>
-              <Description term="联系方式">18112345678</Description>
-              <Description term="联系地址">
-                曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口
-              </Description>
-            </DescriptionList>
-            <DescriptionList style={{ marginBottom: 24 }} title="信息组">
-              <Description term="某某数据">725</Description>
-              <Description term="该数据更新时间">2017-08-08</Description>
-              <Description>&nbsp;</Description>
-              <Description
-                term={
-                  <span>
-                    某某数据
-                    <Tooltip title="数据说明">
-                      <Icon
-                        style={{ color: 'rgba(0, 0, 0, 0.43)', marginLeft: 4 }}
-                        type="info-circle-o"
-                      />
-                    </Tooltip>
-                  </span>
-                }
-              >
-                725
-              </Description>
-              <Description term="该数据更新时间">2017-08-08</Description>
+          <Card title="Targeting" style={{ marginBottom: 24 }}>
+            <DescriptionList style={{ marginBottom: 24 }} col="2">
+              <Description term="Country">india</Description>
+              <Description term="State or City">a, b, c</Description>
+              <Description term="Connection Type">2G, 3G, 4G</Description>
+              <Description term="Carrier">Vodafone, Airtel</Description>
+              <Description term="Mandatory Device ID">IDFA</Description>
+              <Description term="Sub Publisher">--</Description>
+              <Description term="Device Type">mobile</Description>
+              <Description term="Device Make">--</Description>
+              <Description term="Device Model">--</Description>
+              <Description term="OS">--</Description>
+              <Description term="OSV">--</Description>
             </DescriptionList>
           </Card>
-          <Card title="Creative" style={{ marginBottom: 24 }}>
+          <Card title="Creative" style={{ marginBottom: 24 }} col="1">
             <DescriptionList style={{ marginBottom: 24 }}>
-              <Description term="用户姓名">付小小</Description>
-              <Description term="会员卡号">32943898021309809423</Description>
-              <Description term="身份证">3321944288191034921</Description>
-              <Description term="联系方式">18112345678</Description>
-              <Description term="联系地址">
-                曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口
-              </Description>
+              <Description term="Creative">click download</Description>
+              <Description term="Tracking Link">http://ad.moca-tech.net/xxxxxx</Description>
             </DescriptionList>
           </Card>
         </div>
@@ -158,6 +123,7 @@ export default class MyCampiagnDetail extends Component {
             loading={loading}
             dataSource={advancedOperation1}
             columns={columns}
+            bordered
           />
         </Card>
       ),
@@ -176,12 +142,12 @@ export default class MyCampiagnDetail extends Component {
     const extra = (
       <Row>
         <Col xs={24} sm={12}>
-          <div className={styles.textSecondary}>状态</div>
-          <div className={styles.heading}>待审批</div>
+          <div className={styles.textSecondary}>Status</div>
+          <div className={styles.heading}>In-Progress</div>
         </Col>
         <Col xs={24} sm={12}>
-          <div className={styles.textSecondary}>订单金额</div>
-          <div className={styles.heading}>¥ 568.08</div>
+          <div className={styles.textSecondary}>Price Model</div>
+          <div className={styles.heading}>CPI/0.3$</div>
         </Col>
       </Row>
     );
