@@ -49,13 +49,34 @@ for (let i = 0; i < 7; i += 1) {
     });
 }
 
+const brandLogos = [
+    'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png', // Alipay
+    'https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png', // Angular
+    'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png', // Ant Design
+    'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png', // Ant Design Pro
+    'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png', // Bootstrap
+    'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png', // React
+    'https://gw.alipayobjects.com/zos/rmsportal/ComBAopevLwENQdKWiIn.png', // Vue
+    'https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png', // Webpack
+];
+//历史7天的更新记录
+const sevenDaysUpdateList = [];
+for(let i=0;i<7;i++){
+    sevenDaysUpdateList.push({
+        logo:brandLogos[i%10],
+        info: Math.ceil(Math.random()*100000)+"  Amazon Shopping  Update daily cap from 100 to 150",
+        time: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD')
+    });
+}
+
 export const homepageChartData = {
     conversionsData,
     clicksData,
     topCampaigns,
     topClicks,
     announcement,
-    thirtyDaysInfo
+    thirtyDaysInfo,
+    sevenDaysUpdateList
 };
 
 export default {

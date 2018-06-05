@@ -11,6 +11,7 @@ export default {
     topClicks:[],
     announcement:{},
     thirtyDaysInfo:{},
+    sevenDaysUpdateList:[],
     newCampaignList:[]
   },
 
@@ -52,6 +53,7 @@ export default {
         topClicks:[],
         announcement:{},
         thirtyDaysInfo:{},
+        sevenDaysUpdateList:[],
         newCampaignList:[]
       };
     },
