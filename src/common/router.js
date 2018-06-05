@@ -71,6 +71,14 @@ export const getRouterData = app => {
   //配置动态路由
   const routerConfig = {
     '/': {
+      component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
+    },
+    '/dashboard/analysis': {
+      component: dynamicWrapper(app, ['list', 'chart','homepage'], () =>
+        import('../routes/Dashboard/Analysis')
+      ),
+    },
+    '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     },
     '/user/login': {
@@ -81,14 +89,6 @@ export const getRouterData = app => {
     },
     '/user/register-result': {
       component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
-    },
-    '/home': {
-      component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
-    },
-    '/dashboard/analysis': {
-      component: dynamicWrapper(app, ['list', 'chart','homepage'], () =>
-        import('../routes/Dashboard/Analysis')
-      ),
     },
     //功能添加
     '/campiagn/myCampiagn': {

@@ -16,8 +16,8 @@ dynamic.setDefaultLoadingComponent(() => {
 function RouterConfig({ history, app }) {
   const routerData = getRouterData(app);
   //ranChange
-  const UserLayout = routerData['/'].component;
-  const BasicLayout = routerData['/home'].component;
+  const UserLayout = routerData['/user'].component;
+  const BasicLayout = routerData['/'].component;
   return (
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
