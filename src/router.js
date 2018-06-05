@@ -16,14 +16,14 @@ dynamic.setDefaultLoadingComponent(() => {
 function RouterConfig({ history, app }) {
   const routerData = getRouterData(app);
   //ranChange
-  // const UserLayout = routerData['/user'].component;
-  const BasicLayout = routerData['/'].component;
+  const UserLayout = routerData['/'].component;
+  const BasicLayout = routerData['/home'].component;
   return (
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
         <Switch>
           {/* 根据common文件夹中的router配置进行区分是用户登陆页面和登陆后的菜单显示页面 */}
-          {/* <Route path="/user" component={UserLayout} /> */}
+          <Route path="/user" component={UserLayout} />
           <AuthorizedRoute
             path="/"
             render={props => <BasicLayout {...props} />}
