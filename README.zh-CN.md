@@ -1,10 +1,6 @@
 [English](./README.md) | 简体中文
 
-# Ant Design Pro
-
-[![](https://img.shields.io/travis/ant-design/ant-design-pro.svg?style=flat-square)](https://travis-ci.org/ant-design/ant-design-pro) [![Build status](https://ci.appveyor.com/api/projects/status/67fxu2by3ibvqtat/branch/master?svg=true)](https://ci.appveyor.com/project/afc163/ant-design-pro/branch/master)  [![Gitter](https://badges.gitter.im/ant-design/ant-design-pro.svg)](https://gitter.im/ant-design/ant-design-pro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-开箱即用的中台前端/设计解决方案。
+# Ant Design Pro -- Demo
 
 ![](https://gw.alipayobjects.com/zos/rmsportal/xEdBqwSzvoSapmnSnYjU.png)
 
@@ -27,38 +23,6 @@
 - :1234: **Mock 数据**：实用的本地数据调试方案
 - :white_check_mark: **UI 测试**：自动化测试保障前端产品质量
 
-## 模板
-
-```
-- Dashboard
-  - 分析页
-  - 监控页
-  - 工作台
-- 表单页
-  - 基础表单页
-  - 分步表单页
-  - 高级表单页
-- 列表页
-  - 查询表格
-  - 标准列表
-  - 卡片列表
-  - 搜索列表（项目/应用/文章）
-- 详情页
-  - 基础详情页
-  - 高级详情页
-- 结果
-  - 成功页
-  - 失败页
-- 异常
-  - 403 无权限
-  - 404 找不到
-  - 500 服务器出错
-- 帐户
-  - 登录
-  - 注册
-  - 注册成功
-```
-
 ## 使用
 
 ```bash
@@ -78,14 +42,25 @@ $ pro new
 
 更多信息请参考 [使用文档](http://pro.ant.design/docs/getting-started)。
 
-## 兼容性
+## 问题
 
-现代浏览器及 IE11。
+**1. 关于项目运行过程中的报内存错误问题** 
 
-## 参与贡献
+​    	页面所引用的数据模型在  `src/common` 文件夹中的 `model` 一定要引入，且在页面的编写一些不符合规范的组件也会造成项目无法运行。
 
-我们非常欢迎你的贡献，你可以通过以下方式和我们一起共建 :smiley:：
+**2.`npm start  ` 的时候路由直接跳转到`index` 而不是 `login` 页面的问题**
 
-- 在你的公司或个人项目中使用 Ant Design Pro。
-- 通过 [Issue](http://github.com/ant-design/ant-design-pro/issues) 报告 bug 或进行咨询。
-- 提交 [Pull Request](http://github.com/ant-design/ant-design-pro/pulls) 改进 Pro 的代码。
+​	在`utils ` 文件夹中的：
+
+```
+export function getAuthority() {
+  return localStorage.getItem('antd-pro-authority') || 'admin';
+}
+```
+
+该方法设置了返回的角色信息，没有拿到 `local`  中的角色信息的时候默认返回角色信息为 `admin` 
+
+## 代码规范问题
+
+
+
