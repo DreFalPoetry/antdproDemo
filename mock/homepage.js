@@ -22,9 +22,20 @@ for (let i = 0; i < clicksCount.length; i += 1) {
   });
 }
 
+const announcement = {"info":"交互专家|蚂蚁金服-技术部-UED","userName":"李艺彤"};
+
+const thirtyDaysInfo = {
+                        "Revenue":{"count":"12123.00","increase":"20%","dailyAvg":"412.13"},
+                        "clicks":{"count":"12334222","dailyAvg":"34112"},
+                        "conversions":{"count":"100233","dailyAvg":"2313"},
+                        "Campaigns":{"inProgress":17,"dailyCap":"4239","todayDeliveried":"23%"}
+                    };
+
 export const homepageChartData = {
     conversionsData,
-    clicksData
+    clicksData,
+    announcement,
+    thirtyDaysInfo
 };
 
 export default {

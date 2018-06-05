@@ -43,36 +43,36 @@ const { RangePicker } = DatePicker;
 
 const rankingListData = [];
 for (let i = 0; i < 7; i += 1) {
-  rankingListData.push({
-    title: `工专路 ${i} 号店`,
-    total: 323234,
-  });
+	rankingListData.push({
+		title: `工专路 ${i} 号店`,
+		total: 323234,
+	});
 }
 
 @connect(({ list, chart,homepage, loading }) => ({
-  list,
-  chart,
-  homepage,
-  loading: loading.effects['homepage/fetch'],
+	list,
+	chart,
+	homepage,
+	loading: loading.effects['homepage/fetch'],
 }))
 export default class Analysis extends Component {
-  state = {
-    salesType: 'all',
-    currentTabKey: '',
-    rangePickerValue: getTimeDistance('year'),
-  };
+	state = {
+		salesType: 'all',
+		currentTabKey: '',
+		rangePickerValue: getTimeDistance('year'),
+	};
 
   componentDidMount() {
     //ranAdd添加卡片
     this.props.dispatch({
-      type: 'list/fetch',
-      payload: {
-        count: 8,
-      },
+		type: 'list/fetch',
+		payload: {
+			count: 8,
+		},
 	});
 
     this.props.dispatch({
-      type: 'chart/fetch',
+      	type: 'chart/fetch',
 	});
 	
 	//ranAdd--请求homepage model中的数据信息
@@ -89,6 +89,11 @@ export default class Analysis extends Component {
 	dispatch({
 		type: 'homepage/clear',
 	});
+  }
+
+  //改变已读和未读状态
+  changeReadStatus = () =>{
+	console.log('已读和未读状态');
   }
 
   handleRangePickerChange = rangePickerValue => {
@@ -136,6 +141,8 @@ export default class Analysis extends Component {
 	const {
 		conversionsData,
 		clicksData,
+		announcement,
+		thirtyDaysInfo
 	  } = homepage;
 
 	// 按月份或年份筛选
@@ -172,7 +179,7 @@ export default class Analysis extends Component {
         <div className={styles.pageHeaderContent}>
           <div className={styles.announcement}>
             <span>Announcement</span>
-            <i style={{fontStyle:"normal"}}>&nbsp;&nbsp;mark as read</i>
+            <i style={{fontStyle:"normal",color:"#ddb64e",cursor:"pointer"}} onClick={this.changeReadStatus}>&nbsp;&nbsp;mark as read</i>
           </div>
           <div className={styles.headerInfoWrapper} style={{display:"flex"}}>
             <div className={styles.avatar}>
@@ -182,8 +189,8 @@ export default class Analysis extends Component {
               />
             </div>
             <div className={styles.content}>
-              <div className={styles.contentTitle}>早安，曲丽丽，祝你开心每一天！</div>
-              <div>交互专家 | 蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</div>
+              <div className={styles.contentTitle}>早安，{announcement?announcement.info:""}，祝你开心每一天！</div>
+              <div>{announcement?announcement.info:""}</div>
             </div>
           </div>
         </div>
@@ -193,12 +200,12 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="Last 30 days Revenue"
-              total={"$126560"}
-              footer={<Field label="daily avg." value={`$ ${numeral(413.00).format('0,0')}`} />}
+              total={thirtyDaysInfo?thirtyDaysInfo.Revenue.count:""}
+              footer={<Field label="daily avg." value={`$ ${numeral(thirtyDaysInfo?thirtyDaysInfo.Revenue.dailyAvg:'0').format('0,0.00')}`} />}
               contentHeight={46}
             >
               <div style={{ marginRight: 16 }}>
-                increase<span className={styles.trendText}>20%</span>
+                increase<span className={styles.trendText}>{thirtyDaysInfo?thirtyDaysInfo.Revenue.increase:""}</span>
               </div>
             </ChartCard>
           </Col>
@@ -206,8 +213,8 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="Last 30 days clicks"
-              total={numeral(123212123).format('0,0')}
-              footer={<Field label="daily avg." value={numeral(423232).format('0,0')} />}
+              total={numeral(thirtyDaysInfo?thirtyDaysInfo.clicks.count:'0').format('0,0')}
+              footer={<Field label="daily avg." value={numeral(thirtyDaysInfo?thirtyDaysInfo.clicks.dailyAvg:'0').format('0,0')} />}
               contentHeight={46}
             >
               <MiniArea color="#975FE4" data={visitData} />
@@ -217,8 +224,8 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="Last 30 days conversions"
-              total={numeral(100232).format('0,0')}
-              footer={<Field label="daily avg." value={numeral(3232).format('0,0')} />}
+              total={numeral(thirtyDaysInfo?thirtyDaysInfo.conversions.count:'0').format('0,0')}
+              footer={<Field label="daily avg." value={numeral(thirtyDaysInfo?thirtyDaysInfo.conversions.dailyAvg:'0').format('0,0')} />}
               contentHeight={46}
             >
               <MiniArea data={visitData} />
@@ -228,11 +235,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="Campaigns"
-              total="17 In-Progress"
-              footer={<Field label="Today Deliveried" value="23%" />}
+              total={thirtyDaysInfo?thirtyDaysInfo.Campaigns.inProgress+" In-Progress":'0'+"In-Progress"}
+              footer={<Field label="Today Deliveried" value={thirtyDaysInfo?thirtyDaysInfo.Campaigns.todayDeliveried:''} />}
               contentHeight={46}
             >
-              <div>Daily Cap   2032</div>
+              <div>Daily Cap   {thirtyDaysInfo?thirtyDaysInfo.Campaigns.dailyCap:''}</div>
               {/* <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2" /> */}
             </ChartCard>
           </Col>
