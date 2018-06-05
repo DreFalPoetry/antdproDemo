@@ -62,5 +62,8 @@ export function getAuthority() {
 
 ## 代码规范问题
 
+**1.代码整体格式规范**
 
-
+- 项目代码统一使用Tab4格缩进书写格式。
+- css命名：因项目的样式引入问题，antpro项目先约定类名也采用驼峰命名发 例：`iconGroup:{font-size:"12px"}`  
+- js：文件内的方法写在react生命周期之后，使用驼峰命名法和语义化的英文进行方法的命名，自己写的操作方法最好写上注释信息， 例：`changeReadStatus = () => { //注释 }`  
