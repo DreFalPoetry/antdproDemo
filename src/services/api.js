@@ -82,3 +82,9 @@ export async function queryNotices() {
 export async function getConversionAndClicksData() {
   return request('/api/conversionAndClicksData');
 }
+
+export async function queryNewCampaignList(params) {
+    return request(`/api/getNewCampaignList?${stringify(params)}`);
+}
+
+

@@ -1,14 +1,17 @@
 // import { fakeChartData } from '../services/api';
-import { getConversionAndClicksData } from '../services/api';
+import { getConversionAndClicksData,queryNewCampaignList } from '../services/api';
 
 export default {
   namespace: 'homepage',
 
   state: {
     conversionsData:[],//conversion柱状图数据信息
-    // campaignListRank:[],//转变的排行
     clicksData:[],//clicks柱状图数据信息
-    // clickRank:[],//点击的排行
+    topCampaigns:[],
+    topClicks:[],
+    announcement:{},
+    thirtyDaysInfo:{},
+    newCampaignList:[]
   },
 
   effects: {
@@ -19,6 +22,13 @@ export default {
         payload: response,
       });
     },
+    *fetchList({payload}, { call, put }) {
+        const response = yield call(queryNewCampaignList,payload);
+        yield put({
+          type: 'asyncList',
+          payload: response,
+        });
+      },
   },
 
   reducers: {
@@ -28,10 +38,21 @@ export default {
         ...payload,
       };
     },
+    asyncList(state, { payload }) {
+        return {
+          ...state,
+          newCampaignList:payload,
+        };
+    },
     clear() {
       return {
-        conversionsData: [],
-        clicksData: []
+        conversionsData:[],//conversion柱状图数据信息
+        clicksData:[],//clicks柱状图数据信息
+        topCampaigns:[],
+        topClicks:[],
+        announcement:{},
+        thirtyDaysInfo:{},
+        newCampaignList:[]
       };
     },
   },

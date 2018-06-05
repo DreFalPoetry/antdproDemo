@@ -289,8 +289,63 @@ export const getActivities = [
   },
 ];
 
+const brandName = [
+    '103032 Amazon',
+    '11233 猎豹',
+    '23123 360',
+    '23123 百度',
+    '21311 雅虎',
+    '93423 搜狐',
+    '34223 谷歌',
+    '83434 腾讯',
+];
+
+const subDesc = [
+    'Shopping, Soft KPI, Geo Targeting，Mandatory Device ID',
+    '你站在桥下看风景，看风景的人在桥上看你',
+    '真的勇士，敢于直面惨淡的人生，敢于正视淋漓的鲜血',
+    '红色的光一定会照亮黑暗并且冲出去，今年，这个位置一定是你的！',
+    '如果有来生，愿做一只鸟',
+];
+
+export function newCampaignList(count) {
+    const list = [];
+    for (let i = 0; i < count; i += 1) {
+      list.push({
+        id: `newCampaignList${i}`,
+        brandName: brandName[i % 8],
+        avatar: avatars[i % 8],
+        logo: avatars[i % 8],
+        updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
+        subDescription: subDesc[i % 5],
+        type: "CPI/$3",
+      });
+    }
+    return list;
+}
+
+export function getNewCampaignList(req, res, u) {
+    let url = u;
+    if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+      url = req.url; // eslint-disable-line
+    }
+  
+    const params = parse(url, true).query;
+  
+    const count = params.count * 1 || 20;
+  
+    const result = newCampaignList(count);
+  
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+}
+
 export default {
-  getNotice,
-  getActivities,
-  getFakeList,
+    getNotice,
+    getActivities,
+    getFakeList,
+    getNewCampaignList
 };

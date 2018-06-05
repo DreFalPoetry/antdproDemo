@@ -1,9 +1,10 @@
 import moment from 'moment';
 
 // mock data
-const conversionsData = [];
 const beginDay = new Date().getTime();
 
+//趋势图Conversation走向数据信息
+const conversionsData = [];
 const conversionsClick = [112, 1313, 331, 1112, 1432, 1343, 1424, 152, 1553, 1455, 1978, 2344, 6343, 123, 6343, 123, 1444];
 for (let i = 0; i < conversionsClick.length; i += 1) {
     conversionsData.push({
@@ -11,9 +12,8 @@ for (let i = 0; i < conversionsClick.length; i += 1) {
     y: conversionsClick[i],
   });
 }
-
+//趋势图Click走向数据信息
 const clicksData = [];
-
 const clicksCount = [1231, 223, 3231, 1333, 1123, 312, 1313, 645, 4646, 345, 4546, 7676, 333, 3434, 1232, 5353, 765];
 for (let i = 0; i < clicksCount.length; i += 1) {
     clicksData.push({
@@ -22,18 +22,38 @@ for (let i = 0; i < clicksCount.length; i += 1) {
   });
 }
 
+//提示信息--头部的个人提示信息
 const announcement = {"info":"交互专家|蚂蚁金服-技术部-UED","userName":"李艺彤"};
 
+//4个趋势图中的数据--30天的信息
 const thirtyDaysInfo = {
-                        "Revenue":{"count":"12123.00","increase":"20%","dailyAvg":"412.13"},
-                        "clicks":{"count":"12334222","dailyAvg":"34112"},
-                        "conversions":{"count":"100233","dailyAvg":"2313"},
-                        "Campaigns":{"inProgress":17,"dailyCap":"4239","todayDeliveried":"23%"}
-                    };
+    "Revenue":{"count":"12123.00","increase":"20%","dailyAvg":"412.13"},
+    "clicks":{"count":"12334222","dailyAvg":"34112"},
+    "conversions":{"count":"100233","dailyAvg":"2313"},
+    "Campaigns":{"inProgress":17,"dailyCap":"4239","todayDeliveried":"23%"}
+};
+
+//点击量和Campaign排行信息
+const topCampaigns = [];
+for (let i = 0; i < 7; i += 1) {
+    topCampaigns.push({
+        title: `联航路 ${i+1} 号店`,
+        total: 323234,
+    });
+}
+const topClicks = [];
+for (let i = 0; i < 7; i += 1) {
+    topClicks.push({
+        title: `浦申南路 ${i+1} 号店`,
+        total: 2344241,
+    });
+}
 
 export const homepageChartData = {
     conversionsData,
     clicksData,
+    topCampaigns,
+    topClicks,
     announcement,
     thirtyDaysInfo
 };
