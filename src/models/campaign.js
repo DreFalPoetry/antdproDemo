@@ -1,39 +1,49 @@
-import { queryActivities } from '../services/api';
+import { myCampaigns,campaigns } from '../services/api';
 import { routerRedux } from 'dva/router';
 
 export default {
-  namespace: 'campaign',
+    namespace: 'campaign',
 
-  state: {},
-
-  effects: {
-    *changeToDetail({ payload }, { call, put }) {
-      // const response = yield call(fakeAccountLogin, payload);
-      // yield put({
-      //   type: 'changeLoginStatus',
-      //   payload: response,
-      // });
-      // Login successfully
-      // if (response.status === 'ok') {
-      //   reloadAuthorized();
-      yield put(
-        routerRedux.push({
-          pathname: '/campiagn/detail/',
-          query: {
-            id: 2,
-          },
-        }) //装载路由
-      );
-      // }
+    state: {
+        myCampaigns:{},
+        pageNo:"",
+        totalCount:"",
+        campsList:[]
     },
-  },
 
-  reducers: {
-    // saveList(state, action) {
-    //   return {
-    //     ...state,
-    //     list: action.payload,
-    //   };
-    // },
-  },
+    effects: {
+        *myCampaigns(_, { call, put }) {
+            console.log('aaaa');
+            const response = yield call(myCampaigns);
+            yield put({
+                type: 'syancMyCampaigns',
+                payload: response,
+            });
+        },
+        *filterCampaigns(_, { call, put }) {
+            const response = yield call(campaigns);
+            const pageNo = response.page_no;//页数
+            const totalCount = response.total_pages//总条数
+            const campsList = response.camps;
+            yield put({
+                type: 'syancFilterCampaigns',
+                payload: {pageNo,totalCount,campsList},
+            });
+        },
+    },
+
+    reducers: {
+        syancMyCampaigns(state, {payload}) {
+            return {
+                ...state,
+                myCampaigns: payload,
+            };
+        },
+        syancFilterCampaigns(state, {payload:{pageNo,totalCount,campsList}}) {
+            return {
+                ...state,
+                pageNo,totalCount,campsList
+            };
+        },
+    },
 };

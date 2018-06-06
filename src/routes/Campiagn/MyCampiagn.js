@@ -1,7 +1,7 @@
 /**
  * created by Ran 20180606
  */
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { routerRedux } from 'dva/router';
 import { createBrowserHistory } from 'history';
 import moment from 'moment';
@@ -75,12 +75,19 @@ const treeData = [{
     list,
     loading: loading.models.list,
 }))
-export default class MyCampiagn extends PureComponent {
+export default class MyCampiagn extends Component {
     state = {
         value:[]
     }
 
     componentDidMount() {
+        console.log('sdsd');
+        this.props.dispatch({
+            type: 'campaign/myCampaigns',
+        });
+        this.props.dispatch({
+            type: 'campaign/filterCampaigns',
+        });
         this.props.dispatch({
             type: 'list/fetch',
             payload: {
@@ -101,12 +108,13 @@ export default class MyCampiagn extends PureComponent {
     }
 
     //进入详情页面
-    enterHandle = () => {
-        this.props.history.push({ pathname: '/campiagn/detail', state: { id: 1 } });
+    enterHandle = (id) => {
+        this.props.history.push({ pathname: '/campiagn/detail', state: { id: id } });
     };
 
     render() {
-        const { list: { list }, loading } = this.props;
+        const { list: { list },campaign, loading } = this.props;
+        const {myCampaigns,pageNo,totalCount,campsList} = campaign;
         const children = [];
         for (let i = 10; i < 36; i++) {
             children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
@@ -149,21 +157,21 @@ export default class MyCampiagn extends PureComponent {
             total: 50,
         };
 
-        const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
+        const ListContent = ({ data }) => (
             <div className={styles.listContent}>
                 <div className={styles.detailsWrapper}>
                     <div className={styles.listContentItem} style={{width:"40%",marginRight:"20px"}}>
                         <span>Daily Cap</span>
-                        <p>150</p>
+                        <p>{data?data.daily_cap:""}</p>
                     </div>
                     <div className={styles.listContentItem} style={{width:"40%"}}>
                         <span>Price Model</span>
-                        <p>CPI/0.5$</p>
+                        <p>{data?data.payfor+"/$"+data.payout:""}</p>
                     </div>
                 </div>
                 <div className={styles.listContentItem}>
-                    <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
-                    <span style={{marginLeft:20}}>18/5/31</span>
+                    <Progress percent={"80%"} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
+                    <span style={{marginLeft:20}}>{data?data.created_at:""}</span>
                 </div>
             </div>
         );
@@ -179,21 +187,21 @@ export default class MyCampiagn extends PureComponent {
                             xs={24}
                             style={{ padding: '24px', borderRight: '1px solid #e8e8e8', textAlign: 'center' }}
                         >
-                            <Info title="In-Progress" value="7 Campaigns" bordered />
+                            <Info title="In-Progress" value={myCampaigns.inprogress?myCampaigns.inprogress+" Campaigns":"0 Campaigns"} bordered />
                         </Col>
                         <Col
                             sm={8}
                             xs={24}
                             style={{ padding: '24px', borderRight: '1px solid #e8e8e8', textAlign: 'center' }}
                         >
-                            <Info title="Last 2 days" value="2 Updates" bordered />
+                            <Info title="Last 2 days" value={myCampaigns.updates?myCampaigns.updates+" Updates":"0 Updates"} bordered />
                         </Col>
                         <Col 
                             sm={8} 
                             xs={24} 
                             style={{ padding: '24px', textAlign: 'center' }}
                         >
-                            <Info title="Last 20 days" value="2 News" />
+                            <Info title="Last 2 days" value={myCampaigns.news?myCampaigns.news+" News":"0 News"} />
                         </Col>
                     </Row>
                 </Card>
@@ -209,13 +217,13 @@ export default class MyCampiagn extends PureComponent {
                         rowKey="id"
                         loading={loading}
                         pagination={paginationProps}
-                        dataSource={list}
+                        dataSource={campsList}
                         renderItem={item => (
-                            <List.Item actions={[<a onClick={this.enterHandle}>Detail</a>]}>
+                            <List.Item actions={[<a onClick={this.enterHandle.bind(this,item.id)}>Detail</a>]}>
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                                    title={<span>{item.title}</span>}
-                                    description={item.subDescription}
+                                    avatar={<Avatar src={item.icon} shape="square" size="large" />}
+                                    title={<span>{item.id+" "+item.name}</span>}
+                                    description={item.platform+","+item.countries+" "+item.category+" "+item.kpi+" "+item.currency}
                                 />
                                 <ListContent data={item} />
                             </List.Item>

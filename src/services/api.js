@@ -100,5 +100,11 @@ export async function lastestCampaigns() {
 export async function latestUpdates() {
     return request('/pub/dash/latestUpdates');
 }
+export async function myCampaigns() {
+    return request('/pub/dash/myCampaigns');
+}
+export async function campaigns() {
+    return request('/pub/campaigns');
+}
 
 

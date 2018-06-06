@@ -92,7 +92,7 @@ export const getRouterData = app => {
     },
     //功能添加
     '/campiagn/myCampiagn': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/Campiagn/MyCampiagn')),
+      component: dynamicWrapper(app, ['campaign','list'], () => import('../routes/Campiagn/MyCampiagn')),
     },
     '/campiagn/detail': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/Campiagn/CampiagnDetail')),
