@@ -140,6 +140,7 @@ const proxy = {
     });
   },
   'GET /api/conversionAndClicksData': homepageChartData,
+//   'GET /api/testMock':mockjs.mock({'data|100':['id|+1':1,]})
 };
 
 export default (noProxy ? {} : delay(proxy, 1000));
