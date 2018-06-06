@@ -259,7 +259,7 @@ export default class Analysis extends Component {
                                     {/* 转换趋势 */}
                                     <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                                         <div className={styles.salesBar}>
-                                            <Bar height={295} title="Conversion Trend" data={conversionsData} />
+                                            <Bar height={295} title="Conversion Trend" data={queryByDateRange.conv?queryByDateRange.conv.each:[]} />
                                         </div>
                                     </Col>
                                     {/* 转换列表 */}
@@ -267,11 +267,11 @@ export default class Analysis extends Component {
                                         <div className={styles.salesRank}>
                                             <h4 className={styles.rankingTitle}>Top 10 Campaign</h4>
                                             <ul className={styles.rankingList}>
-                                                {topCampaigns?topCampaigns.map((item, i) => (
-                                                <li key={item.title}>
+                                                {queryByDateRange.conv?queryByDateRange.conv.top10.map((item, i) => (
+                                                <li key={item.name}>
                                                     <span className={i < 3 ? styles.active : ''}>{i + 1}</span>
-                                                    <span>{item.title}</span>
-                                                    <span>{numeral(item.total).format('0,0.00')}</span>
+                                                    <span>{item.name}</span>
+                                                    <span>{numeral(item.cnt).format('0,0.00')}</span>
                                                 </li>
                                                 )):""}
                                             </ul>
@@ -284,7 +284,7 @@ export default class Analysis extends Component {
                                     {/* 点击量趋势 */}
                                     <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                                         <div className={styles.salesBar}>
-                                            <Bar height={292} title="Clicks Trend" data={clicksData} />
+                                            <Bar height={292} title="Clicks Trend" data={queryByDateRange.clk?queryByDateRange.clk.each:[]} />
                                         </div>
                                     </Col>
                                     {/* 点击量列表 */}
@@ -292,11 +292,11 @@ export default class Analysis extends Component {
                                         <div className={styles.salesRank}>
                                             <h4 className={styles.rankingTitle}>Top 10 Campaign</h4>
                                             <ul className={styles.rankingList}>
-                                                {topClicks?topClicks.map((item, i) => (
-                                                <li key={item.title}>
+                                                {queryByDateRange.clk?queryByDateRange.clk.top10.map((item, i) => (
+                                                <li key={item.name}>
                                                     <span className={i < 3 ? styles.active : ''}>{i + 1}</span>
-                                                    <span>{item.title}</span>
-                                                    <span>{numeral(item.total).format('0,0.00')}</span>
+                                                    <span>{item.name}</span>
+                                                    <span>{numeral(item.cnt).format('0,0.00')}</span>
                                                 </li>
                                                 )):""}
                                             </ul>
@@ -320,21 +320,21 @@ export default class Analysis extends Component {
                             rowKey="id"
                             loading={loading}
                             grid={{ gutter: 0, lg: 3, md: 2, sm: 1, xs: 1 }}
-                            dataSource={newCampaignList}
+                            dataSource={lastestCampaigns}
                             renderItem={item => (
                                 <List.Item key={item.id} style={{ marginBottom: 0 }}>
                                     <Card hoverable className={styles.card}>
                                         <Card.Meta
-                                            avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
-                                            title={<span>{item.brandName}</span>}
+                                            avatar={<img alt="" className={styles.cardAvatar} src={item.icon} />}
+                                            title={<span>{item.name}</span>}
                                             description={
                                                 <div>
                                                     <Ellipsis className={styles.item} lines={3}>
-                                                        {item.subDescription}
+                                                        {item.category+" "+item.kpi+" "+item.currency}
                                                     </Ellipsis>
                                                     <div className={styles.footerTime}>
-                                                        <span>{item.type}</span>
-                                                        <i style={{fontStyle:"normal"}}>{moment(item.updatedAt).format('YYYY-MM-DD')}</i>
+                                                        <span>{item.payfor+"/$"+item.payout}</span>
+                                                        <i style={{fontStyle:"normal"}}>{item.created_at?moment(item.created_at).format('YYYY-MM-DD'):""}</i>
                                                     </div>
                                                 </div>
                                             }
@@ -357,14 +357,20 @@ export default class Analysis extends Component {
                         size="large"
                         rowKey="id"
                         loading={loading}
-                        dataSource={sevenDaysUpdateList}
+                        dataSource={latestUpdates}
                         renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                                avatar={<Avatar src={item.icon} shape="square" size="large" />}
                                 description={
                                     <div>
-                                    <div>{item.info}</div>
+                                    <div>
+                                    {
+                                        item.id+" "+item.name+" "+
+                                        (item.type==1?"update cap":(item.type==2?"update payout":(item.type==3?"update creative":"terminate")))+
+                                        " from "+item.old+" to "+item.new
+                                    }
+                                    </div>
                                     <div>{item.time}</div>
                                     </div>
                                 }

@@ -205,14 +205,16 @@ export const lastestCampaigns = {
 export const latestUpdates = {
     "code":0,
 	"updates":[{
-		"name":"demo1",
+        "name":"demo1",
+        "icon":"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
         "id":1000,
 		"type":1,// 1,update cap;2,update payout;3,update creative;4,terminate
 		"old":"399",
 		"new":"500",
 		"time":"2018-02-01 07:00:22"
 	},{
-		"name":"demo2",
+        "name":"demo2",
+        "icon":"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
         "id":1000, 
 		"type":3,// 1,update cap;2,update payout;3,update creative;4,terminate
 		"old":"399",

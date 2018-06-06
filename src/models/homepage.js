@@ -7,7 +7,7 @@ import {
     latestUpdates
 } from '../services/api';
 import moment from 'moment';
-import {getDate} from '../utils/commonFunc';
+import {getDate,getDateWithoutYear} from '../utils/commonFunc';
 
 export default {
     namespace: 'homepage',
@@ -68,6 +68,20 @@ export default {
         },
         *queryByDateRange(_, { call, put }) {
             const response = yield call(queryByDateRange);
+            let clkData = [];
+            let clkEach = response.clk.each;
+            clkEach.map((item,index,arr)=>{
+                clkData.push({x:getDateWithoutYear(arr.length-index),y:item})
+            });
+            response.clk.each = clkData;
+
+            let convData = [];
+            let convEach = response.conv.each;
+            convEach.map((item,index,arr)=>{
+                convData.push({x:getDateWithoutYear(arr.length-index),y:item})
+            });
+            response.conv.each = convData;
+
             yield put({
                 type: 'asyncQueryByDateRange',
                 payload: response,
