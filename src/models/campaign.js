@@ -1,4 +1,4 @@
-import { myCampaigns,campaigns } from '../services/api';
+import { myCampaigns,campaigns,campaignDetails } from '../services/api';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -8,7 +8,11 @@ export default {
         myCampaigns:{},
         pageNo:"",
         totalCount:"",
-        campsList:[]
+        campsList:[],
+        campaignsDetails:{},
+        targeting:{},
+        updates:[],
+        creative:{}
     },
 
     effects: {
@@ -29,6 +33,20 @@ export default {
                 payload: {pageNo,totalCount,campsList},
             });
         },
+        *fetchCampaignsDetail(_, { call, put }) {
+            const response = yield call(campaignDetails);
+            const updates = response.detail.updates;
+            const targeting = response.detail.targeting;
+            const creative = response.detail.creative;
+            yield put({
+                type: 'syancCampaignsDetail',
+                payload: response.detail,
+            });
+            yield put({
+                type: 'syancDetailList',
+                payload: {updates,targeting,creative},
+            });
+        },
     },
 
     reducers: {
@@ -42,6 +60,18 @@ export default {
             return {
                 ...state,
                 pageNo,totalCount,campsList
+            };
+        },
+        syancCampaignsDetail(state, {payload}) {
+            return {
+                ...state,
+                campaignsDetails: payload,
+            };
+        },
+        syancDetailList(state, {payload:{updates,targeting,creative}}) {
+            return {
+                ...state,
+                updates,targeting,creative
             };
         },
     },

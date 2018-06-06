@@ -40,7 +40,60 @@ export const filterCampaigns = {
     }]
 }
 
+export const campaignDetails = {
+	"code":0,
+	"detail":{
+		"name":"demo1",
+		"id":1000,
+		"icon":"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
+		"active_time":"2018-03-21 00:23:00",
+		"expire_time":"2018-03-21 00:23:00",
+		"timezone":5.5,
+		"fraud_description":"",
+		"fraud_on":"",
+		"quality_on":"",
+		"quality_description":"",
+		"status":"In-Progress",
+		"targeting":{
+			"countries":"IN,CN",
+			"region":"",
+			"connection_types":"",
+			"carrier":"",
+			"mandatory_did":"",
+			"device_types":"",
+			"device_models":"",
+			"device_makes":"",
+			"os":"android",
+			"osv":""
+		},
+		"category":"Shopping",
+		"kpi":"soft",
+		"payfor":"CPI",
+		"payout":0.3,
+		"currency":"USD",
+		"daily_cap":1000,
+		"diliveried_cap":200,
+		"sub_publisher":"",
+		"creative":{
+			"creative":"http://....",
+			"size":12022
+		},
+		"updates":[{
+			"type":1,
+			"old":"",
+			"new":"",
+			"gmt_update_at":"1212"
+		},{
+			"type":2,
+			"old":"",
+			"new":"",
+			"gmt_update_at":"1212"
+		}]
+	}
+}
+
 export default {
     myCampaigns,
-    filterCampaigns
+    filterCampaigns,
+    campaignDetails
 };
