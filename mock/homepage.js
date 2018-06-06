@@ -3,6 +3,27 @@ import moment from 'moment';
 // mock data
 const beginDay = new Date().getTime();
 
+//小图表最近30天的点击数
+const thirtyDaysClickData = [];
+const fakeY = [1232, 4121, 1232, 8934, 3122, 2322, 4542, 2311, 2112, 1234, 7542, 2311, 2323, 3112, 9656, 2342, 1234];
+for (let i = 0; i < fakeY.length; i += 1) {
+    thirtyDaysClickData.push({
+        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+        y: fakeY[i],
+  });
+}
+
+//小图表最近30天的conversions
+const thirtyDaysConversionsData = [];
+const fakeYl = [123, 411, 232, 934, 122, 322, 542, 311, 112, 234, 542, 311, 323, 112, 656, 342, 234];
+for (let i = 0; i < fakeY.length; i += 1) {
+    thirtyDaysConversionsData.push({
+        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+        y: fakeYl[i],
+  });
+}
+
+
 //趋势图Conversation走向数据信息
 const conversionsData = [];
 const conversionsClick = [112, 1313, 331, 1112, 1432, 1343, 1424, 152, 1553, 1455, 1978, 2344, 6343, 123, 6343, 123, 1444];
@@ -28,8 +49,8 @@ const announcement = {"info":"交互专家|蚂蚁金服-技术部-UED","userName
 //4个趋势图中的数据--30天的信息
 const thirtyDaysInfo = {
     "Revenue":{"count":"12123.00","increase":"20%","dailyAvg":"412.13"},
-    "clicks":{"count":"12334222","dailyAvg":"34112"},
-    "conversions":{"count":"100233","dailyAvg":"2313"},
+    "clicks":{"count":"12334222","dailyAvg":"34112","data":conversionsData},
+    "conversions":{"count":"100233","dailyAvg":"2313","data":thirtyDaysConversionsData},
     "Campaigns":{"inProgress":17,"dailyCap":"4239","todayDeliveried":"23%"}
 };
 

@@ -1,3 +1,6 @@
+/**
+ * created by ran 20180604
+ */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import {
@@ -52,10 +55,6 @@ export default class Analysis extends Component {
 	};
 
     componentDidMount() {
-        this.props.dispatch({
-            type: 'chart/fetch',
-        });
-        
         //ranAdd--请求homepage model中的数据信息
         this.props.dispatch({
             type: 'homepage/fetch',
@@ -121,11 +120,7 @@ export default class Analysis extends Component {
 
     render() {
         const { rangePickerValue } = this.state;
-        const { chart, loading,homepage } = this.props;
-        const {
-            visitData,
-            salesData,
-        } = chart;
+        const { loading,homepage } = this.props;
         
         const {
             conversionsData,
@@ -210,7 +205,7 @@ export default class Analysis extends Component {
                             footer={<Field label="daily avg." value={numeral(thirtyDaysInfo.clicks?thirtyDaysInfo.clicks.dailyAvg:'0').format('0,0.00')} />}
                             contentHeight={46}
                         >
-                            <MiniArea color="#975FE4" data={visitData} />
+                            <MiniArea color="#975FE4" data={thirtyDaysInfo.clicks?thirtyDaysInfo.clicks.data:[]} />
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
@@ -221,7 +216,7 @@ export default class Analysis extends Component {
                             footer={<Field label="daily avg." value={numeral(thirtyDaysInfo.conversions?thirtyDaysInfo.conversions.dailyAvg:'0').format('0,0.00')} />}
                             contentHeight={46}
                         >
-                            <MiniArea data={visitData} />
+                            <MiniArea data={thirtyDaysInfo.conversions?thirtyDaysInfo.conversions.data:[]} />
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
