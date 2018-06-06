@@ -81,7 +81,6 @@ export default class MyCampiagn extends Component {
     }
 
     componentDidMount() {
-        console.log('sdsd');
         this.props.dispatch({
             type: 'campaign/myCampaigns',
         });

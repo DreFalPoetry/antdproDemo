@@ -13,7 +13,6 @@ export default {
 
     effects: {
         *myCampaigns(_, { call, put }) {
-            console.log('aaaa');
             const response = yield call(myCampaigns);
             yield put({
                 type: 'syancMyCampaigns',

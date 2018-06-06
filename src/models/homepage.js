@@ -59,7 +59,6 @@ export default {
 
             response.sum.clk.each = clkData;
             response.sum.conv.each = convData;
-            console.log(response);
 
             yield put({
                 type: 'asyncRecent30d',
