@@ -87,4 +87,18 @@ export async function queryNewCampaignList(params) {
     return request(`/api/getNewCampaignList?${stringify(params)}`);
 }
 
+//与接口数据匹配的api
+export async function recent30d() {
+    return request('/pub/dash/recent30d');
+}
+export async function queryByDateRange() {
+    return request('/pub/dash/queryByDateRange');
+}
+export async function lastestCampaigns() {
+    return request('/pub/dash/lastestCampaigns');
+}
+export async function latestUpdates() {
+    return request('/pub/dash/latestUpdates');
+}
+
 

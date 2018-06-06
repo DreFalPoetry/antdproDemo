@@ -65,13 +65,26 @@ export default class Analysis extends Component {
                 count: 8,
             },
         });
+        //请求后端服务接口数据
+        this.props.dispatch({
+            type: 'homepage/recent30d'
+        });
+        this.props.dispatch({
+            type: 'homepage/queryByDateRange'
+        });
+        this.props.dispatch({
+            type: 'homepage/lastestCampaigns',
+        });
+        this.props.dispatch({
+            type: 'homepage/latestUpdates',
+        });
     }
 
     //在组件销毁的时候清除model中的数据信息
     componentWillUnmount() {
         const { dispatch } = this.props;
         dispatch({
-        type: 'chart/clear',
+            type: 'chart/clear',
         });
         dispatch({
             type: 'homepage/clear',
@@ -130,7 +143,12 @@ export default class Analysis extends Component {
             announcement,
             thirtyDaysInfo,
             sevenDaysUpdateList,
-            newCampaignList
+            newCampaignList,
+            //服务端获取数据信息
+            recent30d,
+            queryByDateRange,
+            lastestCampaigns,
+            latestUpdates
         } = homepage;
 
         // 按月份或年份筛选
@@ -188,12 +206,12 @@ export default class Analysis extends Component {
                         <ChartCard
                             bordered={false}
                             title="Last 30 days Revenue"
-                            total={thirtyDaysInfo.Revenue?thirtyDaysInfo.Revenue.count:""}
-                            footer={<Field label="daily avg." value={`$ ${numeral(thirtyDaysInfo.Revenue?thirtyDaysInfo.Revenue.dailyAvg:'0').format('0,0.00')}`} />}
+                            total={recent30d.sum?recent30d.sum.rev.total:""}
+                            footer={<Field label="daily avg." value={`$ ${numeral(recent30d.sum?recent30d.sum.rev.total/30:'0').format('0,0.00')}`} />}
                             contentHeight={46}
                         >
                             <div style={{ marginRight: 16 }}>
-                                increase<span className={styles.trendText}>{thirtyDaysInfo.Revenue?thirtyDaysInfo.Revenue.increase:""}</span>
+                                increase<span className={styles.trendText}>{recent30d.sum?recent30d.sum.rev.incr+"%":""}</span>
                             </div>
                         </ChartCard>
                     </Col>
@@ -201,33 +219,33 @@ export default class Analysis extends Component {
                         <ChartCard
                             bordered={false}
                             title="Last 30 days clicks"
-                            total={numeral(thirtyDaysInfo.clicks?thirtyDaysInfo.clicks.count:'0').format('0,0.00')}
-                            footer={<Field label="daily avg." value={numeral(thirtyDaysInfo.clicks?thirtyDaysInfo.clicks.dailyAvg:'0').format('0,0.00')} />}
+                            total={numeral(recent30d.sum?recent30d.sum.clk.total:'0').format('0,0.00')}
+                            footer={<Field label="daily avg." value={numeral(recent30d.sum?recent30d.sum.clk.total/30:'0').format('0,0.00')} />}
                             contentHeight={46}
                         >
-                            <MiniArea color="#975FE4" data={thirtyDaysInfo.clicks?thirtyDaysInfo.clicks.data:[]} />
+                            <MiniArea color="#975FE4" data={recent30d.sum?recent30d.sum.clk.each:[]} />
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
                             title="Last 30 days conversions"
-                            total={numeral(thirtyDaysInfo.conversions?thirtyDaysInfo.conversions.count:'0').format('0,0.00')}
-                            footer={<Field label="daily avg." value={numeral(thirtyDaysInfo.conversions?thirtyDaysInfo.conversions.dailyAvg:'0').format('0,0.00')} />}
+                            total={numeral(recent30d.sum?recent30d.sum.conv.total:'0').format('0,0.00')}
+                            footer={<Field label="daily avg." value={numeral(recent30d.sum?recent30d.sum.conv.total/30:'0').format('0,0.00')} />}
                             contentHeight={46}
                         >
-                            <MiniArea data={thirtyDaysInfo.conversions?thirtyDaysInfo.conversions.data:[]} />
+                            <MiniArea data={recent30d.sum?recent30d.sum.conv.each:[]} />
                         </ChartCard>
                     </Col>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
                             title="Campaigns"
-                            total={thirtyDaysInfo.Campaigns?thirtyDaysInfo.Campaigns.inProgress+" In-Progress":'0'+"In-Progress"}
-                            footer={<Field label="Today Deliveried" value={thirtyDaysInfo.Campaigns?thirtyDaysInfo.Campaigns.todayDeliveried:''} />}
+                            total={recent30d.camp?recent30d.camp.total+" In-Progress":"0 In-Progress"}
+                            footer={<Field label="Today Deliveried" value={recent30d.camp?recent30d.camp.deliveried:''} />}
                             contentHeight={46}
                         >
-                            <div>Daily Cap   {thirtyDaysInfo.Campaigns?thirtyDaysInfo.Campaigns.dailyCap:''}</div>
+                            <div>Daily Cap   {recent30d.camp?recent30d.camp.caps:''}</div>
                         </ChartCard>
                     </Col>
                 </Row>

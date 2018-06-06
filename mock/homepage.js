@@ -100,6 +100,131 @@ export const homepageChartData = {
     sevenDaysUpdateList
 };
 
+//1
+export const recent30d = {
+    "code":"0",
+    "sum":{
+		"rev":{"total":1000, "incr":10},
+		"clk":{"total":1000, "each":[10,20,31,12,41,10,20,31,12,41,10,20,31,12,41,10,20,31,12,41,10,20,31,12,41,10,20,31,12,41]},
+		"conv":{"total":1000, "each":[10,20,32,44,24,10,20,32,44,24,10,20,32,44,24,10,20,32,44,24,10,20,32,44,24,10,20,32,44,24]}
+	},
+	"camp":{
+		"total":17,
+		"caps":2000,
+		"deliveried":23
+	}
+};
+
+//2
+export const queryByDateRange = {
+    "code":0,
+	"clk":{
+		"each":[10,20,30,40,59,10,20,30,40,59,10,20,30,40,59,10,20,30,40,59,10,20,30,40,59,10,20,30,40,59,],
+		"top10":[{
+			"name":"NAME1",
+			"cnt":9000
+			},{
+			"name":"NAME2",
+			"cnt":8000
+			},{
+			"name":"NAME3",
+			"cnt":7000
+			},{
+            "name":"NAME4",
+            "cnt":8000
+            },{
+            "name":"NAME5",
+            "cnt":8000
+            },{
+            "name":"NAME6",
+            "cnt":8000
+            },{
+            "name":"NAME7",
+            "cnt":8000
+            },{
+            "name":"NAME8",
+            "cnt":8000
+        }]
+	},
+	"conv":{
+		"each":[10,20,30,20,40,10,20,30,20,40,10,20,30,20,40,10,20,30,20,40,10,20,30,20,40,10,20,30,20,40,],
+		"top10":[{
+			"name":"NAME1",
+			"cnt":9000
+			},{
+			"name":"NAME2",
+			"cnt":8000
+			},{
+			"name":"NAME3",
+			"cnt":7000
+			},{
+            "name":"NAME4",
+            "cnt":8000
+            },{
+            "name":"NAME5",
+            "cnt":8000
+            },{
+            "name":"NAME6",
+            "cnt":8000
+            },{
+            "name":"NAME7",
+            "cnt":8000
+            },{
+            "name":"NAME8",
+            "cnt":8000
+        }]
+	}
+}
+
+//3
+export const lastestCampaigns = {
+    "code":0,
+	"camps":[{
+		"name":"demo1",
+        "id":1000,
+		"icon":"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
+		"category":"Shopping",
+		"kpi":"soft",
+		"payfor":"CPI",
+		"payout":0.3,
+		"currency":"USD",
+		"created_at":""
+	},{
+		"name":"demo2",
+		"icon":"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
+		"category":"Shopping",
+		"kpi":"soft",
+		"payfor":"CPI",
+		"payout":0.3,
+		"currency":"USD",
+		"created_at":""
+	}]
+}
+
+//4
+export const latestUpdates = {
+    "code":0,
+	"updates":[{
+		"name":"demo1",
+        "id":1000,
+		"type":1,// 1,update cap;2,update payout;3,update creative;4,terminate
+		"old":"399",
+		"new":"500",
+		"time":"2018-02-01 07:00:22"
+	},{
+		"name":"demo2",
+        "id":1000, 
+		"type":3,// 1,update cap;2,update payout;3,update creative;4,terminate
+		"old":"399",
+		"new":"500",
+		"time":"2018-02-01 07:00:22"
+	}]
+}
+
 export default {
     homepageChartData,
+    recent30d,
+    queryByDateRange,
+    lastestCampaigns,
+    latestUpdates
 };

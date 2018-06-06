@@ -7,7 +7,7 @@ import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
 //引入conversions的mock数据
-import {homepageChartData} from './mock/homepage';
+import {homepageChartData,recent30d, queryByDateRange,lastestCampaigns,latestUpdates} from './mock/homepage';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -140,6 +140,11 @@ const proxy = {
     });
   },
   'GET /api/conversionAndClicksData': homepageChartData,
+  'GET /pub/dash/recent30d':recent30d,
+  'GET /pub/dash/queryByDateRange':queryByDateRange,
+  'GET /pub/dash/lastestCampaigns':lastestCampaigns,
+  'GET /pub/dash/latestUpdates':latestUpdates,
+
 //   'GET /api/testMock':mockjs.mock({'data|100':['id|+1':1,]})
 };
 
