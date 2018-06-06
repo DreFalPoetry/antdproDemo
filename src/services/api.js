@@ -109,5 +109,8 @@ export async function campaigns() {
 export async function campaignDetails() {
     return request('/pub/campaigns/detail');
 }
+export async function queryReportList() {
+    return request('/pub/report');
+}
 
 

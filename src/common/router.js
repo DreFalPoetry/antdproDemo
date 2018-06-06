@@ -98,10 +98,10 @@ export const getRouterData = app => {
       component: dynamicWrapper(app, ['campaign','list'], () => import('../routes/Campiagn/CampiagnDetail')),
     },
     '/report/campaignReport': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Report/CampaignReport')),
+      component: dynamicWrapper(app, ['report','form'], () => import('../routes/Report/CampaignReport')),
     },
     '/report/subPublisherWise': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Report/SubPublisherWise')),
+      component: dynamicWrapper(app, ['report','form'], () => import('../routes/Report/SubPublisherWise')),
     },
     '/settings': {
       component: dynamicWrapper(app, ['list', 'chart'], () =>

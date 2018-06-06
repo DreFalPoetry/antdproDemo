@@ -31,87 +31,96 @@ const FormItem = Form.Item;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 @Form.create()
+@connect(({report, loading }) => ({
+    report,
+    loading: loading.models.report,
+}))
 export default class SubPublisherWise extends PureComponent {
-  state = {
-    data: [],
-  };
-  componentDidMount() {}
+    state = {};
+    
+    componentDidMount() {
+        this.props.dispatch({
+            type: 'report/fetch',
+        })
+    }
 
-  render() {
-    const { getFieldDecorator } = this.props.form;
+    render() {
+        const { getFieldDecorator } = this.props.form;
+        const { report } = this.props;
+        const { dataList,total,pageCount} = report;
 
-    const columns = [
-      {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-      },
-      {
-        title: 'Sub Publisher',
-        dataIndex: 'subPublisher',
-      },
-      {
-        title: 'Clicks',
-        dataIndex: 'clicks',
-      },
-      {
-        title: 'Conversions',
-        dataIndex: 'conversions',
-      },
-      {
-        title: 'CVR%',
-        dataIndex: 'cvr',
-      },
-      {
-        title: 'Fraud%',
-        dataIndex: 'fraud',
-      },
-      {
-        title: 'KPI%',
-        dataIndex: 'kpi',
-      },
-      {
-        title: 'KPI Required%',
-        dataIndex: 'kpiRequired',
-      },
-      {
-        title: 'Optimize Advice',
-        dataIndex: 'optimizeAdvice',
-      }
-    ];
+        const columns = [
+        {
+            title: 'Campaign',
+            dataIndex: 'campaign_id',
+        },
+        {
+            title: 'Sub Publisher',
+            dataIndex: 'sub_publisher',
+        },
+        {
+            title: 'Clicks',
+            dataIndex: 'clks',
+        },
+        {
+            title: 'Conversions',
+            dataIndex: 'convs',
+        },
+        {
+            title: 'CVR%',
+            dataIndex: 'cvr',
+        },
+        {
+            title: 'Fraud%',
+            dataIndex: 'faud',
+        },
+        {
+            title: 'KPI%',
+            dataIndex: 'kpi',
+        },
+        {
+            title: 'KPI Required%',
+            dataIndex: 'kpi_req',
+        },
+        {
+            title: 'Optimize Advice',
+            dataIndex: 'opt_adv',
+        }
+        ];
 
-    return (
-      <div>
-        <PageHeaderLayout />
-        <Card bordered={false} style={{marginTop:30}}>
-          <Form onSubmit={this.handleSearch} layout="inline">
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={8} sm={24}>
-                <FormItem label="Date Range">
-                  {getFieldDecorator('date')(
-                    <RangePicker style={{ width: '250px' }} />
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={8} sm={24}>
-                <FormItem label="Campaign">
-                  {getFieldDecorator('status3')(
-                    <Select placeholder="请选择" style={{ width: '182px' }}>
-                      <Option value="0">12023</Option>
-                      <Option value="1">123012</Option>
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-              <span style={{ float: 'right', marginBottom: 24 }}>
-                <Button type="primary" htmlType="submit">
-                  Query
-                </Button>
-              </span>
-            </Row>
-          </Form>
-          <Table columns={columns} dataSource={this.state.data} bordered />
-        </Card>
-      </div>
-    );
-  }
+        return (
+        <div>
+            <PageHeaderLayout />
+            <Card bordered={false} style={{marginTop:30}}>
+            <Form onSubmit={this.handleSearch} layout="inline">
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <Col md={8} sm={24}>
+                    <FormItem label="Date Range">
+                    {getFieldDecorator('date')(
+                        <RangePicker style={{ width: '250px' }} />
+                    )}
+                    </FormItem>
+                </Col>
+                <Col md={8} sm={24}>
+                    <FormItem label="Campaign">
+                    {getFieldDecorator('status3')(
+                        <Select placeholder="请选择" style={{ width: '182px' }}>
+                        <Option value="0">12023</Option>
+                        <Option value="1">123012</Option>
+                        </Select>
+                    )}
+                    </FormItem>
+                </Col>
+                <span style={{ float: 'right', marginBottom: 24 }}>
+                    <Button type="primary" htmlType="submit">
+                    Query
+                    </Button>
+                </span>
+                </Row>
+            </Form>
+            <Table columns={columns} dataSource={dataList} bordered />
+            </Card>
+        </div>
+        );
+    }
 }
