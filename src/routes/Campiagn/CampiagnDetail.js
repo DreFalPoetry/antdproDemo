@@ -30,26 +30,22 @@ const FormItem = Form.Item;
 const { Description } = DescriptionList;
 
 const columns = [
-  {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
-  },
-  {
-    title: 'Change From',
-    dataIndex: 'old',
-    key: 'name',
-  },
-  {
-    title: 'Change To',
-    dataIndex: 'new',
-    key: 'status',
-  },
-  {
-    title: 'Updated At',
-    dataIndex: 'gmt_update_at',
-    key: 'updatedAt',
-  }
+    {
+        title: 'Type',
+        dataIndex: 'type',
+    },
+    {
+        title: 'Change From',
+        dataIndex: 'old',
+    },
+    {
+        title: 'Change To',
+        dataIndex: 'new',
+    },
+    {
+        title: 'Updated At',
+        dataIndex: 'gmt_update_at',
+    }
 ];
 
 //通过@connect进行model的数据传输
@@ -144,6 +140,7 @@ export default class MyCampiagnDetail extends Component {
                 loading={loading}
                 dataSource={updates}
                 columns={columns}
+                bordered
             />
             </Card>
         ),

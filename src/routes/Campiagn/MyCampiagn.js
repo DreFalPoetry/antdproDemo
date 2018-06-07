@@ -169,7 +169,7 @@ export default class MyCampiagn extends Component {
                     </div>
                 </div>
                 <div className={styles.listContentItem}>
-                    <Progress percent={"80%"} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
+                    <Progress percent={80} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
                     <span style={{marginLeft:20}}>{data?data.created_at:""}</span>
                 </div>
             </div>
