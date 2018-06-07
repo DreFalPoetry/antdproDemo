@@ -76,11 +76,11 @@ export default class MyCampiagnDetail extends Component {
         const {campaignsDetails,targeting,updates,creative} = campaign;
         const description = (
             <DescriptionList className={styles.headerList} size="small" col="1">
-              <Description term="Category">{campaignsDetails.category?campaignsDetails.category:""}</Description>
-              <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"-"+campaignsDetails.expire_time:""}</Description>
+              <Description term="Category">{campaignsDetails.category?campaignsDetails.category:"--"}</Description>
+              <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"-"+campaignsDetails.expire_time:"--"}</Description>
               <Description term="Fraud Demand">{"没发现该字段"}</Description>
-              <Description term="Fraud Description">{campaignsDetails.fraud_description?campaignsDetails.fraud_description:""}</Description>
-              <Description term="KPI">{campaignsDetails.kpi?campaignsDetails.kpi:""}</Description>
+              <Description term="Fraud Description">{campaignsDetails.fraud_description?campaignsDetails.fraud_description:"--"}</Description>
+              <Description term="KPI">{campaignsDetails.kpi?campaignsDetails.kpi:"--"}</Description>
               <Description term="KPI Description">{"没发现该字段"}</Description>
             </DescriptionList>
         );
@@ -88,11 +88,11 @@ export default class MyCampiagnDetail extends Component {
             <Row>
                 <Col xs={24} sm={12}>
                 <div className={styles.textSecondary}>Status</div>
-                <div className={styles.heading}>{campaignsDetails.status?campaignsDetails.status:""}</div>
+                <div className={styles.heading}>{campaignsDetails.status?campaignsDetails.status:"--"}</div>
                 </Col>
                 <Col xs={24} sm={12}>
                 <div className={styles.textSecondary}>Price Model</div>
-                <div className={styles.heading}>{campaignsDetails.payfor?campaignsDetails.payfor+"/$"+campaignsDetails.payout:""}</div>
+                <div className={styles.heading}>{campaignsDetails.payfor?campaignsDetails.payfor+"/$"+campaignsDetails.payout:"--"}</div>
                 </Col>
             </Row>
         );
@@ -101,23 +101,23 @@ export default class MyCampiagnDetail extends Component {
             <div>
                 <Card title="Targeting" style={{ marginBottom: 24 }}>
                     <DescriptionList style={{ marginBottom: 24 }} col="2">
-                        <Description term="Country">{targeting.countries?targeting.countries:""}</Description>
-                        <Description term="State or City">{targeting.region?targeting.region:""}</Description>
-                        <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:""}</Description>
-                        <Description term="Carrier">{targeting.carrier?targeting.carrier:""}</Description>
+                        <Description term="Country">{targeting.countries?targeting.countries:"--"}</Description>
+                        <Description term="State or City">{targeting.region?targeting.region:"--"}</Description>
+                        <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:"--"}</Description>
+                        <Description term="Carrier">{targeting.carrier?targeting.carrier:"--"}</Description>
                         <Description term="Mandatory Device ID">找不到是哪个字段</Description>
                         <Description term="Sub Publisher">找不到是哪个字段</Description>
-                        <Description term="Device Type">{targeting.device_types?targeting.device_types:""}</Description>
-                        <Description term="Device Make">{targeting.device_makes?targeting.device_makes:""}</Description>
-                        <Description term="Device Model">{targeting.device_models?targeting.device_models:""}</Description>
-                        <Description term="OS">{targeting.os?targeting.os:""}</Description>
-                        <Description term="OSV">{targeting.osv?targeting.osv:""}</Description>
+                        <Description term="Device Type">{targeting.device_types?targeting.device_types:"--"}</Description>
+                        <Description term="Device Make">{targeting.device_makes?targeting.device_makes:"--"}</Description>
+                        <Description term="Device Model">{targeting.device_models?targeting.device_models:"--"}</Description>
+                        <Description term="OS">{targeting.os?targeting.os:"--"}</Description>
+                        <Description term="OSV">{targeting.osv?targeting.osv:"--"}</Description>
                     </DescriptionList>
                 </Card>
                 <Card title="Creative" style={{ marginBottom: 24 }} col="1">
                     <DescriptionList style={{ marginBottom: 24 }}>
                         <Description term="Creative">click download</Description>
-                        <Description term="Tracking Link">{creative.creative?creative.creative:""}</Description>
+                        <Description term="Tracking Link">{creative.creative?creative.creative:"--"}</Description>
                     </DescriptionList>
                 </Card>
             </div>
