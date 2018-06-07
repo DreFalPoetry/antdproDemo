@@ -133,7 +133,25 @@ const proxy = {
         currentAuthority: 'guest',
     });
   },
-  //
+  //连接后端的修改密码接口
+  'POST /pub/user/changePwd': (req, res) => {
+    const { old_pwd, new_pwd } = req.body;
+    if (old_pwd != new_pwd ) {
+        res.send({
+            "rcode":0,
+            "userinfo":{
+                "name":"aaa",
+                "email":"xxx@moca-tech.net",
+                "avatar":"https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            },
+            "currentAuthority": 'admin',
+        });
+        return;
+    }
+    res.send({
+        status: 'error'
+    });
+  },
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },

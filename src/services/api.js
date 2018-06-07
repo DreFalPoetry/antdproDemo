@@ -75,6 +75,14 @@ export async function realUserLogin(params) {
     });
 }
 
+//连接后端的修改密码接口
+export async function changePassword(params) {
+    return request('/pub/user/changePwd', {
+        method: 'POST',
+        body: params,
+    });
+}
+
 export async function fakeRegister(params) {
   return request('/api/register', {
     method: 'POST',
