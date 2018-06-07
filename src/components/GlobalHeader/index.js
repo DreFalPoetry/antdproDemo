@@ -65,6 +65,7 @@ export default class GlobalHeader extends PureComponent {
       onNoticeVisibleChange,
       onMenuClick,
       onNoticeClear,
+      login
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -109,11 +110,11 @@ export default class GlobalHeader extends PureComponent {
               console.log('enter', value); // eslint-disable-line
             }}
           />
-          {currentUser.name ? (
+          {login.userinfo ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
-                <span className={styles.name}>{currentUser.name}</span>
+                <Avatar size="small" className={styles.avatar} src={login.userinfo.avatar} />
+                <span className={styles.name}>{login.userinfo.name}</span>
               </span>
             </Dropdown>
           ) : (

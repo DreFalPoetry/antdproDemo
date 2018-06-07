@@ -61,10 +61,18 @@ export async function queryFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
-    method: 'POST',
-    body: params,
-  });
+    return request('/api/login/account', {
+        method: 'POST',
+        body: params,
+    });
+}
+
+//连接后端的登陆接口
+export async function realUserLogin(params) {
+    return request('/pub/user/login', {
+        method: 'POST',
+        body: params,
+    });
 }
 
 export async function fakeRegister(params) {

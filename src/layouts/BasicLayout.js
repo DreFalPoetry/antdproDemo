@@ -107,9 +107,9 @@ class BasicLayout extends React.PureComponent {
         isMobile: mobile,
       });
     });
-    this.props.dispatch({
-      type: 'user/fetchCurrent',
-    });
+    // this.props.dispatch({
+    //   type: 'user/fetchCurrent',
+    // });
   }
   componentWillUnmount() {
     unenquireScreen(this.enquireHandler);
@@ -193,6 +193,7 @@ class BasicLayout extends React.PureComponent {
       routerData,
       match,
       location,
+      login
     } = this.props;
     const bashRedirect = this.getBashRedirect();
     const layout = (
@@ -213,6 +214,7 @@ class BasicLayout extends React.PureComponent {
           <Header style={{ padding: 0 }}>
             <GlobalHeader
               logo={logo}
+              login={login}
               currentUser={currentUser}
               fetchingNotices={fetchingNotices}
               notices={notices}
@@ -257,9 +259,10 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ user, global, loading }) => ({
+export default connect(({ user, global, loading,login }) => ({
   currentUser: user.currentUser,
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
+  login:login
 }))(BasicLayout);

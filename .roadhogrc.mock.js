@@ -101,6 +101,39 @@ const proxy = {
       currentAuthority: 'guest',
     });
   },
+  //连接后端用户登陆
+  'POST /pub/user/login': (req, res) => {
+    const { email, password } = req.body;
+    if (password === '888888' && email === 'racky@moca.com') {
+        res.send({
+            "rcode":0,
+            "userinfo":{
+                "name":"aaa",
+                "email":"xxx@moca-tech.net",
+                "avatar":"https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            },
+            "currentAuthority": 'admin',
+        });
+        return;
+    }
+    if (password === '123456' && email === 'unknown@moca.com') {
+        res.send({
+            "rcode":0,
+            "userinfo":{
+                "name":"bbb",
+                "email":"xxx@moca-tech.net",
+                "avatar":"https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            },
+            "currentAuthority": 'user',
+        });
+        return;
+    }
+    res.send({
+        status: 'error',
+        currentAuthority: 'guest',
+    });
+  },
+  //
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },
