@@ -134,6 +134,7 @@ export default class MyCampiagn extends Component {
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
             searchPlaceholder: 'Please select',
+            treeNodeFilterProp:'label',
             style: {
                 width: '80%',
             },
