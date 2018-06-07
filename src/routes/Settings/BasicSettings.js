@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 import {
     Row,
     Col,
-    Icon,
     Card,
     Button,
     Tabs,
-    Table,
-    Radio,
     DatePicker,
-    Tooltip,
-    Menu,
-    Dropdown,
-    List,
+    message,
     Form,
     Input,
 } from 'antd';
@@ -47,9 +41,9 @@ export default class BasicSettings extends Component {
                 }).then((json) => {
                     console.log(json);
                     if(json.rcode!==undefined && json.rcode!==null && json.rcode === 0){
-                        console.log('密码修改成功');
+                        message.info('Password modification success');
                     }else{
-                        console.log('密码修改失败');
+                        message.error('Failure of password modification');
                     }
                 })
             }
