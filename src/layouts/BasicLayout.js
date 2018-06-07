@@ -163,15 +163,18 @@ class BasicLayout extends React.PureComponent {
       payload: type,
     });
   };
+
+  //公用头部个人信息下拉菜单点击操作
   handleMenuClick = ({ key }) => {
     if (key === 'triggerError') {
-      this.props.dispatch(routerRedux.push('/exception/trigger'));
-      return;
+        this.props.dispatch(routerRedux.push('/exception/trigger'));
+        return;
     }
+    //点击退出登录menu
     if (key === 'logout') {
-      this.props.dispatch({
-        type: 'login/logout',
-      });
+        this.props.dispatch({
+            type: 'login/logout',
+        });
     }
   };
   handleNoticeVisibleChange = visible => {
