@@ -69,6 +69,11 @@ export default class BasicSettings extends Component {
         }
     };
 
+    //取消
+    handleReset = () => {
+        this.props.form.resetFields();
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -121,7 +126,7 @@ export default class BasicSettings extends Component {
                 <Row gutter={24}>
                     <Col span={6} offset={16}>
                         <Button type="primary" htmlType="submit" style={{marginRight:20}}>Save</Button>
-                        <Button>Cancel</Button>
+                        <Button onClick={this.handleReset}>Cancel</Button>
                     </Col>
                 </Row>
             </Form>
