@@ -11,8 +11,8 @@ const actions = (
         查看邮箱
       </Button>
     </a>
-    <Link to="/">
-      <Button size="large">返回首页</Button>
+    <Link to="/user/login">
+      <Button size="large">返回登陆页</Button>
     </Link>
   </div>
 );
