@@ -55,16 +55,6 @@ export default class Analysis extends Component {
 	};
 
     componentDidMount() {
-        //ranAdd--请求homepage model中的数据信息
-        this.props.dispatch({
-            type: 'homepage/fetch',
-        });
-        this.props.dispatch({
-            type: 'homepage/fetchList',
-            payload: {
-                count: 8,
-            },
-        });
         //请求后端服务接口数据
         this.props.dispatch({
             type: 'homepage/recent30d'

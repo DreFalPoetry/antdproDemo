@@ -111,7 +111,7 @@ export async function queryByDateRange() {
     return request('/pub/dash/queryByDateRange');
 }
 export async function lastestCampaigns() {
-    return request('/pub/dash/lastestCampaigns');
+    return request('/pub/dash/latestCampaigns');
 }
 export async function latestUpdates() {
     return request('/pub/dash/latestUpdates');

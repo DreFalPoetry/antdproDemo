@@ -195,7 +195,7 @@ const proxy = {
   'GET /api/conversionAndClicksData': homepageChartData,
   'GET /pub/dash/recent30d':recent30d,
   'GET /pub/dash/queryByDateRange':queryByDateRange,
-  'GET /pub/dash/lastestCampaigns':lastestCampaigns,
+  'GET /pub/dash/latestCampaigns':lastestCampaigns,
   'GET /pub/dash/latestUpdates':latestUpdates,
   'GET /pub/dash/myCampaigns':myCampaigns,
   'GET /pub/campaigns':filterCampaigns,

@@ -30,12 +30,13 @@ export default {
         },
         *realLogin({ payload }, { call, put }) {
             const response = yield call(realUserLogin, payload);
+            response.currentAuthority = "admin";
             yield put({
                 type: 'changeLoginStatus',
                 payload: response,
             });
             // Login successfully
-            if (response.rcode === 0) {
+            if (response.code == 0) {
                 const userinfo = response.userinfo;
                 yield put({
                     type: 'asyncUserInfo',

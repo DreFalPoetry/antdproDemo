@@ -39,8 +39,8 @@ export default {
         *fetchList({payload}, { call, put }) {
             const response = yield call(queryNewCampaignList,payload);
             yield put({
-            type: 'asyncList',
-            payload: response,
+                type: 'asyncList',
+                payload: response,
             });
         },
         *recent30d(_, { call, put }) {
@@ -130,7 +130,7 @@ export default {
         asyncLastestCampaigns(state, { payload }) {
             return {
                 ...state,
-                lastestCampaigns:payload.camps,
+                lastestCampaigns:payload.camps?payload.camps:[],
             };
         },
         asyncLatestUpdates(state, { payload }) {

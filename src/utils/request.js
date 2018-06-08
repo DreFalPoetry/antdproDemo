@@ -43,7 +43,7 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-    const address = "http://192.168.2.12:8080"+url;
+    const address = "http://192.168.31.15:8080"+url;
   const defaultOptions = {
     credentials: 'include',
   };
@@ -65,7 +65,7 @@ export default function request(url, options) {
     }
   }
 
-  return fetch(url, newOptions)
+  return fetch(address, newOptions)
     .then(checkStatus)
     .then(response => {
       if (newOptions.method === 'DELETE' || response.status === 204) {
@@ -74,24 +74,24 @@ export default function request(url, options) {
       return response.json();
     })
     .catch(e => {
-      const { dispatch } = store;
-      const status = e.name;
-      if (status === 401) {
-        dispatch({
-          type: 'login/logout',
-        });
-        return;
-      }
-      if (status === 403) {
-        dispatch(routerRedux.push('/exception/403'));
-        return;
-      }
-      if (status <= 504 && status >= 500) {
-        dispatch(routerRedux.push('/exception/500'));
-        return;
-      }
-      if (status >= 404 && status < 422) {
-        dispatch(routerRedux.push('/exception/404'));
-      }
+    //   const { dispatch } = store;
+    //   const status = e.name;
+    //   if (status === 401) {
+    //     dispatch({
+    //       type: 'login/logout',
+    //     });
+    //     return;
+    //   }
+    //   if (status === 403) {
+    //     dispatch(routerRedux.push('/exception/403'));
+    //     return;
+    //   }
+    //   if (status <= 504 && status >= 500) {
+    //     dispatch(routerRedux.push('/exception/500'));
+    //     return;
+    //   }
+    //   if (status >= 404 && status < 422) {
+    //     dispatch(routerRedux.push('/exception/404'));
+    //   }
     });
 }
