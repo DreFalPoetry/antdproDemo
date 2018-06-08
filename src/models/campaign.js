@@ -18,34 +18,41 @@ export default {
     effects: {
         *myCampaigns(_, { call, put }) {
             const response = yield call(myCampaigns);
-            yield put({
-                type: 'syancMyCampaigns',
-                payload: response,
-            });
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                yield put({
+                    type: 'syancMyCampaigns',
+                    payload: response,
+                });
+            }
         },
         *filterCampaigns(_, { call, put }) {
             const response = yield call(campaigns);
-            const pageNo = response.page_no;//页数
-            const totalCount = response.total_pages//总条数
-            const campsList = response.camps;
-            yield put({
-                type: 'syancFilterCampaigns',
-                payload: {pageNo,totalCount,campsList},
-            });
+            console.log(response);
+            // if(response.code!=undefined && response.code!=null && response.code == 0){
+            //     const pageNo = response.page_no;//页数
+            //     const totalCount = response.total_pages;//总条数
+            //     const campsList = response.camps;
+            //     yield put({
+            //         type: 'syancFilterCampaigns',
+            //         payload: {pageNo,totalCount,campsList},
+            //     });
+            // }
         },
         *fetchCampaignsDetail(_, { call, put }) {
             const response = yield call(campaignDetails);
-            const updates = response.detail.updates;
-            const targeting = response.detail.targeting;
-            const creative = response.detail.creative;
-            yield put({
-                type: 'syancCampaignsDetail',
-                payload: response.detail,
-            });
-            yield put({
-                type: 'syancDetailList',
-                payload: {updates,targeting,creative},
-            });
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                const updates = response.detail.updates;
+                const targeting = response.detail.targeting;
+                const creative = response.detail.creative;
+                yield put({
+                    type: 'syancCampaignsDetail',
+                    payload: response.detail,
+                });
+                yield put({
+                    type: 'syancDetailList',
+                    payload: {updates,targeting,creative},
+                });
+            }
         },
     },
 

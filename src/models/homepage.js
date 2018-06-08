@@ -13,15 +13,6 @@ export default {
     namespace: 'homepage',
 
     state: {
-        conversionsData:[],//conversion柱状图数据信息
-        clicksData:[],//clicks柱状图数据信息
-        topCampaigns:[],
-        topClicks:[],
-        announcement:{},
-        thirtyDaysInfo:{},
-        sevenDaysUpdateList:[],
-        newCampaignList:[],
-        //服务端获取数据信息
         recent30d:{},
         queryByDateRange:{},
         lastestCampaigns:[],
@@ -29,76 +20,70 @@ export default {
     },
 
     effects: {
-        *fetch(_, { call, put }) {
-        const response = yield call(getConversionAndClicksData);
-        yield put({
-            type: 'save',
-            payload: response,
-        });
-        },
-        *fetchList({payload}, { call, put }) {
-            const response = yield call(queryNewCampaignList,payload);
-            yield put({
-                type: 'asyncList',
-                payload: response,
-            });
-        },
         *recent30d(_, { call, put }) {
             const response = yield call(recent30d);
-            let clkData = [];
-            let clkEach = response.sum.clk.each;
-            clkEach.map((item,index,arr)=>{
-                clkData.push({x:getDate(arr.length-index),y:item})
-            });
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                let clkData = [];
+                let clkEach = response.sum.clk.each;
+                clkEach.map((item,index,arr)=>{
+                    clkData.push({x:getDate(arr.length-index),y:item})
+                });
 
-            let convData = [];
-            let convEach = response.sum.conv.each;
-            convEach.map((item,index,arr)=>{
-                convData.push({x:getDate(arr.length-index),y:item})
-            });
+                let convData = [];
+                let convEach = response.sum.conv.each;
+                convEach.map((item,index,arr)=>{
+                    convData.push({x:getDate(arr.length-index),y:item})
+                });
 
-            response.sum.clk.each = clkData;
-            response.sum.conv.each = convData;
+                response.sum.clk.each = clkData;
+                response.sum.conv.each = convData;
 
-            yield put({
-                type: 'asyncRecent30d',
-                payload: response,
-            });
+                yield put({
+                    type: 'asyncRecent30d',
+                    payload: response,
+                });
+            }
         },
         *queryByDateRange(_, { call, put }) {
             const response = yield call(queryByDateRange);
-            let clkData = [];
-            let clkEach = response.clk.each;
-            clkEach.map((item,index,arr)=>{
-                clkData.push({x:getDateWithoutYear(arr.length-index),y:item})
-            });
-            response.clk.each = clkData;
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                let clkData = [];
+                let clkEach = response.clk.each;
+                clkEach.map((item,index,arr)=>{
+                    clkData.push({x:getDateWithoutYear(arr.length-index),y:item})
+                });
+                response.clk.each = clkData;
 
-            let convData = [];
-            let convEach = response.conv.each;
-            convEach.map((item,index,arr)=>{
-                convData.push({x:getDateWithoutYear(arr.length-index),y:item})
-            });
-            response.conv.each = convData;
+                let convData = [];
+                let convEach = response.conv.each;
+                convEach.map((item,index,arr)=>{
+                    convData.push({x:getDateWithoutYear(arr.length-index),y:item})
+                });
+                response.conv.each = convData;
 
-            yield put({
-                type: 'asyncQueryByDateRange',
-                payload: response,
-            });
+                yield put({
+                    type: 'asyncQueryByDateRange',
+                    payload: response,
+                });
+            }
         },
         *lastestCampaigns(_, { call, put }) {
             const response = yield call(lastestCampaigns);
-            yield put({
-                type: 'asyncLastestCampaigns',
-                payload: response,
-            });
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                yield put({
+                    type: 'asyncLastestCampaigns',
+                    payload: response,
+                });
+            }
         },
         *latestUpdates(_, { call, put }) {
             const response = yield call(latestUpdates);
-            yield put({
-                type: 'asyncLatestUpdates',
-                payload: response,
-            });
+            if(response.code!=undefined && response.code!=null && response.code == 0){
+                yield put({
+                    type: 'asyncLatestUpdates',
+                    payload: response,
+                });
+            }
         },
     },
 
@@ -141,14 +126,6 @@ export default {
         },
         clear() {
             return {
-                conversionsData:[],//conversion柱状图数据信息
-                clicksData:[],//clicks柱状图数据信息
-                topCampaigns:[],
-                topClicks:[],
-                announcement:{},
-                thirtyDaysInfo:{},
-                sevenDaysUpdateList:[],
-                newCampaignList:[],
                 //服务端获取数据信息
                 recent30d:{},
                 queryByDateRange:{},

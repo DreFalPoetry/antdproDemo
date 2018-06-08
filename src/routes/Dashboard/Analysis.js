@@ -47,7 +47,7 @@ const { RangePicker } = DatePicker;
 @connect(({chart,homepage, loading }) => ({
 	chart,
 	homepage,
-	loading: loading.effects['homepage/fetch'],
+	loading: loading.effects['homepage/recent30d'],
 }))
 export default class Analysis extends Component {
 	state = {
@@ -126,14 +126,6 @@ export default class Analysis extends Component {
         const { loading,homepage } = this.props;
         
         const {
-            conversionsData,
-            clicksData,
-            topCampaigns,
-            topClicks,
-            announcement,
-            thirtyDaysInfo,
-            sevenDaysUpdateList,
-            newCampaignList,
             //服务端获取数据信息
             recent30d,
             queryByDateRange,
@@ -172,7 +164,7 @@ export default class Analysis extends Component {
         return (
             <div>
                 {/* 头部公告信息 */}
-                <div className={styles.pageHeaderContent}>
+                {/* <div className={styles.pageHeaderContent}>
                     <div className={styles.announcement}>
                         <span>Announcement</span>
                         <i style={{fontStyle:"normal",color:"#ddb64e",cursor:"pointer"}} onClick={this.changeReadStatus}>&nbsp;&nbsp;mark as read</i>
@@ -189,14 +181,14 @@ export default class Analysis extends Component {
                             <div>{announcement.info?announcement.info:""}</div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* 最近30天收益之类 */}
                 <Row gutter={24}>
                     <Col {...topColResponsiveProps}>
                         <ChartCard
                             bordered={false}
                             title="Last 30 days Revenue"
-                            total={recent30d.sum?recent30d.sum.rev.total:""}
+                            total={numeral(recent30d.sum?recent30d.sum.rev.total:"0").format('0,0')}
                             footer={<Field label="daily avg." value={`$ ${numeral(recent30d.sum?recent30d.sum.rev.total/30:'0').format('0,0.00')}`} />}
                             contentHeight={46}
                         >
@@ -209,8 +201,8 @@ export default class Analysis extends Component {
                         <ChartCard
                             bordered={false}
                             title="Last 30 days clicks"
-                            total={numeral(recent30d.sum?recent30d.sum.clk.total:'0').format('0,0.00')}
-                            footer={<Field label="daily avg." value={numeral(recent30d.sum?recent30d.sum.clk.total/30:'0').format('0,0.00')} />}
+                            total={numeral(recent30d.sum?recent30d.sum.clk.total:'0').format('0,0')}
+                            footer={<Field label="daily avg." value={numeral(recent30d.sum?recent30d.sum.clk.total/30:'0').format('0,0')} />}
                             contentHeight={46}
                         >
                             <MiniArea color="#975FE4" data={recent30d.sum?recent30d.sum.clk.each:[]} />

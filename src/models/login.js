@@ -16,18 +16,18 @@ export default {
     },
 
     effects: {
-        *login({ payload }, { call, put }) {
-            const response = yield call(fakeAccountLogin, payload);
-            yield put({
-                type: 'changeLoginStatus',
-                payload: response,
-            });
-        // Login successfully
-            if (response.status === 'ok') {
-                reloadAuthorized();
-                yield put(routerRedux.push('/dashboard/analysis'));
-            }
-        },
+        // *login({ payload }, { call, put }) {
+        //     const response = yield call(fakeAccountLogin, payload);
+        //     yield put({
+        //         type: 'changeLoginStatus',
+        //         payload: response,
+        //     });
+        // // Login successfully
+        //     if (response.status === 'ok') {
+        //         reloadAuthorized();
+        //         yield put(routerRedux.push('/dashboard/analysis'));
+        //     }
+        // },
         *realLogin({ payload }, { call, put }) {
             const response = yield call(realUserLogin, payload);
             response.currentAuthority = "admin";
@@ -38,6 +38,7 @@ export default {
             // Login successfully
             if (response.code == 0) {
                 const userinfo = response.userinfo;
+                userinfo.avatar = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
                 localStorage.setItem('loginUserInfo',JSON.stringify(userinfo));
                 yield put({
                     type: 'asyncUserInfo',
