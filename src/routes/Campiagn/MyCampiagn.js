@@ -87,12 +87,12 @@ export default class MyCampiagn extends Component {
         this.props.dispatch({
             type: 'campaign/filterCampaigns',
         });
-        this.props.dispatch({
-            type: 'list/fetch',
-            payload: {
-                count: 5,
-            },
-        });
+        // this.props.dispatch({
+        //     type: 'list/fetch',
+        //     payload: {
+        //         count: 5,
+        //     },
+        // });
     }
 
     //树形选择发生变化的时候

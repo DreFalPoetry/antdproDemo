@@ -24,6 +24,8 @@ import {
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from 'components/DescriptionList';
 import styles from './MyCampiagn.less';
+import {campaignDetails} from '../../services/api';
+
 const { Search } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -60,9 +62,34 @@ export default class MyCampiagnDetail extends Component {
     componentDidMount() {
         console.log(this.props.location.state);
         const { dispatch } = this.props;
-        dispatch({
-            type: 'campaign/fetchCampaignsDetail',
-        });
+
+        const response = campaignDetails(104528);
+        response.then((res) => {
+            return res;
+        }).then((json) => {
+            const updates = json.detail.updates;
+            const targeting = json.detail.targeting;
+            const creative = json.detail.creative;
+            dispatch({
+                type: 'campaign/syancCampaignsDetail',
+                payload: json.detail,
+            });
+            dispatch({
+                type: 'campaign/syancDetailList',
+                payload: {updates,targeting,creative},
+            });
+        })
+        // yield put({
+        //     type: 'syancCampaignsDetail',
+        //     payload: response.detail,
+        // });
+        // yield put({
+        //     type: 'syancDetailList',
+        //     payload: {updates,targeting,creative},
+        // });
+        // dispatch({
+        //     type: 'campaign/fetchCampaignsDetail',
+        // });
     }
 
     onOperationTabChange = key => {

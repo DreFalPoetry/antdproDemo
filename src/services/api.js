@@ -122,8 +122,8 @@ export async function myCampaigns() {
 export async function campaigns() {
     return request('/pub/campaigns');
 }
-export async function campaignDetails() {
-    return request('/pub/campaigns/detail');
+export async function campaignDetails(id) {
+    return request('/pub/campaigns/'+id);
 }
 export async function queryReportList() {
     return request('/pub/report');

@@ -38,6 +38,7 @@ export default {
             // Login successfully
             if (response.code == 0) {
                 const userinfo = response.userinfo;
+                localStorage.setItem('loginUserInfo',JSON.stringify(userinfo));
                 yield put({
                     type: 'asyncUserInfo',
                     payload: {userinfo},

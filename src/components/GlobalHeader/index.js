@@ -85,6 +85,7 @@ export default class GlobalHeader extends PureComponent {
       </Menu>
     );
     const noticeData = this.getNoticeData();
+    let loginUserInfo = JSON.parse(localStorage.getItem('loginUserInfo'));
     return (
       <div className={styles.header}>
         {isMobile && [
@@ -110,15 +111,16 @@ export default class GlobalHeader extends PureComponent {
               console.log('enter', value); // eslint-disable-line
             }}
           />
-          {login.userinfo ? (
+          {loginUserInfo.name ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={login.userinfo.avatar} />
-                <span className={styles.name}>{login.userinfo.name}</span>
+                <Avatar size="small" className={styles.avatar} src={loginUserInfo.avatar} />
+                <span className={styles.name}>{loginUserInfo.name}</span>
               </span>
             </Dropdown>
           ) : (
-            <Spin size="small" style={{ marginLeft: 8 }} />
+              ""
+            // <Spin size="small" style={{ marginLeft: 8 }} />
           )}
         </div>
       </div>
