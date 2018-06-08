@@ -33,41 +33,6 @@ const { Option } = Select;
 const FormItem = Form.Item;
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
-const treeData = [{
-    label: 'Citys',
-    value: '1',
-    key: '1',
-    children: [{
-        label: 'India',
-        value: '11',
-        key: '11',
-    },{
-        label: 'USA',
-        value: '12',
-        key: '12',
-    },{
-        label: 'China',
-        value: '13',
-        key: '13',
-    }],
-},{
-    label: 'Status',
-    value: '2',
-    key: '2',
-    children: [{
-        label: 'InProcess',
-        value: '21',
-        key: '21',
-    }, {
-        label: 'NotDone',
-        value: '22',
-        key: '22',
-    }, {
-        label: 'Done',
-        value: '23',
-        key: '23',
-    }],
-}];
 
 //通过@connect进行model的数据传输
 @connect(({ campaign, list, loading }) => ({
@@ -87,6 +52,12 @@ export default class MyCampiagn extends Component {
         this.props.dispatch({
             type: 'campaign/filterCampaigns',
         });
+
+        //获取下拉框的list数据信息
+        this.props.dispatch({
+            type: 'campaign/getFilterList',
+        });
+
         // this.props.dispatch({
         //     type: 'list/fetch',
         //     payload: {
@@ -113,11 +84,7 @@ export default class MyCampiagn extends Component {
 
     render() {
         const { list: { list },campaign, loading } = this.props;
-        const {myCampaigns,pageNo,totalCount,campsList} = campaign;
-        const children = [];
-        for (let i = 10; i < 36; i++) {
-            children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-        }
+        const {myCampaigns,pageNo,totalCount,campsList,filterList} = campaign;
 
         const Info = ({ title, value, bordered }) => (
             <div>
@@ -128,7 +95,7 @@ export default class MyCampiagn extends Component {
         );
 
         const selectTreeProps = {
-            treeData,
+            treeData:filterList,
             value: this.state.value,
             onChange: this.changeTreeVal,
             treeCheckable: true,
@@ -144,7 +111,7 @@ export default class MyCampiagn extends Component {
             <div className={styles.extraContent}>
                 <div className={styles.selectWrapper}>
                     <label>FILTER</label>
-                    <TreeSelect {...selectTreeProps}/>
+                    <TreeSelect {...selectTreeProps} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}/>
                 </div>
                 <Search style={{ width: '30%' }} placeholder="Search by ID, Name" onSearch={this.getSearchVal} />
             </div>

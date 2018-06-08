@@ -95,6 +95,9 @@ export default class MyCampiagnDetail extends Component {
     onOperationTabChange = key => {
         // console.log(key);
         this.setState({ operationkey: key });
+        if(key == 'tab3'){
+            window.open('http://localhost:8000/#/report/subPublisherWise?id=24234234');
+        }
     };
 
     render() {
@@ -105,10 +108,9 @@ export default class MyCampiagnDetail extends Component {
             <DescriptionList className={styles.headerList} size="small" col="1">
               <Description term="Category">{campaignsDetails.category?campaignsDetails.category:"--"}</Description>
               <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"-"+campaignsDetails.expire_time:"--"}</Description>
-              <Description term="Fraud Demand">{"没发现该字段"}</Description>
+              <Description term="Daily Cap">{campaignsDetails.daily_cap?campaignsDetails.daily_cap:"--"}</Description>
               <Description term="Fraud Description">{campaignsDetails.fraud_description?campaignsDetails.fraud_description:"--"}</Description>
-              <Description term="KPI">{campaignsDetails.kpi?campaignsDetails.kpi:"--"}</Description>
-              <Description term="KPI Description">{"没发现该字段"}</Description>
+              <Description term="KPI Description">{campaignsDetails.quality_description?campaignsDetails.quality_description:"--"}</Description>
             </DescriptionList>
         );
         const extra = (
@@ -132,7 +134,7 @@ export default class MyCampiagnDetail extends Component {
                         <Description term="State or City">{targeting.region?targeting.region:"--"}</Description>
                         <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:"--"}</Description>
                         <Description term="Carrier">{targeting.carrier?targeting.carrier:"--"}</Description>
-                        <Description term="Mandatory Device ID">找不到是哪个字段</Description>
+                        <Description term="Mandatory Device ID">{targeting.mandatory_did?targeting.mandatory_did:"--"}</Description>
                         <Description term="Sub Publisher">找不到是哪个字段</Description>
                         <Description term="Device Type">{targeting.device_types?targeting.device_types:"--"}</Description>
                         <Description term="Device Make">{targeting.device_makes?targeting.device_makes:"--"}</Description>
@@ -143,7 +145,9 @@ export default class MyCampiagnDetail extends Component {
                 </Card>
                 <Card title="Creative" style={{ marginBottom: 24 }} col="1">
                     <DescriptionList style={{ marginBottom: 24 }}>
-                        <Description term="Creative">click download</Description>
+                        <Description term="Creative">{creative.creative? <a href={creative.creative} target='_blank'>click download</a>:""}</Description>
+                    </DescriptionList>
+                    <DescriptionList style={{ marginBottom: 24 }}>
                         <Description term="Tracking Link">{creative.creative?creative.creative:"--"}</Description>
                     </DescriptionList>
                 </Card>
@@ -151,25 +155,51 @@ export default class MyCampiagnDetail extends Component {
         ),
         tab2: (
             <Card title="Targeting" style={{ marginBottom: 24 }}>
-            <Table
+                <List
+                    size="large"
+                    rowKey="id"
+                    loading={loading}
+                    dataSource={updates}
+                    renderItem={item => (
+                    <List.Item>
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.icon} shape="square" size="large" />}
+                            description={
+                                <div>
+                                <div>
+                                {
+                                    item.id+" "+item.name+" "+
+                                    (item.type==1?"update cap":(item.type==2?"update payout":(item.type==3?"update creative":"terminate")))+
+                                    " from "+item.old+" to "+item.new
+                                }
+                                </div>
+                                <div>{item.time}</div>
+                                </div>
+                            }
+                        />
+                    </List.Item>
+                    )}
+                />
+                {/* <Table
                 pagination={false}
                 loading={loading}
-                dataSource={updates}
-                columns={columns}
-                bordered
-            />
+                    dataSource={updates}
+                    columns={columns}
+                    bordered
+                /> */}
             </Card>
         ),
         tab3: (
-            <Card title="Targeting" style={{ marginBottom: 24 }}>
-            <Table
-                pagination={false}
-                loading={loading}
-                dataSource={updates}
-                columns={columns}
-                bordered
-            />
-            </Card>
+            <div></div>
+            // <Card title="Targeting" style={{ marginBottom: 24 }}>
+            // <Table
+            //     pagination={false}
+            //     loading={loading}
+            //     dataSource={updates}
+            //     columns={columns}
+            //     bordered
+            // />
+            // </Card>
         ),
         };
 
@@ -184,7 +214,7 @@ export default class MyCampiagnDetail extends Component {
         },
         {
             key: 'tab3',
-            tab: 'Optimize Advice',
+            tab: <span><Icon type="link" />Optimize Advice</span>,
         },
         ];
 

@@ -122,6 +122,10 @@ export async function myCampaigns() {
 export async function campaigns() {
     return request('/pub/campaigns');
 }
+//获取filterList的数据
+export async function campaignOptions() {
+    return request('/pub/campaigns/options');
+}
 export async function campaignDetails(id) {
     return request('/pub/campaigns/'+id);
 }
