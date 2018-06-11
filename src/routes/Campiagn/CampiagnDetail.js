@@ -79,17 +79,6 @@ export default class MyCampiagnDetail extends Component {
                 payload: {updates,targeting,creative},
             });
         })
-        // yield put({
-        //     type: 'syancCampaignsDetail',
-        //     payload: response.detail,
-        // });
-        // yield put({
-        //     type: 'syancDetailList',
-        //     payload: {updates,targeting,creative},
-        // });
-        // dispatch({
-        //     type: 'campaign/fetchCampaignsDetail',
-        // });
     }
 
     onOperationTabChange = key => {
@@ -107,8 +96,8 @@ export default class MyCampiagnDetail extends Component {
         const description = (
             <DescriptionList className={styles.headerList} size="small" col="1">
               <Description term="Category">{campaignsDetails.category?campaignsDetails.category:"--"}</Description>
-              <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"-"+campaignsDetails.expire_time:"--"}</Description>
-              <Description term="Daily Cap">{campaignsDetails.daily_cap?campaignsDetails.daily_cap:"--"}</Description>
+              <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"~"+campaignsDetails.expire_time:"--"}</Description>
+              <Description term="Daily Cap">{campaignsDetails.allocation?campaignsDetails.allocation.daily_cap:"Open Cap"}</Description>
               <Description term="Fraud Description">{campaignsDetails.fraud_description?campaignsDetails.fraud_description:"--"}</Description>
               <Description term="KPI Description">{campaignsDetails.quality_description?campaignsDetails.quality_description:"--"}</Description>
             </DescriptionList>
@@ -121,7 +110,7 @@ export default class MyCampiagnDetail extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                 <div className={styles.textSecondary}>Price Model</div>
-                <div className={styles.heading}>{campaignsDetails.payfor?campaignsDetails.payfor+"/$"+campaignsDetails.payout:"--"}</div>
+                <div className={styles.heading}>{campaignsDetails.allocation?campaignsDetails.allocation.payfor+"/$"+campaignsDetails.allocation.payout:"--"}</div>
                 </Col>
             </Row>
         );
@@ -135,7 +124,7 @@ export default class MyCampiagnDetail extends Component {
                         <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:"--"}</Description>
                         <Description term="Carrier">{targeting.carrier?targeting.carrier:"--"}</Description>
                         <Description term="Mandatory Device ID">{targeting.mandatory_did?targeting.mandatory_did:"--"}</Description>
-                        <Description term="Sub Publisher">找不到是哪个字段</Description>
+                        <Description term="Sub Publisher">{campaignsDetails.sub_publisher?campaignsDetails.sub_publisher:"--"}</Description>
                         <Description term="Device Type">{targeting.device_types?targeting.device_types:"--"}</Description>
                         <Description term="Device Make">{targeting.device_makes?targeting.device_makes:"--"}</Description>
                         <Description term="Device Model">{targeting.device_models?targeting.device_models:"--"}</Description>
@@ -148,7 +137,7 @@ export default class MyCampiagnDetail extends Component {
                         <Description term="Creative">{creative.creative? <a href={creative.creative} target='_blank'>click download</a>:""}</Description>
                     </DescriptionList>
                     <DescriptionList style={{ marginBottom: 24 }}>
-                        <Description term="Tracking Link">{creative.creative?creative.creative:"--"}</Description>
+                        <Description term="Tracking Link">{campaignsDetails.tracking_link?campaignsDetails.tracking_link:"--"}</Description>
                     </DescriptionList>
                 </Card>
             </div>
@@ -170,7 +159,7 @@ export default class MyCampiagnDetail extends Component {
                                 {
                                     item.id+" "+item.name+" "+
                                     (item.type==1?"update cap":(item.type==2?"update payout":(item.type==3?"update creative":"terminate")))+
-                                    " from "+item.old+" to "+item.new
+                                    (item.old?" from "+item.old+" to "+item.new_data:"")
                                 }
                                 </div>
                                 <div>{item.time}</div>

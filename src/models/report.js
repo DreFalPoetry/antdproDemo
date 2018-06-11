@@ -25,13 +25,6 @@ export default {
                     payload:{dataList,total,pageCount}
                 });
             }
-            // const dataList = response.datagraid;
-            // const total = response.total_pages;
-            // const pageCount = response.page_no;
-            // yield put({
-            //     type: 'syancList',
-            //     payload:{dataList,total,pageCount}
-            // });
         },
     },
 

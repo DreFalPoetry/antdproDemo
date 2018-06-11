@@ -50,23 +50,6 @@ export default {
                 reloadAuthorized();
                 yield put(routerRedux.push('/dashboard/analysis'));
             }
-            // if(response.code!=null && response.code!= undefined){
-            //     if (response.code == 0) {
-            //         const userinfo = response.userinfo;
-            //         userinfo.avatar = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-            //         localStorage.setItem('loginUserInfo',JSON.stringify(userinfo));
-            //         yield put({
-            //             type: 'asyncUserInfo',
-            //             payload: {userinfo},
-            //         });
-            //         reloadAuthorized();
-            //         yield put(routerRedux.push('/dashboard/analysis'));
-            //     }else if(response.code == 1){
-            //         sessionInvalid();
-            //     }else{
-            //         errorCallBack(response);
-            //     }
-            // }
         },
         *logout(_, { put, select }) {
             try {

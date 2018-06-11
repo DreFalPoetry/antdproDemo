@@ -28,12 +28,6 @@ export default {
                     payload: response,
                 });
             }
-            // if(response.code!=undefined && response.code!=null && response.code == 0){
-            //     yield put({
-            //         type: 'syancMyCampaigns',
-            //         payload: response,
-            //     });
-            // }
         },
         *filterCampaigns(_, { call, put }) {
             const response = yield call(campaigns);
@@ -49,15 +43,6 @@ export default {
                     payload: {pageNo,totalCount,campsList},
                 });
             }
-            // if(response.code!=undefined && response.code!=null && response.code == 0){
-            //     const pageNo = response.page_no;//页数
-            //     const totalCount = response.total_pages;//总条数
-            //     const campsList = response.camps;
-            //     yield put({
-            //         type: 'syancFilterCampaigns',
-            //         payload: {pageNo,totalCount,campsList},
-            //     });
-            // }
         },
         *getFilterList(_, { call, put }) {
             const response = yield call(campaignOptions);
@@ -70,19 +55,6 @@ export default {
                         payload: filterList,
                     });
             }
-            // if(response.code!=undefined && response.code!=null){
-            //     if(response.code == 0){
-            //         const filterList = response.data;
-            //         yield put({
-            //             type: 'syancFilterList',
-            //             payload: filterList,
-            //         });
-            //     }else if(response.code == 1){
-                    
-            //     }else{
-                    
-            //     }
-            // }
         },
         *fetchCampaignsDetail(_, { call, put }) {
             const response = yield call(campaignDetails);
@@ -101,19 +73,6 @@ export default {
                     payload: {updates,targeting,creative},
                 });
             }
-            // if(response.code!=undefined && response.code!=null && response.code == 0){
-            //     const updates = response.detail.updates;
-            //     const targeting = response.detail.targeting;
-            //     const creative = response.detail.creative;
-            //     yield put({
-            //         type: 'syancCampaignsDetail',
-            //         payload: response.detail,
-            //     });
-            //     yield put({
-            //         type: 'syancDetailList',
-            //         payload: {updates,targeting,creative},
-            //     });
-            // }
         },
     },
 

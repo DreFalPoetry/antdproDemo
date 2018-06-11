@@ -142,21 +142,21 @@ export default class Analysis extends Component {
 
         // 按月份或年份筛选
         const salesExtra = (
-        <div className={styles.salesExtraWrap}>
-            <div className={styles.salesExtra}>
-                <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
-                    This Month
-                </a>
-                <a className={this.isActive('year')} onClick={() => this.selectDate('year')}>
-                    This Year
-                </a>
+            <div className={styles.salesExtraWrap}>
+                <div className={styles.salesExtra}>
+                    <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
+                        This Month
+                    </a>
+                    <a className={this.isActive('year')} onClick={() => this.selectDate('year')}>
+                        This Year
+                    </a>
+                </div>
+                <RangePicker
+                    value={rangePickerValue}
+                    onChange={this.handleRangePickerChange}
+                    style={{ width: 256 }}
+                />
             </div>
-            <RangePicker
-                value={rangePickerValue}
-                onChange={this.handleRangePickerChange}
-                style={{ width: 256 }}
-            />
-        </div>
         );
 
         const topColResponsiveProps = {
@@ -315,14 +315,14 @@ export default class Analysis extends Component {
                                     <Card hoverable className={styles.card}>
                                         <Card.Meta
                                             avatar={<img alt="" className={styles.cardAvatar} src={item.icon} />}
-                                            title={<span>{item.name}</span>}
+                                            title={<span>{item.id + " " + item.name}</span>}
                                             description={
                                                 <div>
                                                     <Ellipsis className={styles.item} lines={3}>
-                                                        {item.category+" "+item.kpi+" "+item.currency}
+                                                        {(item.category?item.category+", ":"")+item.kpi+" kpi,"+" "+"daily Cap:"+item.daily_cap}
                                                     </Ellipsis>
                                                     <div className={styles.footerTime}>
-                                                        <span>{item.payfor+"/$"+item.payout}</span>
+                                                        <span>{item.payfor+"/"+item.payout}</span>
                                                         <i style={{fontStyle:"normal"}}>{item.created_at?moment(item.created_at).format('YYYY-MM-DD'):""}</i>
                                                     </div>
                                                 </div>
@@ -357,7 +357,7 @@ export default class Analysis extends Component {
                                     {
                                         item.id+" "+item.name+" "+
                                         (item.type==1?"update cap":(item.type==2?"update payout":(item.type==3?"update creative":"terminate")))+
-                                        " from "+item.old+" to "+item.new
+                                       (item.old?" from "+item.old+" to "+item.new_data:"") 
                                     }
                                     </div>
                                     <div>{item.time}</div>
