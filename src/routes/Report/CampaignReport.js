@@ -25,11 +25,14 @@ import {
   Table,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import {getDate,getTheFirstDay} from '../../utils/commonFunc';
 //ranAdd
 const { Search } = Input;
 const { Option } = Select;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const FormItem = Form.Item;
+let selectDate1 = '';
+let selectDate2 = '';
 
 @Form.create()
 @connect(({report, loading }) => ({
@@ -39,12 +42,16 @@ const FormItem = Form.Item;
 export default class CampiagnReport extends PureComponent {
     state = {
         dataSource: [],
+        start_date:getTheFirstDay(),
+        end_date:getDate(0),
+        page_no:1,
+        page_size:2
     };
 
     componentDidMount() {
         this.props.dispatch({
             type: 'report/fetch',
-            payload:{"page_no":1,"page_size":2}
+            payload:{"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0)}
         })
     }
 
@@ -64,20 +71,58 @@ export default class CampiagnReport extends PureComponent {
         });
     }
 
+    //搜索栏日期发生变化
+    dateChange = (dates,dateStrings) =>{
+        this.setState({
+            start_date:'',
+            end_date:''
+        });
+        selectDate1 = dateStrings[0];
+        selectDate2 = dateStrings[1]; 
+    }
+
     //点击下一页或上一页操作
     pageChange  = (page,pageSize) => {
-        this.props.dispatch({
-            type: 'report/fetch',
-            payload:{"page_no":page,"page_size":pageSize}
-        })
+        this.setState({
+            'page_no':page,
+            'page_size':pageSize
+        },function(){
+            const {start_date,page_no,end_date,page_size} = this.state;
+            this.props.dispatch({
+                type: 'report/fetch',
+                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size}
+            })
+        });
     }
 
     //每页条数发生变化
     onShowSizeChange = (current,size) =>{
-        this.props.dispatch({
-            type: 'report/fetch',
-            payload:{"page_no":1,"page_size":size}
+        this.setState({
+            'page_no':1,
+            'page_size':size
+        },function(){
+            const {start_date,page_no,end_date,page_size} = this.state;
+            this.props.dispatch({
+                type: 'report/fetch',
+                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size}
+            })
         })
+    }
+
+    //点击query按钮
+    queryList = (e) =>{
+        e.preventDefault();
+        this.setState({
+            page_no:1,
+            start_date:selectDate1,
+            end_date:selectDate2
+        },function(){
+            const {start_date,page_no,end_date,page_size} = this.state;
+            this.props.dispatch({
+                type: 'report/fetch',
+                payload:{"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date}
+            })
+        });
     }
 
     render() {
@@ -121,12 +166,14 @@ export default class CampiagnReport extends PureComponent {
         <div>
             <PageHeaderLayout />
             <Card bordered={false} style={{marginTop:30}}>
-            <Form onSubmit={this.handleSearch} layout="inline">
+            <Form onSubmit={this.queryList} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                 <Col md={8} sm={24}>
                     <FormItem label="Date Range">
-                    {getFieldDecorator('date')(
-                        <RangePicker style={{ width: '250px' }}/>
+                    {getFieldDecorator('date',{
+                        'initialValue':[moment(getTheFirstDay()),moment(getDate(0))]
+                    })(
+                        <RangePicker style={{ width: '250px' }} onChange={this.dateChange}/>
                     )}
                     </FormItem>
                 </Col>
@@ -158,6 +205,7 @@ export default class CampiagnReport extends PureComponent {
                 pagination={{
                     'total':total,
                     'defaultCurrent':1,
+                    'current':this.state.page_no,
                     'pageSize':pageSize,
                     'onChange':this.pageChange,
                     'showSizeChanger':true,
