@@ -8,31 +8,31 @@ export default {
     state: {
         dataList:[],
         total:null,
-        pageCount:null
+        pageSize:null
     },
 
     effects: {
-        *fetch(_, { call, put }) {
-            const response = yield call(queryReportList);
+        *fetch({payload}, { call, put }) {
+            const response = yield call(queryReportList,payload);
             // callbackStatus successfully
             const finallResult = callbackDeal(response);
             if(finallResult == 'successCallBack'){
                 const dataList = response.datagraid;
-                const total = response.total_pages;
-                const pageCount = response.page_no;
+                const total = response.total_records;
+                const pageSize = response.page_size;
                 yield put({
                     type: 'syancList',
-                    payload:{dataList,total,pageCount}
+                    payload:{dataList,total,pageSize}
                 });
             }
         },
     },
 
     reducers: {
-        syancList(state, {payload:{dataList,total,pageCount}}) {
+        syancList(state, {payload:{dataList,total,pageSize}}) {
             return {
                 ...state,
-                dataList,total,pageCount
+                dataList,total,pageSize
             };
         },
         syancFilterCampaigns(state, {payload:{pageNo,totalCount,campsList}}) {

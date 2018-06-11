@@ -136,8 +136,8 @@ export async function campaignOptions() {
 export async function campaignDetails(id) {
     return request('/pub/campaigns/'+id);
 }
-export async function queryReportList() {
-    return request('/pub/report');
+export async function queryReportList(params) {
+    return request(`/pub/report?${stringify(params)}`);
 }
 
 

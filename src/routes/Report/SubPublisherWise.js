@@ -44,6 +44,7 @@ export default class SubPublisherWise extends PureComponent {
     componentDidMount() {
         this.props.dispatch({
             type: 'report/fetch',
+            payload:{'is_sub':1,"page_no":1,"page_size":2}
         })
     }
 
@@ -63,28 +64,44 @@ export default class SubPublisherWise extends PureComponent {
         });
     }
 
+    //点击下一页或上一页操作
+    pageChange  = (page,pageSize) => {
+        this.props.dispatch({
+            type: 'report/fetch',
+            payload:{"page_no":page,"page_size":pageSize}
+        })
+    }
+
+    //每页条数发生变化
+    onShowSizeChange = (current,size) =>{
+        this.props.dispatch({
+            type: 'report/fetch',
+            payload:{"page_no":1,"page_size":size}
+        })
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const { report } = this.props;
         const { dataSource } = this.state;
-        const { dataList,total,pageCount} = report;
+        const { dataList,total,pageSize} = report;
 
         const columns = [
         {
             title: 'Campaign',
-            dataIndex: 'campaign_id',
+            dataIndex: 'group_id',
         },
         {
             title: 'Sub Publisher',
-            dataIndex: 'sub_publisher',
+            dataIndex: 'aff_pub',
         },
         {
             title: 'Clicks',
-            dataIndex: 'clks',
+            dataIndex: 'gross_clks',
         },
         {
             title: 'Conversions',
-            dataIndex: 'convs',
+            dataIndex: 'gross_cons',
         },
         {
             title: 'CVR%',
@@ -92,7 +109,7 @@ export default class SubPublisherWise extends PureComponent {
         },
         {
             title: 'Fraud%',
-            dataIndex: 'faud',
+            dataIndex: 'fraud',
         },
         {
             title: 'KPI%',
@@ -100,11 +117,11 @@ export default class SubPublisherWise extends PureComponent {
         },
         {
             title: 'KPI Required%',
-            dataIndex: 'kpi_req',
+            dataIndex: 'kpi_required',
         },
         {
             title: 'Optimize Advice',
-            dataIndex: 'opt_adv',
+            dataIndex: 'advice',
         }
         ];
 
@@ -141,7 +158,21 @@ export default class SubPublisherWise extends PureComponent {
                 </span>
                 </Row>
             </Form>
-            <Table columns={columns} dataSource={dataList} bordered />
+            <Table 
+                columns={columns} 
+                dataSource={dataList} 
+                bordered 
+                rowKey="group_id"
+                pagination={{
+                    'total':total,
+                    'defaultCurrent':1,
+                    'pageSize':pageSize,
+                    'onChange':this.pageChange,
+                    'showSizeChanger':true,
+                    'pageSizeOptions':['2','5','10', '15', '20'],
+                    'onShowSizeChange':this.onShowSizeChange
+                }}
+            />
             </Card>
         </div>
         );
