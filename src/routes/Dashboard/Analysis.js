@@ -51,7 +51,7 @@ const { RangePicker } = DatePicker;
 }))
 export default class Analysis extends Component {
 	state = {
-		rangePickerValue: getTimeDistance('year'),
+		rangePickerValue:'',
 	};
 
     componentDidMount() {
@@ -60,7 +60,7 @@ export default class Analysis extends Component {
             type: 'homepage/recent30d'
         });
         this.props.dispatch({
-            type: 'homepage/queryByDateRange'
+            type: 'homepage/queryByDateRange',
         });
         this.props.dispatch({
             type: 'homepage/lastestCampaigns',
@@ -86,14 +86,14 @@ export default class Analysis extends Component {
         console.log('已读和未读状态');
     }
 
-    handleRangePickerChange = rangePickerValue => {
-        console.log(rangePickerValue);
+    //手动选择日期时
+    handleRangePickerChange = (date,dateString)=> {
         this.setState({
-            rangePickerValue,
+            rangePickerValue:date
         });
-
         this.props.dispatch({
-            type: 'chart/fetchSalesData',
+            type: 'homepage/queryByDateRange',
+            payload:{"start_date":dateString[0],"end_date":dateString[1]}
         });
     };
 
@@ -101,10 +101,17 @@ export default class Analysis extends Component {
         this.setState({
             rangePickerValue: getTimeDistance(type),
         });
-
-        this.props.dispatch({
-            type: 'chart/fetchSalesData',
-        });
+        if(type == 'month'){
+            this.props.dispatch({
+                type: 'homepage/queryByDateRange',
+                payload:{"type":"monthly"}
+            });
+        }else{
+            this.props.dispatch({
+                type: 'homepage/queryByDateRange',
+                payload:{"type":"yearly"}
+            });
+        }
     };
 
     isActive(type) {

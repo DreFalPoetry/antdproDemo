@@ -107,8 +107,8 @@ export async function queryNewCampaignList(params) {
 export async function recent30d() {
     return request('/pub/dash/recent30d');
 }
-export async function queryByDateRange() {
-    return request('/pub/dash/queryByDateRange');
+export async function queryByDateRange(params) {
+    return request(`/pub/dash/queryByDateRange?${stringify(params)}`);
 }
 export async function lastestCampaigns() {
     return request('/pub/dash/latestCampaigns');

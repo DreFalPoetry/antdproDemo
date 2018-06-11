@@ -44,8 +44,8 @@ export default {
                 });
             }
         },
-        *queryByDateRange(_, { call, put }) {
-            const response = yield call(queryByDateRange);
+        *queryByDateRange({ payload }, { call, put }) {
+            const response = yield call(queryByDateRange,payload);
             if(response.code!=undefined && response.code!=null && response.code == 0){
                 let clkData = [];
                 let clkEach = response.clk.each;

@@ -53,8 +53,8 @@ export default class LoginPage extends Component {
                 {login.status === 'error' &&
                 !login.submitting &&
                 this.renderMessage('账户或密码错误（admin/888888）')}
-                <UserName name="email" placeholder="admin/user" />
-                <Password name="password" placeholder="888888/123456" />
+                <UserName name="email" placeholder="Email" />
+                <Password name="password" placeholder="Password" />
             {/* </Tab> */}
             {/* <Tab key="mobile" tab="手机号登录">
                 {login.status === 'error' &&
@@ -65,9 +65,9 @@ export default class LoginPage extends Component {
                 <Captcha name="captcha" />
             </Tab> */}
             <div>
-                <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>
+                {/* <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>
                 自动登录
-                </Checkbox>
+                </Checkbox> */}
                 {/* <a style={{ float: 'right' }} href="">
                 忘记密码
                 </a> */}
@@ -78,9 +78,9 @@ export default class LoginPage extends Component {
                 <Icon className={styles.icon} type="alipay-circle" />
                 <Icon className={styles.icon} type="taobao-circle" />
                 <Icon className={styles.icon} type="weibo-circle" /> */}
-                <Link className={styles.register} to="/user/register">
+                {/* <Link className={styles.register} to="/user/register">
                 注册账户
-                </Link>
+                </Link> */}
             </div>
             </Login>
         </div>
