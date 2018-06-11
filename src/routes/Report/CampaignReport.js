@@ -20,6 +20,7 @@ import {
   Button,
   Progress,
   InputNumber,
+  AutoComplete,
   DatePicker,
   Table,
 } from 'antd';
@@ -36,7 +37,9 @@ const FormItem = Form.Item;
     loading: loading.models.report,
 }))
 export default class CampiagnReport extends PureComponent {
-    state = {};
+    state = {
+        dataSource: [],
+    };
 
     componentDidMount() {
         this.props.dispatch({
@@ -44,9 +47,26 @@ export default class CampiagnReport extends PureComponent {
         })
     }
 
+    //select
+    selectCampaign = (value) => {
+        console.log('onSelect', value);
+    }
+
+    //搜索Campaign项目
+    searchCampaign = (value) => {
+        this.setState({
+            dataSource: !value ? [] : [
+                value,
+                value + value,
+                value + value + value,
+            ],
+        });
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const { report } = this.props;
+        const { dataSource } = this.state;
         const { dataList,total,pageCount} = report;
 
         const columns = [
@@ -96,10 +116,13 @@ export default class CampiagnReport extends PureComponent {
                 <Col md={8} sm={24}>
                     <FormItem label="Campaign">
                     {getFieldDecorator('status3')(
-                        <Select placeholder="请选择" style={{ width: '182px' }}>
-                        <Option value="0">123021</Option>
-                        <Option value="1">122302</Option>
-                        </Select>
+                        <AutoComplete
+                            dataSource={dataSource}
+                            style={{ width: 200 }}
+                            onSelect={this.selectCampaign}
+                            onSearch={this.searchCampaign}
+                            placeholder="input here"
+                        />
                     )}
                     </FormItem>
                 </Col>

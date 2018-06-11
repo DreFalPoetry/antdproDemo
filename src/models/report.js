@@ -1,5 +1,6 @@
 import { queryReportList } from '../services/api';
-import { routerRedux } from 'dva/router';
+//引入判断 成功返回执行和session失效状态和 callBack提示错误信息状态
+import {callbackDeal} from '../utils/serviceCallBack';
 
 export default {
     namespace: 'report',
@@ -13,13 +14,24 @@ export default {
     effects: {
         *fetch(_, { call, put }) {
             const response = yield call(queryReportList);
-            const dataList = response.datagraid;
-            const total = response.total_pages;
-            const pageCount = response.page_no;
-            yield put({
-                type: 'syancList',
-                payload:{dataList,total,pageCount}
-            });
+            // callbackStatus successfully
+            const finallResult = callbackDeal(response);
+            if(finallResult == 'successCallBack'){
+                const dataList = response.datagraid;
+                const total = response.total_pages;
+                const pageCount = response.page_no;
+                yield put({
+                    type: 'syancList',
+                    payload:{dataList,total,pageCount}
+                });
+            }
+            // const dataList = response.datagraid;
+            // const total = response.total_pages;
+            // const pageCount = response.page_no;
+            // yield put({
+            //     type: 'syancList',
+            //     payload:{dataList,total,pageCount}
+            // });
         },
     },
 

@@ -1,6 +1,7 @@
 import { setAuthority } from './authority';
 import { reloadAuthorized } from './Authorized';
 import { notification  } from 'antd';
+import { routerRedux } from 'dva/router';
 
 export function sessionInvalid(){
     localStorage.removeItem('loginUserInfo');
@@ -25,7 +26,8 @@ export function callbackDeal(response){
             localStorage.removeItem('loginUserInfo');
             setAuthority('guest');
             reloadAuthorized();
-            this.props.history.push('/user/login');
+            routerRedux.push('/dashboard/analysis')
+            // this.props.history.push('/user/login');
         }else{
             notification.error({
                 message: 'Request an error',

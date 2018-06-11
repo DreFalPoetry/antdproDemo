@@ -37,7 +37,7 @@ export default {
                 type: 'changeLoginStatus',
                 payload: response,
             });
-            // Login successfully
+            // callbackStatus successfully
             const finallResult = callbackDeal(response);
             if(finallResult == 'successCallBack'){
                 const userinfo = response.userinfo;
