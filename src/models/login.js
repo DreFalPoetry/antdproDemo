@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { fakeAccountLogin ,realUserLogin} from '../services/api';
+import { fakeAccountLogin ,realUserLogin,userLogOut} from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 //引入判断session失效状态和 callBack提示错误信息状态
@@ -51,25 +51,30 @@ export default {
                 yield put(routerRedux.push('/dashboard/analysis'));
             }
         },
-        *logout(_, { put, select }) {
-            try {
-                // get location pathname
-                const urlParams = new URL(window.location.href);
-                const pathname = yield select(state => state.routing.location.pathname);
-                // add the parameters in the url
-                urlParams.searchParams.set('redirect', pathname);
-                window.history.replaceState(null, 'login', urlParams.href);
-            } finally {
-                sessionStorage.removeItem('loginUserInfo');
-                yield put({
-                    type: 'changeLoginStatus',
-                    payload: {
-                        status: false,
-                        currentAuthority: 'guest',
-                    },
-                });
-                reloadAuthorized();
-                yield put(routerRedux.push('/user/login'));
+        *logout(_, {call, put, select }) {
+            const response = yield call(userLogOut, {});
+            // callbackStatus successfully
+            const finallResult = callbackDeal(response);
+            if(finallResult == 'successCallBack'){
+                try {
+                    // get location pathname
+                    const urlParams = new URL(window.location.href);
+                    const pathname = yield select(state => state.routing.location.pathname);
+                    // add the parameters in the url
+                    urlParams.searchParams.set('redirect', pathname);
+                    window.history.replaceState(null, 'login', urlParams.href);
+                } finally {
+                    sessionStorage.removeItem('loginUserInfo');
+                    yield put({
+                        type: 'changeLoginStatus',
+                        payload: {
+                            status: false,
+                            currentAuthority: 'guest',
+                        },
+                    });
+                    reloadAuthorized();
+                    yield put(routerRedux.push('/user/login'));
+                }
             }
         },
     },

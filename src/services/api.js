@@ -75,6 +75,13 @@ export async function realUserLogin(params) {
     });
 }
 
+//连接后端的退出登陆接口
+export async function userLogOut() {
+    return request('/pub/user/logOut', {
+        method: 'POST'
+    });
+}
+
 //连接后端的修改密码接口
 export async function changePassword(params) {
     return request('/pub/user/changePwd', {
