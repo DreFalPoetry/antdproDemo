@@ -42,7 +42,7 @@ export default {
             if(finallResult == 'successCallBack'){
                 const userinfo = response.userinfo;
                 userinfo.avatar = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-                localStorage.setItem('loginUserInfo',JSON.stringify(userinfo));
+                sessionStorage.setItem('loginUserInfo',JSON.stringify(userinfo));
                 yield put({
                     type: 'asyncUserInfo',
                     payload: {userinfo},
@@ -69,24 +69,25 @@ export default {
             // }
         },
         *logout(_, { put, select }) {
-        try {
-            // get location pathname
-            const urlParams = new URL(window.location.href);
-            const pathname = yield select(state => state.routing.location.pathname);
-            // add the parameters in the url
-            urlParams.searchParams.set('redirect', pathname);
-            window.history.replaceState(null, 'login', urlParams.href);
-        } finally {
-            yield put({
-            type: 'changeLoginStatus',
-            payload: {
-                status: false,
-                currentAuthority: 'guest',
-            },
-            });
-            reloadAuthorized();
-            yield put(routerRedux.push('/user/login'));
-        }
+            try {
+                // get location pathname
+                const urlParams = new URL(window.location.href);
+                const pathname = yield select(state => state.routing.location.pathname);
+                // add the parameters in the url
+                urlParams.searchParams.set('redirect', pathname);
+                window.history.replaceState(null, 'login', urlParams.href);
+            } finally {
+                sessionStorage.removeItem('loginUserInfo');
+                yield put({
+                    type: 'changeLoginStatus',
+                    payload: {
+                        status: false,
+                        currentAuthority: 'guest',
+                    },
+                });
+                reloadAuthorized();
+                yield put(routerRedux.push('/user/login'));
+            }
         },
     },
 

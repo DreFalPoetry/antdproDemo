@@ -85,7 +85,7 @@ export default class GlobalHeader extends PureComponent {
       </Menu>
     );
     const noticeData = this.getNoticeData();
-    let loginUserInfo = JSON.parse(localStorage.getItem('loginUserInfo'));
+    let loginUserInfo = JSON.parse(sessionStorage.getItem('loginUserInfo'));
     return (
       <div className={styles.header}>
         {isMobile && [

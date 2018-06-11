@@ -4,7 +4,7 @@ import { notification  } from 'antd';
 import { routerRedux } from 'dva/router';
 
 export function sessionInvalid(){
-    localStorage.removeItem('loginUserInfo');
+    sessionStorage.removeItem('loginUserInfo');
     setAuthority('guest');
     reloadAuthorized();
     this.props.history.push('/user/login');
@@ -23,7 +23,7 @@ export function callbackDeal(response){
         if (response.code == 0) {
             return 'successCallBack';
         }else if(response.code == 1){
-            localStorage.removeItem('loginUserInfo');
+            sessionStorage.removeItem('loginUserInfo');
             setAuthority('guest');
             reloadAuthorized();
             routerRedux.push('/dashboard/analysis')
