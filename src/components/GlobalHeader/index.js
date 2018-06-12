@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip } from 'antd';
+import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip ,AutoComplete} from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
@@ -7,6 +7,11 @@ import { Link } from 'dva/router';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
+import { connect } from 'dva';
+
+@connect(({report }) => ({
+    report
+}))
 
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
@@ -55,6 +60,21 @@ export default class GlobalHeader extends PureComponent {
     event.initEvent('resize', true, false);
     window.dispatchEvent(event);
   }
+
+    //搜索Campaign项目
+    searchCampaign = (value) => {
+        console.log(value);
+        this.props.dispatch({
+            type: 'report/fetchCampaign',
+            payload:{"keywords":value}
+        })
+    }
+
+    //select
+    selectCampaign = (value) => {
+        this.props.changePath(value)
+    }
+
   render() {
     const {
       currentUser = {},
@@ -65,8 +85,10 @@ export default class GlobalHeader extends PureComponent {
       onNoticeVisibleChange,
       onMenuClick,
       onNoticeClear,
-      login
+      login,
+      report
     } = this.props;
+    const { dataSource} = report;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         {/* <Menu.Item disabled>
@@ -100,17 +122,23 @@ export default class GlobalHeader extends PureComponent {
           onClick={this.toggle}
         />
         <div className={styles.right}>
-          <HeaderSearch
+          {/* <HeaderSearch
             className={`${styles.action} ${styles.search}`}
             placeholder="站内搜索"
-            dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-            onSearch={value => {
-              console.log('input', value); // eslint-disable-line
-            }}
+            dataSource={dataSource}
+            onSearch={this.searchCampaign}
+            onChange={this.changeCampaing}
             onPressEnter={value => {
               console.log('enter', value); // eslint-disable-line
             }}
-          />
+          /> */}
+          <AutoComplete
+                dataSource={dataSource}
+                style={{ width: 200 }}
+                onSelect={this.selectCampaign}
+                onSearch={this.searchCampaign}
+                placeholder="select campaigns"
+            />
           {loginUserInfo ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>

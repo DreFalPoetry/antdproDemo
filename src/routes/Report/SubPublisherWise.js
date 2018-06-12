@@ -26,7 +26,7 @@ import {
   Switch
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import {getDate,getTheFirstDay} from '../../utils/commonFunc';
+import {getDate,getTheFirstDay,getParam} from '../../utils/commonFunc';
 //ranAdd
 const { Search } = Input;
 const { Option } = Select;
@@ -51,15 +51,30 @@ export default class SubPublisherWise extends PureComponent {
             page_no:1,
             page_size:2,
             is_gmt:0,
-            campaign_id:null
+            campaign_id:null,
+            campaignNameAndId:""
         };
     }
     
     componentDidMount() {
-        this.props.dispatch({
-            type: 'report/fetch',
-            payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
-        })
+        let urlParam = getParam('infoId');
+        console.log(getParam('infoId'));
+        if(urlParam){
+            this.setState({
+                campaign_id:Number(urlParam.split('-')[0]),
+                campaignNameAndId:urlParam
+            },function(){
+                this.props.dispatch({
+                    type: 'report/fetch',
+                    payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0,"campaign_id":this.state.campaign_id}
+                })
+            })
+        }else{
+            this.props.dispatch({
+                type: 'report/fetch',
+                payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
+            })
+        }
     }
 
     //select
@@ -201,7 +216,9 @@ export default class SubPublisherWise extends PureComponent {
                 </Col>
                 <Col md={8} sm={24}>
                     <FormItem label="Campaign">
-                    {getFieldDecorator('status3')(
+                    {getFieldDecorator('status3',{
+                        initialValue:this.state.campaignNameAndId
+                    })(
                         <AutoComplete
                             dataSource={dataSource}
                             style={{ width: 200 }}

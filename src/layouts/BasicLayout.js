@@ -184,6 +184,11 @@ class BasicLayout extends React.PureComponent {
       });
     }
   };
+
+  //跳转到详情页面
+  redirectToDetail = (value) => {
+    this.props.history.push({ pathname: '/campiagn/detail', state: { itemId: value } });
+  }
   render() {
     const {
       currentUser,
@@ -224,6 +229,7 @@ class BasicLayout extends React.PureComponent {
               onCollapse={this.handleMenuCollapse}
               onMenuClick={this.handleMenuClick}
               onNoticeVisibleChange={this.handleNoticeVisibleChange}
+              changePath={this.redirectToDetail}
             />
           </Header>
           <Content style={{ margin: '24px 24px', height: '100%' }}>

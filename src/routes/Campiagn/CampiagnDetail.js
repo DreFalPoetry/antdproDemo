@@ -81,11 +81,13 @@ export default class MyCampiagnDetail extends Component {
         })
     }
 
-    onOperationTabChange = key => {
-        // console.log(key);
+    onOperationTabChange = (campaignsDetails,key) => {
+        console.log(key);
+        console.log(campaignsDetails);
         this.setState({ operationkey: key });
         if(key == 'tab3'){
-            window.open('http://localhost:8000/#/report/subPublisherWise?id=24234234');
+            let params = campaignsDetails.id?("?infoId="+campaignsDetails.id+"-"+campaignsDetails.name):"";
+            window.open('http://localhost:8000/#/report/subPublisherWise'+params);
         }
     };
 
@@ -228,14 +230,14 @@ export default class MyCampiagnDetail extends Component {
         <div>
             <PageHeaderLayout
             breadcrumbList={breadcrumbList}
-            title="104855 Amazon"
+            title={campaignsDetails.id?campaignsDetails.id+" "+campaignsDetails.name:''}
             logo={
-                <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />
+                <img alt="" src={campaignsDetails.icon?campaignsDetails.icon:''}/>
             }
             content={description}
             extraContent={extra}
             >
-            <Card bordered={false} tabList={tabList} onTabChange={this.onOperationTabChange}>
+            <Card bordered={false} tabList={tabList} onTabChange={this.onOperationTabChange.bind(this,campaignsDetails)}>
                 {contentList[this.state.operationkey]}
             </Card>
             </PageHeaderLayout>

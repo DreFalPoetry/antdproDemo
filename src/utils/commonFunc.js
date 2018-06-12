@@ -29,3 +29,24 @@ export function getDateWithoutYear(i){
     var startdate=(lastM<10 ? "0" + lastM : lastM)+"-"+(lastD<10 ? "0"+ lastD : lastD);//三十天之前日期
     return startdate;
 }
+
+export function getParam(name) {
+    var hash = window.location.hash;
+    var search ="?"+hash.split('?')[1];
+    console.log(search);
+    var pattern = new RegExp("[?&]" + name + "\=([^&]+)", "g");
+    var matcher = pattern.exec(search);
+    var items = null;
+    if (null != matcher) {
+        try {
+            items = decodeURIComponent(decodeURIComponent(matcher[1]));
+        } catch (e) {
+            try {
+                items = decodeURIComponent(matcher[1]);
+            } catch (e) {
+                items = matcher[1];
+            }
+        }
+    }
+    return items;
+};
