@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { routerRedux } from 'dva/router';
 import {
     Row,
     Col,
@@ -39,11 +40,14 @@ export default class BasicSettings extends Component {
                 response.then((res) => {
                     return res;
                 }).then((json) => {
-                    console.log(json);
-                    if(json.rcode!==undefined && json.rcode!==null && json.rcode === 0){
-                        message.info('Password modification success');
-                    }else{
-                        message.error('Failure of password modification');
+                    if(json.code!==undefined && json.code!==null){
+                        if(json.code == 0){
+                            message.info('Password modification success');
+                        }else if(json.code == 1){
+                            routerRedux.push('/user/login')
+                        }else{
+                            message.error('Failure of password modification');
+                        }
                     }
                 })
             }

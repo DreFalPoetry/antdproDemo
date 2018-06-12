@@ -23,6 +23,7 @@ import {
   DatePicker,
   AutoComplete,
   Table,
+  Switch
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import {getDate,getTheFirstDay} from '../../utils/commonFunc';
@@ -31,8 +32,6 @@ const { Search } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
-let selectDate1 = '';
-let selectDate2 = '';
 
 @Form.create()
 @connect(({report, loading }) => ({
@@ -40,18 +39,25 @@ let selectDate2 = '';
     loading: loading.models.report,
 }))
 export default class SubPublisherWise extends PureComponent {
-    state = {
-        dataSource: [],
-        start_date:getTheFirstDay(),
-        end_date:getDate(0),
-        page_no:1,
-        page_size:2
-    };
+    constructor(props) {
+        super(props);
+        this.selectDate1 = '';
+        this.selectDate2 = '';
+        this.isGmt = 0;
+        this.state = {
+            dataSource: [],
+            start_date:getTheFirstDay(),
+            end_date:getDate(0),
+            page_no:1,
+            page_size:2,
+            is_gmt:0
+        };
+    }
     
     componentDidMount() {
         this.props.dispatch({
             type: 'report/fetch',
-            payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0)}
+            payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
         })
     }
 
@@ -77,10 +83,10 @@ export default class SubPublisherWise extends PureComponent {
             'page_no':page,
             'page_size':pageSize
         },function(){
-            const {start_date,page_no,end_date,page_size} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size}
+                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
             })
         });
     }
@@ -91,36 +97,44 @@ export default class SubPublisherWise extends PureComponent {
             'page_no':1,
             'page_size':size
         },function(){
-            const {start_date,page_no,end_date,page_size} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size}
+                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
             })
         })
     }
 
     //搜索栏日期发生变化
     dateChange = (dates,dateStrings) =>{
-        this.setState({
-            start_date:'',
-            end_date:''
-        });
-        selectDate1 = dateStrings[0];
-        selectDate2 = dateStrings[1]; 
+        this.selectDate1 = dateStrings[0];
+        this.selectDate2 = dateStrings[1]; 
     }
 
     //点击query按钮
     queryList = (e) =>{
         e.preventDefault();
         this.setState({
-            page_no:1
+            page_no:1,
+            start_date:this.selectDate1,
+            end_date:this.selectDate2,
+            is_gmt:this.isGmt
         },function(){
-            const {start_date,page_no,end_date,page_size} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date}
+                payload:{'is_sub':1,"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date,'is_gmt':is_gmt}
             })
         });
+    }
+
+    //切换时区
+    changeGmt = (checked) => {
+        if(checked){
+            this.isGmt = 1;
+        }else{
+            this.isGmt = 0;
+        }
     }
 
     render() {
@@ -196,6 +210,13 @@ export default class SubPublisherWise extends PureComponent {
                             onSearch={this.searchCampaign}
                             placeholder="input here"
                         />
+                    )}
+                    </FormItem>
+                </Col>
+                <Col md={5} sm={24}>    
+                    <FormItem label="isGmt">
+                    {getFieldDecorator('is_gmt')(
+                       <Switch onChange={this.changeGmt} />
                     )}
                     </FormItem>
                 </Col>
