@@ -44,13 +44,14 @@ export default class SubPublisherWise extends PureComponent {
         this.selectDate1 = '';
         this.selectDate2 = '';
         this.isGmt = 0;
+        this.campaignId = null;
         this.state = {
-            dataSource: [],
             start_date:getTheFirstDay(),
             end_date:getDate(0),
             page_no:1,
             page_size:2,
-            is_gmt:0
+            is_gmt:0,
+            campaign_id:null
         };
     }
     
@@ -63,18 +64,16 @@ export default class SubPublisherWise extends PureComponent {
 
     //select
     selectCampaign = (value) => {
-        console.log('onSelect', value);
+        this.campaignId = value;
     }
 
     //搜索Campaign项目
     searchCampaign = (value) => {
-        this.setState({
-            dataSource: !value ? [] : [
-                value,
-                value + value,
-                value + value + value,
-            ],
-        });
+        this.campaignId = null;
+        this.props.dispatch({
+            type: 'report/fetchCampaign',
+            payload:{"keywords":value}
+        })
     }
 
     //点击下一页或上一页操作
@@ -83,10 +82,10 @@ export default class SubPublisherWise extends PureComponent {
             'page_no':page,
             'page_size':pageSize
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
+                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt,"campaign_id":campaign_id}
             })
         });
     }
@@ -97,10 +96,10 @@ export default class SubPublisherWise extends PureComponent {
             'page_no':1,
             'page_size':size
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
+                payload:{'is_sub':1,"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt,"campaign_id":campaign_id}
             })
         })
     }
@@ -118,12 +117,13 @@ export default class SubPublisherWise extends PureComponent {
             page_no:1,
             start_date:this.selectDate1,
             end_date:this.selectDate2,
-            is_gmt:this.isGmt
+            is_gmt:this.isGmt,
+            campaign_id:this.campaignId
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date,'is_gmt':is_gmt}
+                payload:{'is_sub':1,"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date,'is_gmt':is_gmt,'campaign_id':campaign_id}
             })
         });
     }
@@ -140,8 +140,7 @@ export default class SubPublisherWise extends PureComponent {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { report } = this.props;
-        const { dataSource } = this.state;
-        const { dataList,total,pageSize} = report;
+        const { dataList,total,pageSize,dataSource} = report;
 
         const columns = [
         {

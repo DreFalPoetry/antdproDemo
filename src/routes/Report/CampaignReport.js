@@ -44,13 +44,14 @@ export default class CampiagnReport extends PureComponent {
         this.selectDate1 = '';
         this.selectDate2 = '';
         this.isGmt = 0;
+        this.campaignId = null;
         this.state = {
-            dataSource: [],
             start_date:getTheFirstDay(),
             end_date:getDate(0),
             page_no:1,
             page_size:2,
-            is_gmt:0
+            is_gmt:0,
+            campaign_id:null
         };
     }
     
@@ -64,18 +65,16 @@ export default class CampiagnReport extends PureComponent {
 
     //select
     selectCampaign = (value) => {
-        console.log('onSelect', value);
+       this.campaignId = value;
     }
 
     //搜索Campaign项目
     searchCampaign = (value) => {
-        this.setState({
-            dataSource: !value ? [] : [
-                value,
-                value + value,
-                value + value + value,
-            ],
-        });
+        this.campaignId = null;
+        this.props.dispatch({
+            type: 'report/fetchCampaign',
+            payload:{"keywords":value}
+        })
     }
 
     //搜索栏日期发生变化
@@ -90,10 +89,10 @@ export default class CampiagnReport extends PureComponent {
             'page_no':page,
             'page_size':pageSize
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
+                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt,"campaign_id":campaign_id}
             })
         });
     }
@@ -104,10 +103,10 @@ export default class CampiagnReport extends PureComponent {
             'page_no':1,
             'page_size':size
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt}
+                payload:{"start_date":start_date,"end_date":end_date,"page_no":page_no,"page_size":page_size,"is_gmt":is_gmt,"campaign_id":campaign_id}
             })
         })
     }
@@ -119,12 +118,13 @@ export default class CampiagnReport extends PureComponent {
             page_no:1,
             start_date:this.selectDate1,
             end_date:this.selectDate2,
-            is_gmt:this.isGmt
+            is_gmt:this.isGmt,
+            campaign_id:this.campignId
         },function(){
-            const {start_date,page_no,end_date,page_size,is_gmt} = this.state;
+            const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date,'is_gmt':is_gmt}
+                payload:{"page_no":page_no,"page_size":page_size,'start_date':start_date,'end_date':end_date,'is_gmt':is_gmt,'campaign_id':campaign_id}
             })
         });
     }
@@ -141,8 +141,7 @@ export default class CampiagnReport extends PureComponent {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { report } = this.props;
-        const { dataSource } = this.state;
-        const { dataList,total,pageSize} = report;
+        const { dataList,total,pageSize,dataSource} = report;
 
         const columns = [
         {
