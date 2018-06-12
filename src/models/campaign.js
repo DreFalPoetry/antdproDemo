@@ -7,8 +7,8 @@ export default {
 
     state: {
         myCampaigns:{},
-        pageNo:"",
-        totalCount:"",
+        pageSize:null,
+        total:null,
         campsList:[],
         campaignsDetails:{},
         targeting:{},
@@ -18,6 +18,7 @@ export default {
     },
 
     effects: {
+        //获取头部框数据详情
         *myCampaigns(_, { call, put }) {
             const response = yield call(myCampaigns);
             // callbackStatus successfully
@@ -29,18 +30,18 @@ export default {
                 });
             }
         },
-        *filterCampaigns(_, { call, put }) {
-            const response = yield call(campaigns);
-            console.log(response);
+        //获取table数据
+        *filterCampaigns({payload}, { call, put }) {
+            const response = yield call(campaigns,payload);
             // callbackStatus successfully
             const finallResult = callbackDeal(response);
             if(finallResult == 'successCallBack'){
-                const pageNo = response.page_no;//页数
-                const totalCount = response.total_pages;//总条数
+                const total = response.total_records;//总条数
+                const pageSize = response.page_size;//每页条数
                 const campsList = response.camps;
                 yield put({
                     type: 'syancFilterCampaigns',
-                    payload: {pageNo,totalCount,campsList},
+                    payload: {pageSize,total,campsList},
                 });
             }
         },
@@ -50,12 +51,13 @@ export default {
             const finallResult = callbackDeal(response);
             if(finallResult == 'successCallBack'){
                 const filterList = response.data;
-                    yield put({
-                        type: 'syancFilterList',
-                        payload: filterList,
-                    });
+                yield put({
+                    type: 'syancFilterList',
+                    payload: filterList,
+                });
             }
         },
+        //获取campaign详情
         *fetchCampaignsDetail(_, { call, put }) {
             const response = yield call(campaignDetails);
             // callbackStatus successfully
@@ -83,10 +85,10 @@ export default {
                 myCampaigns: payload,
             };
         },
-        syancFilterCampaigns(state, {payload:{pageNo,totalCount,campsList}}) {
+        syancFilterCampaigns(state, {payload:{pageSize,total,campsList}}) {
             return {
                 ...state,
-                pageNo,totalCount,campsList
+                pageSize,total,campsList
             };
         },
         syancCampaignsDetail(state, {payload}) {

@@ -126,8 +126,11 @@ export async function latestUpdates() {
 export async function myCampaigns() {
     return request('/pub/dash/myCampaigns');
 }
-export async function campaigns() {
-    return request('/pub/campaigns');
+export async function campaigns(params) {
+    return request('/pub/campaigns',{
+        method: 'POST',
+        body: params,
+    });
 }
 //获取filterList的数据
 export async function campaignOptions() {

@@ -61,9 +61,9 @@ export default class MyCampiagnDetail extends Component {
     };
     componentDidMount() {
         console.log(this.props.location.state);
+        let jsonInfo = this.props.location.state;
         const { dispatch } = this.props;
-
-        const response = campaignDetails(104528);
+        const response = campaignDetails(jsonInfo.itemId);
         response.then((res) => {
             return res;
         }).then((json) => {

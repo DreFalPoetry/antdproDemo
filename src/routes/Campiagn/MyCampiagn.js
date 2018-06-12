@@ -41,8 +41,14 @@ const SHOW_PARENT = TreeSelect.SHOW_PARENT;
     loading: loading.models.list,
 }))
 export default class MyCampiagn extends Component {
-    state = {
-        value:[]
+    constructor(props) {
+        super(props);
+        this.state = {
+            page_no:1,
+            page_size:2,
+            value:[],
+            keywords:''
+        };
     }
 
     componentDidMount() {
@@ -51,40 +57,79 @@ export default class MyCampiagn extends Component {
         });
         this.props.dispatch({
             type: 'campaign/filterCampaigns',
+            payload:{'page_no':1,'page_size':2}
         });
 
         //获取下拉框的list数据信息
         this.props.dispatch({
             type: 'campaign/getFilterList',
         });
-
-        // this.props.dispatch({
-        //     type: 'list/fetch',
-        //     payload: {
-        //         count: 5,
-        //     },
-        // });
     }
 
     //树形选择发生变化的时候
     changeTreeVal = (value) => {
-        console.log('onChange ', value);
-        this.setState({ value });
+        this.setState({ 
+            value:value,
+            page_no:1
+        },function(){
+            const {value,page_no,page_size,keywords} = this.state;
+            this.props.dispatch({
+                type: 'campaign/filterCampaigns',
+                payload:{'page_no':page_no,'page_size':page_size,'tree_param':value,'keywords':keywords}
+            });
+        });
     }
 
     //获取搜索框中的值
     getSearchVal = (value) => {
-        console.log(value);
+        this.setState({
+            keywords:value,
+            page_no:1
+        },function(){
+            const {value,page_no,page_size,keywords} = this.state;
+            this.props.dispatch({
+                type: 'campaign/filterCampaigns',
+                payload:{'page_no':page_no,'page_size':page_size,'tree_param':value,'keywords':keywords}
+            });
+        })
+    }
+
+    //点击下一页或上一页操作
+    pageChange  = (page,pageSize) => {
+        this.setState({
+            'page_no':page,
+            'page_size':pageSize
+        },function(){
+            const {page_no,page_size} = this.state;
+            this.props.dispatch({
+                type: 'campaign/filterCampaigns',
+                payload:{"page_no":page_no,"page_size":page_size}
+            })
+        });
+    }
+
+    //每页条数发生变化
+    onShowSizeChange = (current,size) =>{
+        this.setState({
+            'page_no':1,
+            'page_size':size
+        },function(){
+            const {page_no,page_size} = this.state;
+            this.props.dispatch({
+                type: 'campaign/filterCampaigns',
+                payload:{"page_no":page_no,"page_size":page_size}
+            })
+        })
     }
 
     //进入详情页面
     enterHandle = (id) => {
-        this.props.history.push({ pathname: '/campiagn/detail', state: { id: id } });
+        this.props.history.push({ pathname: '/campiagn/detail', state: { itemId: id } });
     };
 
     render() {
-        const { list: { list },campaign, loading } = this.props;
-        const {myCampaigns,pageNo,totalCount,campsList,filterList} = campaign;
+        const { campaign, loading } = this.props;
+        const {myCampaigns,total,pageSize,campsList,filterList} = campaign;
 
         const Info = ({ title, value, bordered }) => (
             <div>
@@ -119,9 +164,12 @@ export default class MyCampiagn extends Component {
 
         const paginationProps = {
             showSizeChanger: true,
-            showQuickJumper: true,
-            pageSize: 5,
-            total: 50,
+            pageSize: pageSize,
+            total: total,
+            current:this.state.page_no,
+            pageSizeOptions:['2', '5', '10', '15','20'],
+            onChange:this.pageChange,
+            onShowSizeChange:this.onShowSizeChange
         };
 
         const ListContent = ({ data }) => (
