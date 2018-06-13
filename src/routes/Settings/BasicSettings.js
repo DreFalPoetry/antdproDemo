@@ -16,6 +16,9 @@ import {changePassword} from '../../services/api';
 //ranAdd
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
+import { setAuthority } from '../../utils/authority';
+import { reloadAuthorized } from '../../utils/Authorized';
+
 import Ellipsis from 'components/Ellipsis';
 
 const { TabPane } = Tabs;
@@ -40,13 +43,17 @@ export default class BasicSettings extends Component {
                 response.then((res) => {
                     return res;
                 }).then((json) => {
+                    console.log(json);
                     if(json.code!==undefined && json.code!==null){
                         if(json.code == 0){
-                            message.info('Password modification success');
+                            message.success('Password modification success');
                         }else if(json.code == 1){
-                            routerRedux.push('/user/login')
+                            sessionStorage.removeItem('loginUserInfo');
+                            setAuthority('guest');
+                            reloadAuthorized();
+                            routerRedux.push('/user/login');
                         }else{
-                            message.error('Failure of password modification');
+                            message.error(json.info);
                         }
                     }
                 })

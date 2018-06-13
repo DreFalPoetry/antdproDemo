@@ -30,6 +30,22 @@ export function getDateWithoutYear(i){
     return startdate;
 }
 
+export function getProgressSpeed(startTime,endTime){
+    var startTime = new Date(startTime);
+    var endTime = new Date(endTime);
+    var myDate = new Date();
+    var speed = (myDate - startTime)/(endTime - startTime);
+    var speedPoint = null;
+    if(speed <= 0){
+        speedPoint = 0;
+    }else if(speed >0 && speed <1){
+        speedPoint =  parseInt(speed*100) 
+    }else{
+        speedPoint = 100;
+    }
+    return speedPoint;
+}
+
 export function getParam(name) {
     var hash = window.location.hash;
     var search ="?"+hash.split('?')[1];
@@ -49,4 +65,12 @@ export function getParam(name) {
         }
     }
     return items;
+};
+
+//拼接字符串
+export function splicingCharacter(...args) {
+    let arr1 = args;
+    console.log(arr1);
+    return arr1.filter(item=>item).join(',');
+    // return items;
 };

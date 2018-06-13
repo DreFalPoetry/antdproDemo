@@ -314,7 +314,7 @@ export default class Analysis extends Component {
                                 <List.Item key={item.id} style={{ marginBottom: 0 }}>
                                     <Card hoverable className={styles.card}>
                                         <Card.Meta
-                                            avatar={<img alt="" className={styles.cardAvatar} src={item.icon} />}
+                                            avatar={<img alt="" className={styles.cardAvatar} src={item.icon?item.icon:''} />}
                                             title={<span>{item.id + " " + item.name}</span>}
                                             description={
                                                 <div>

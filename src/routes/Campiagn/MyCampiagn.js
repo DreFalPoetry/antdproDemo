@@ -28,6 +28,7 @@ import {
 //ranAdd
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './MyCampiagn.less';
+import { getProgressSpeed,splicingCharacter }from '../../utils/commonFunc';
 const { Search } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -132,7 +133,7 @@ export default class MyCampiagn extends Component {
         const {myCampaigns,total,pageSize,campsList,filterList} = campaign;
 
         const Info = ({ title, value, bordered }) => (
-            <div>
+            <div className={styles.infoShowBold}>
                 <span>{title}</span>
                 <p>{value}</p>
                 {bordered && <em />}
@@ -185,8 +186,8 @@ export default class MyCampiagn extends Component {
                     </div>
                 </div>
                 <div className={styles.listContentItem}>
-                    <Progress percent={80} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
-                    <span style={{marginLeft:20}}>{data?data.created_at:""}</span>
+                    <Progress percent={data?getProgressSpeed(data.active_time,data.expire_time):0} strokeWidth={6} style={{ width: 120 }} showInfo={false}/>
+                    <span style={{marginLeft:20}}>{data?data.expire_time:""}</span>
                 </div>
             </div>
         );
@@ -195,7 +196,7 @@ export default class MyCampiagn extends Component {
             <div className={styles.campiagnHeader}>
                 <PageHeaderLayout />
                 {/* 头部信息 */}
-                <Card bordered={false}>
+                <Card bordered={false} >
                     <Row>
                         <Col
                             sm={8}
@@ -236,9 +237,9 @@ export default class MyCampiagn extends Component {
                         renderItem={item => (
                             <List.Item actions={[<a onClick={this.enterHandle.bind(this,item.id)}>Detail</a>]}>
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.icon} shape="square" size="large" />}
+                                    avatar={<Avatar src={item.icon?item.icon:''} shape="square" size="large" />}
                                     title={<span>{item.id+" "+item.name}</span>}
-                                    description={item.platform+","+item.countries+" "+item.category+" "+item.kpi+" "+item.currency}
+                                    description={splicingCharacter(item.platform,item.country,item.category,item.kpi?item.kpi+" KPI":"",item.currency)}
                                 />
                                 <ListContent data={item} />
                             </List.Item>
