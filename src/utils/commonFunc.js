@@ -49,7 +49,6 @@ export function getProgressSpeed(startTime,endTime){
 export function getParam(name) {
     var hash = window.location.hash;
     var search ="?"+hash.split('?')[1];
-    console.log(search);
     var pattern = new RegExp("[?&]" + name + "\=([^&]+)", "g");
     var matcher = pattern.exec(search);
     var items = null;
@@ -70,7 +69,6 @@ export function getParam(name) {
 //拼接字符串
 export function splicingCharacter(...args) {
     let arr1 = args;
-    console.log(arr1);
     return arr1.filter(item=>item).join(',');
     // return items;
 };

@@ -63,7 +63,6 @@ export default class GlobalHeader extends PureComponent {
 
     //搜索Campaign项目
     searchCampaign = (value) => {
-        console.log(value);
         this.props.dispatch({
             type: 'report/fetchCampaign',
             payload:{"keywords":value}

@@ -113,26 +113,26 @@ const menuData = [
   //     },
   //   ],
   // },
-  {
-    name: '账户',
-    icon: 'user',
-    path: 'user',
-    authority: 'guest',
-    children: [
-      {
-        name: '登录',
-        path: 'login',
-      },
-      {
-        name: '注册',
-        path: 'register',
-      },
-      {
-        name: '注册结果',
-        path: 'register-result',
-      },
-    ],
-  },
+//   {
+//     name: '账户',
+//     icon: 'user',
+//     path: 'user',
+//     authority: 'guest',
+//     children: [
+//       {
+//         name: '登录',
+//         path: 'login',
+//       },
+//       {
+//         name: '注册',
+//         path: 'register',
+//       },
+//       {
+//         name: '注册结果',
+//         path: 'register-result',
+//       },
+//     ],
+//   },
   // 添加新的菜单页面
   // {
   //   name: '新菜单项',

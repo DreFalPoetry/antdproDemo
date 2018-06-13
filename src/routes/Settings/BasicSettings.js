@@ -38,12 +38,10 @@ export default class BasicSettings extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const response = changePassword(values);
                 response.then((res) => {
                     return res;
                 }).then((json) => {
-                    console.log(json);
                     if(json.code!==undefined && json.code!==null){
                         if(json.code == 0){
                             message.success('Password modification success');

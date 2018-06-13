@@ -76,15 +76,28 @@ export default class MyCampiagnDetail extends Component {
         response.then((res) => {
             return res;
         }).then((json) => {
-            const updates = json.detail.updates;
-            const targeting = json.detail.targeting;
-            const creative = json.detail.creative;
-            this.setState({
-                campaignsDetails:json.detail,
-                targeting:targeting,
-                updates:updates,
-                creative:creative,
-            })
+            if(json.code == 0){
+                const updates = json.detail.updates;
+                const targeting = json.detail.targeting;
+                const creative = json.detail.creative;
+                this.setState({
+                    campaignsDetails:json.detail,
+                    targeting:targeting,
+                    updates:updates,
+                    creative:creative,
+                })
+            }else if(json.code == 1){
+                sessionStorage.removeItem('loginUserInfo');
+                setAuthority('guest');
+                reloadAuthorized();
+                routerRedux.push('/dashboard/analysis')
+            }else{
+                notification.error({
+                    message: 'Request an error',
+                    description: response.info,
+                });
+            }
+            
             // dispatch({
             //     type: 'campaign/syancCampaignsDetail',
             //     payload: json.detail,
@@ -102,7 +115,7 @@ export default class MyCampiagnDetail extends Component {
         response.then((res) => {
             return res;
         }).then((json) => {
-            // if(json.code == 0){
+            if(json.code == 0){
                 const updates = json.detail.updates;
                 const targeting = json.detail.targeting;
                 const creative = json.detail.creative;
@@ -120,23 +133,21 @@ export default class MyCampiagnDetail extends Component {
                 //     type: 'campaign/syancDetailList',
                 //     payload: {updates,targeting,creative},
                 // });
-            // }else if(json.code == 1){
-            //     sessionStorage.removeItem('loginUserInfo');
-            //     setAuthority('guest');
-            //     reloadAuthorized();
-            //     routerRedux.push('/dashboard/analysis')
-            // }else{
-            //     notification.error({
-            //         message: 'Request an error',
-            //         description: response.info,
-            //     });
-            // }
+            }else if(json.code == 1){
+                sessionStorage.removeItem('loginUserInfo');
+                setAuthority('guest');
+                reloadAuthorized();
+                routerRedux.push('/dashboard/analysis')
+            }else{
+                notification.error({
+                    message: 'Request an error',
+                    description: response.info,
+                });
+            }
         })
     }
 
     onOperationTabChange = (campaignsDetails,key) => {
-        console.log(key);
-        console.log(campaignsDetails);
         this.setState({ operationkey: key });
         if(key == 'tab3'){
             let params = campaignsDetails.id?("?infoId="+campaignsDetails.id+"-"+campaignsDetails.name):"";
