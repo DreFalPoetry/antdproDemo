@@ -45,6 +45,9 @@ export default class BasicSettings extends Component {
                     if(json.code!==undefined && json.code!==null){
                         if(json.code == 0){
                             message.success('Password modification success');
+                            setTimeout(() => {
+                                this.props.form.resetFields();
+                            }, 1000);
                         }else if(json.code == 1){
                             sessionStorage.removeItem('loginUserInfo');
                             setAuthority('guest');
