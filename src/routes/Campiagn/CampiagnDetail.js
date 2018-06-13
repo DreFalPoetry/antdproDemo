@@ -71,60 +71,33 @@ export default class MyCampiagnDetail extends Component {
     };
     componentDidMount() {
         let jsonInfo = this.props.location.state;
-        const { dispatch } = this.props;
-        const response = campaignDetails(jsonInfo.itemId);
-        response.then((res) => {
-            return res;
-        }).then((json) => {
-            if(json.code == 0){
-                const updates = json.detail.updates;
-                const targeting = json.detail.targeting;
-                const creative = json.detail.creative;
-                this.setState({
-                    campaignsDetails:json.detail,
-                    targeting:targeting,
-                    updates:updates,
-                    creative:creative,
-                })
-            }else if(json.code == 1){
-                sessionStorage.removeItem('loginUserInfo');
-                setAuthority('guest');
-                reloadAuthorized();
-                routerRedux.push('/dashboard/analysis')
-            }else{
-                notification.error({
-                    message: 'Request an error',
-                    description: response.info,
-                });
-            }
-            
-            // dispatch({
-            //     type: 'campaign/syancCampaignsDetail',
-            //     payload: json.detail,
-            // });
-            // dispatch({
-            //     type: 'campaign/syancDetailList',
-            //     payload: {updates,targeting,creative},
-            // });
-        })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        let jsonInfo = nextProps.history.location.state;
-        const response = campaignDetails(jsonInfo.itemId);
-        response.then((res) => {
-            return res;
-        }).then((json) => {
-            if(json.code == 0){
-                const updates = json.detail.updates;
-                const targeting = json.detail.targeting;
-                const creative = json.detail.creative;
-                this.setState({
-                    campaignsDetails:json.detail,
-                    targeting:targeting,
-                    updates:updates,
-                    creative:creative,
-                })
+        if(jsonInfo){
+            const response = campaignDetails(jsonInfo.itemId);
+            response.then((res) => {
+                return res;
+            }).then((json) => {
+                if(json.code == 0){
+                    const updates = json.detail.updates;
+                    const targeting = json.detail.targeting;
+                    const creative = json.detail.creative;
+                    this.setState({
+                        campaignsDetails:json.detail,
+                        targeting:targeting,
+                        updates:updates,
+                        creative:creative,
+                    })
+                }else if(json.code == 1){
+                    sessionStorage.removeItem('loginUserInfo');
+                    setAuthority('guest');
+                    reloadAuthorized();
+                    routerRedux.push('/dashboard/analysis')
+                }else{
+                    notification.error({
+                        message: 'Request an error',
+                        description: response.info,
+                    });
+                }
+                
                 // dispatch({
                 //     type: 'campaign/syancCampaignsDetail',
                 //     payload: json.detail,
@@ -133,18 +106,48 @@ export default class MyCampiagnDetail extends Component {
                 //     type: 'campaign/syancDetailList',
                 //     payload: {updates,targeting,creative},
                 // });
-            }else if(json.code == 1){
-                sessionStorage.removeItem('loginUserInfo');
-                setAuthority('guest');
-                reloadAuthorized();
-                routerRedux.push('/dashboard/analysis')
-            }else{
-                notification.error({
-                    message: 'Request an error',
-                    description: response.info,
-                });
-            }
-        })
+            })
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let jsonInfo = nextProps.history.location.state;
+        if(jsonInfo){
+            const response = campaignDetails(jsonInfo.itemId);
+            response.then((res) => {
+                return res;
+            }).then((json) => {
+                if(json.code == 0){
+                    const updates = json.detail.updates;
+                    const targeting = json.detail.targeting;
+                    const creative = json.detail.creative;
+                    this.setState({
+                        campaignsDetails:json.detail,
+                        targeting:targeting,
+                        updates:updates,
+                        creative:creative,
+                    })
+                    // dispatch({
+                    //     type: 'campaign/syancCampaignsDetail',
+                    //     payload: json.detail,
+                    // });
+                    // dispatch({
+                    //     type: 'campaign/syancDetailList',
+                    //     payload: {updates,targeting,creative},
+                    // });
+                }else if(json.code == 1){
+                    sessionStorage.removeItem('loginUserInfo');
+                    setAuthority('guest');
+                    reloadAuthorized();
+                    routerRedux.push('/dashboard/analysis')
+                }else{
+                    notification.error({
+                        message: 'Request an error',
+                        description: response.info,
+                    });
+                }
+            })
+        }
     }
 
     onOperationTabChange = (campaignsDetails,key) => {
@@ -164,7 +167,7 @@ export default class MyCampiagnDetail extends Component {
             <DescriptionList className={styles.headerList} size="small" col="1">
               <Description term="Category">{campaignsDetails.category?campaignsDetails.category:"--"}</Description>
               <Description term="Lifetime cycle">{campaignsDetails.active_time?campaignsDetails.active_time+"~"+campaignsDetails.expire_time:"--"}</Description>
-              <Description term="Daily Cap">{campaignsDetails.allocation?campaignsDetails.allocation.daily_cap:"Open Cap"}</Description>
+              <Description term="Daily Cap">{campaignsDetails.allocation?(campaignsDetails.allocation.daily_cap?campaignsDetails.allocation.daily_cap:"Open Cap"):"--"}</Description>
               <Description term="Fraud Description">{campaignsDetails.fraud_description?campaignsDetails.fraud_description:"--"}</Description>
               <Description term="KPI Description">{campaignsDetails.quality_description?campaignsDetails.quality_description:"--"}</Description>
             </DescriptionList>
@@ -185,19 +188,27 @@ export default class MyCampiagnDetail extends Component {
         tab1: (
             <div>
                 <Card title="Targeting" style={{ marginBottom: 24 }}>
-                    <DescriptionList style={{ marginBottom: 24 }} col="2">
-                        <Description term="Country">{targeting.countries?targeting.countries:"--"}</Description>
-                        <Description term="State or City">{targeting.region?targeting.region:"--"}</Description>
-                        <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:"--"}</Description>
-                        <Description term="Carrier">{targeting.carrier?targeting.carrier:"--"}</Description>
-                        <Description term="Mandatory Device ID">{targeting.mandatory_did?targeting.mandatory_did:"--"}</Description>
-                        <Description term="Sub Publisher">{campaignsDetails.sub_publisher?campaignsDetails.sub_publisher:"--"}</Description>
-                        <Description term="Device Type">{targeting.device_types?targeting.device_types:"--"}</Description>
-                        <Description term="Device Make">{targeting.device_makes?targeting.device_makes:"--"}</Description>
-                        <Description term="Device Model">{targeting.device_models?targeting.device_models:"--"}</Description>
-                        <Description term="OS">{targeting.os?targeting.os:"--"}</Description>
-                        <Description term="OSV">{targeting.osv?targeting.osv:"--"}</Description>
-                    </DescriptionList>
+                <Row>
+                    <Col xs={24} sm={12}>
+                        <DescriptionList style={{ marginBottom: 24 }} col="1">
+                            <Description term="Country">{targeting.countries?targeting.countries:"--"}</Description>
+                            <Description term="State or City">{targeting.region?targeting.region:"--"}</Description>
+                            <Description term="Connection Type">{targeting.connection_types?targeting.connection_types:"--"}</Description>
+                            <Description term="Carrier">{targeting.carrier?targeting.carrier:"--"}</Description>
+                            <Description term="Mandatory Device ID">{targeting.mandatory_did?targeting.mandatory_did:"--"}</Description>
+                            <Description term="Sub Publisher">{campaignsDetails.sub_publisher?campaignsDetails.sub_publisher:"--"}</Description>
+                        </DescriptionList>
+                    </Col>
+                    <Col xs={24} sm={12}>
+                        <DescriptionList style={{ marginBottom: 24 }} col="1">
+                            <Description term="Device Type">{targeting.device_types?targeting.device_types:"--"}</Description>
+                            <Description term="Device Make">{targeting.device_makes?targeting.device_makes:"--"}</Description>
+                            <Description term="Device Model">{targeting.device_models?targeting.device_models:"--"}</Description>
+                            <Description term="OS">{targeting.os?targeting.os:"--"}</Description>
+                            <Description term="OSV">{targeting.osv?targeting.osv:"--"}</Description>
+                        </DescriptionList>
+                    </Col>
+                </Row>
                 </Card>
                 <Card title="Creative" style={{ marginBottom: 24 }}>
                     <DescriptionList style={{ marginBottom: 24 }} col="1">
