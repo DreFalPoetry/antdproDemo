@@ -41,8 +41,8 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 export default class SubPublisherWise extends PureComponent {
     constructor(props) {
         super(props);
-        this.selectDate1 = '';
-        this.selectDate2 = '';
+        this.selectDate1 = getTheFirstDay();
+        this.selectDate2 = getDate(0);
         this.isGmt = 0;
         this.campaignId = null;
         this.state = {

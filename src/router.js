@@ -19,7 +19,7 @@ function RouterConfig({ history, app }) {
   const UserLayout = routerData['/user'].component;
   const BasicLayout = routerData['/'].component;
   return (
-    <LocaleProvider locale={zhCN}>
+    <LocaleProvider>
       <ConnectedRouter history={history}>
         <Switch>
           {/* 根据common文件夹中的router配置进行区分是用户登陆页面和登陆后的菜单显示页面 */}

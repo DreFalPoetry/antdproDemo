@@ -98,7 +98,7 @@ class Bar extends Component {
             <Axis
               name="x"
               title={false}
-              label={{autoRotate:false,}}
+              label={autoHideXLabels ? false : {}}
               tickLine={autoHideXLabels ? false : {}}
             />
             <Axis name="y" min={0} />

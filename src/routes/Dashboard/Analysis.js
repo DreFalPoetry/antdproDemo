@@ -285,7 +285,7 @@ export default class Analysis extends Component {
                                                 <li key={item.name}>
                                                     <span className={i < 3 ? styles.active : ''}>{i + 1}</span>
                                                     <span>{item.name}</span>
-                                                    <span>{numeral(item.cnt).format('0,0.00')}</span>
+                                                    <span>{numeral(item.cnt).format('0,0')}</span>
                                                 </li>
                                                 )):""}
                                             </ul>

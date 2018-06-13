@@ -41,8 +41,8 @@ const FormItem = Form.Item;
 export default class CampiagnReport extends PureComponent {
     constructor(props) {
         super(props);
-        this.selectDate1 = '';
-        this.selectDate2 = '';
+        this.selectDate1 = getTheFirstDay();
+        this.selectDate2 = getDate(0);
         this.isGmt = 0;
         this.campaignId = null;
         this.state = {
@@ -119,7 +119,7 @@ export default class CampiagnReport extends PureComponent {
             start_date:this.selectDate1,
             end_date:this.selectDate2,
             is_gmt:this.isGmt,
-            campaign_id:this.campignId
+            campaign_id:this.campaignId
         },function(){
             const {start_date,page_no,end_date,page_size,is_gmt,campaign_id} = this.state;
             this.props.dispatch({

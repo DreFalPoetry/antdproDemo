@@ -101,10 +101,10 @@ export default class MyCampiagn extends Component {
             'page_no':page,
             'page_size':pageSize
         },function(){
-            const {page_no,page_size} = this.state;
+            const {value,keywords,page_no,page_size} = this.state;
             this.props.dispatch({
                 type: 'campaign/filterCampaigns',
-                payload:{"page_no":page_no,"page_size":page_size}
+                payload:{"page_no":page_no,"page_size":page_size,'tree_param':value,'keywords':keywords}
             })
         });
     }
@@ -115,10 +115,10 @@ export default class MyCampiagn extends Component {
             'page_no':1,
             'page_size':size
         },function(){
-            const {page_no,page_size} = this.state;
+            const {page_no,page_size,value,keywords} = this.state;
             this.props.dispatch({
                 type: 'campaign/filterCampaigns',
-                payload:{"page_no":page_no,"page_size":page_size}
+                payload:{"page_no":page_no,"page_size":page_size,'tree_param':value,'keywords':keywords}
             })
         })
     }
