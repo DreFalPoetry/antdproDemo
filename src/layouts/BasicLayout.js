@@ -187,7 +187,9 @@ class BasicLayout extends React.PureComponent {
 
   //跳转到详情页面
   redirectToDetail = (value) => {
-    this.props.history.push({ pathname: '/campiagn/detail', state: { itemId: value } });
+      console.log(this.props);
+    // this.props.dispatch(routerRedux.push('/campiagn/detail?itemId='+value));
+    this.props.history.replace({ pathname: '/campiagn/detail', state: { itemId: value } });
   }
   render() {
     const {

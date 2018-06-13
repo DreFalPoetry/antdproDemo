@@ -18,6 +18,7 @@ import {
   Button,
   Progress,
   Table,
+  notification
 } from 'antd';
 
 //ranAdd
@@ -25,6 +26,11 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from 'components/DescriptionList';
 import styles from './MyCampiagn.less';
 import {campaignDetails} from '../../services/api';
+
+import {getParam} from '../../utils/commonFunc';
+import { setAuthority } from '../../utils/authority';
+import { reloadAuthorized } from '../../utils/Authorized';
+import { routerRedux } from 'dva/router';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -58,9 +64,12 @@ const columns = [
 export default class MyCampiagnDetail extends Component {
     state = {
         operationkey: 'tab1',
+        campaignsDetails:{},
+        targeting:{},
+        updates:[],
+        creative:{},
     };
     componentDidMount() {
-        console.log(this.props.location.state);
         let jsonInfo = this.props.location.state;
         const { dispatch } = this.props;
         const response = campaignDetails(jsonInfo.itemId);
@@ -70,14 +79,58 @@ export default class MyCampiagnDetail extends Component {
             const updates = json.detail.updates;
             const targeting = json.detail.targeting;
             const creative = json.detail.creative;
-            dispatch({
-                type: 'campaign/syancCampaignsDetail',
-                payload: json.detail,
-            });
-            dispatch({
-                type: 'campaign/syancDetailList',
-                payload: {updates,targeting,creative},
-            });
+            this.setState({
+                campaignsDetails:json.detail,
+                targeting:targeting,
+                updates:updates,
+                creative:creative,
+            })
+            // dispatch({
+            //     type: 'campaign/syancCampaignsDetail',
+            //     payload: json.detail,
+            // });
+            // dispatch({
+            //     type: 'campaign/syancDetailList',
+            //     payload: {updates,targeting,creative},
+            // });
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let jsonInfo = nextProps.history.location.state;
+        const response = campaignDetails(jsonInfo.itemId);
+        response.then((res) => {
+            return res;
+        }).then((json) => {
+            // if(json.code == 0){
+                const updates = json.detail.updates;
+                const targeting = json.detail.targeting;
+                const creative = json.detail.creative;
+                this.setState({
+                    campaignsDetails:json.detail,
+                    targeting:targeting,
+                    updates:updates,
+                    creative:creative,
+                })
+                // dispatch({
+                //     type: 'campaign/syancCampaignsDetail',
+                //     payload: json.detail,
+                // });
+                // dispatch({
+                //     type: 'campaign/syancDetailList',
+                //     payload: {updates,targeting,creative},
+                // });
+            // }else if(json.code == 1){
+            //     sessionStorage.removeItem('loginUserInfo');
+            //     setAuthority('guest');
+            //     reloadAuthorized();
+            //     routerRedux.push('/dashboard/analysis')
+            // }else{
+            //     notification.error({
+            //         message: 'Request an error',
+            //         description: response.info,
+            //     });
+            // }
         })
     }
 
@@ -94,7 +147,8 @@ export default class MyCampiagnDetail extends Component {
     render() {
         const {campaign, loading} = this.props;
         const advancedOperation1 = [];
-        const {campaignsDetails,targeting,updates,creative} = campaign;
+        // const {campaignsDetails,targeting,updates,creative} = campaign;
+        const {campaignsDetails,targeting,updates,creative} = this.state;
         const description = (
             <DescriptionList className={styles.headerList} size="small" col="1">
               <Description term="Category">{campaignsDetails.category?campaignsDetails.category:"--"}</Description>
@@ -112,7 +166,7 @@ export default class MyCampiagnDetail extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                 <div className={styles.textSecondary}>Price Model</div>
-                <div className={styles.heading}>{campaignsDetails.allocation?campaignsDetails.allocation.payfor+"/$"+campaignsDetails.allocation.payout:"--"}</div>
+                <div className={styles.heading}>{campaignsDetails.allocation?campaignsDetails.allocation.payfor+"/"+campaignsDetails.allocation.payout:"--"}</div>
                 </Col>
             </Row>
         );
@@ -134,11 +188,9 @@ export default class MyCampiagnDetail extends Component {
                         <Description term="OSV">{targeting.osv?targeting.osv:"--"}</Description>
                     </DescriptionList>
                 </Card>
-                <Card title="Creative" style={{ marginBottom: 24 }} col="1">
-                    <DescriptionList style={{ marginBottom: 24 }}>
+                <Card title="Creative" style={{ marginBottom: 24 }}>
+                    <DescriptionList style={{ marginBottom: 24 }} col="1">
                         <Description term="Creative">{creative.creative? <a href={creative.creative} target='_blank'>click download</a>:""}</Description>
-                    </DescriptionList>
-                    <DescriptionList style={{ marginBottom: 24 }}>
                         <Description term="Tracking Link">{campaignsDetails.tracking_link?campaignsDetails.tracking_link:"--"}</Description>
                     </DescriptionList>
                 </Card>

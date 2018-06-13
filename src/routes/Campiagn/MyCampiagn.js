@@ -177,11 +177,11 @@ export default class MyCampiagn extends Component {
                 <div className={styles.detailsWrapper}>
                     <div className={styles.listContentItem} style={{width:"40%",marginRight:"20px"}}>
                         <span>Daily Cap</span>
-                        <p>{data?data.daily_cap:""}</p>
+                        <p>{data?data.daily_cap:"0"}</p>
                     </div>
                     <div className={styles.listContentItem} style={{width:"40%"}}>
                         <span>Price Model</span>
-                        <p>{data?data.payfor+"/$"+data.payout:""}</p>
+                        <p>{data?data.payfor+"/"+data.payout:""}</p>
                     </div>
                 </div>
                 <div className={styles.listContentItem}>

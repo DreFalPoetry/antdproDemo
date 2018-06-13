@@ -67,12 +67,13 @@ class Bar extends Component {
     const { autoHideXLabels } = this.state;
 
     const scale = {
-      x: {
-        type: 'cat',
-      },
-      y: {
-        min: 0,
-      },
+        x: {
+            type: 'cat',
+            tickCount: 10,
+        },
+        y: {
+            min: 0,
+        },
     };
 
     const tooltip = [
@@ -97,7 +98,7 @@ class Bar extends Component {
             <Axis
               name="x"
               title={false}
-              label={autoHideXLabels ? false : {}}
+              label={{autoRotate:false,}}
               tickLine={autoHideXLabels ? false : {}}
             />
             <Axis name="y" min={0} />
