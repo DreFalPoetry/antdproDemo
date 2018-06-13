@@ -154,7 +154,8 @@ export default class MyCampiagnDetail extends Component {
         this.setState({ operationkey: key });
         if(key == 'tab3'){
             let params = campaignsDetails.id?("?infoId="+campaignsDetails.id+"-"+campaignsDetails.name):"";
-            window.open('http://localhost:8000/#/report/subPublisherWise'+params);
+            let urlOrigin = window.location.origin;
+            window.open(urlOrigin+'/#/report/subPublisherWise'+params);
         }
     };
 
