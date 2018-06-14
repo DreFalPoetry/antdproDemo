@@ -323,7 +323,7 @@ export default class Analysis extends Component {
                                                     </Ellipsis>
                                                     <div className={styles.footerTime}>
                                                         <span>{item.payfor+"/"+item.payout}</span>
-                                                        <i style={{fontStyle:"normal"}}>{item.created_at?moment(item.created_at).format('YYYY-MM-DD'):""}</i>
+                                                        <i style={{fontStyle:"normal"}}>{item.created_at?item.created_at:""}</i>
                                                     </div>
                                                 </div>
                                             }
