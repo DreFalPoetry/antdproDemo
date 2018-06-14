@@ -18,7 +18,12 @@ export default {
             // callbackStatus successfully
             const finallResult = callbackDeal(response);
             if(finallResult == 'successCallBack'){
-                const dataList = response.datagraid;
+                const dataListInit = response.datagraid;
+                let dataList = [];
+                dataListInit.map((item,index)=>{
+                    item.uniqueKey = index;
+                    dataList.push(item);
+                });
                 const total = response.total_records;
                 const pageSize = response.page_size;
                 yield put({

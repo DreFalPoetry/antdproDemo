@@ -36,7 +36,7 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 @Form.create()
 @connect(({report, loading }) => ({
     report,
-    loading: loading.models.report,
+    loading: loading.effects['report/fetch'],
 }))
 export default class SubPublisherWise extends PureComponent {
     constructor(props) {
@@ -154,7 +154,7 @@ export default class SubPublisherWise extends PureComponent {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { report } = this.props;
+        const { report,loading } = this.props;
         const { dataList,total,pageSize,dataSource} = report;
 
         const columns = [
@@ -247,7 +247,8 @@ export default class SubPublisherWise extends PureComponent {
                 columns={columns} 
                 dataSource={dataList} 
                 bordered 
-                rowKey="group_id"
+                rowKey="uniqueKey"
+                loading={loading}
                 pagination={{
                     'total':total,
                     'defaultCurrent':1,

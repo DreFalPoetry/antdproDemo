@@ -39,7 +39,7 @@ const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 @connect(({ campaign, list, loading }) => ({
     campaign,
     list,
-    loading: loading.models.list,
+    loading: loading.effects['campaign/filterCampaigns'],
 }))
 export default class MyCampiagn extends Component {
     constructor(props) {
@@ -230,7 +230,7 @@ export default class MyCampiagn extends Component {
                 >
                     <List
                         size="large"
-                        rowKey="id"
+                        rowKey="uniqueKey"
                         loading={loading}
                         pagination={paginationProps}
                         dataSource={campsList}

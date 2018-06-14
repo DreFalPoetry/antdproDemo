@@ -38,7 +38,12 @@ export default {
             if(finallResult == 'successCallBack'){
                 const total = response.total_records;//总条数
                 const pageSize = response.page_size;//每页条数
-                const campsList = response.camps;
+                const campsListInit = response.camps;
+                let campsList = [];
+                campsListInit.map((item,index)=>{
+                    item.uniqueKey = index;
+                    campsList.push(item);
+                })
                 yield put({
                     type: 'syancFilterCampaigns',
                     payload: {pageSize,total,campsList},
