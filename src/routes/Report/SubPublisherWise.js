@@ -59,6 +59,7 @@ export default class SubPublisherWise extends PureComponent {
     componentDidMount() {
         let urlParam = getParam('infoId');
         if(urlParam){
+            this.campaignId = Number(urlParam.split('-')[0]);
             this.setState({
                 campaign_id:Number(urlParam.split('-')[0]),
                 campaignNameAndId:urlParam
