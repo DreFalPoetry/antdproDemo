@@ -49,7 +49,7 @@ export default class CampiagnReport extends PureComponent {
             start_date:getTheFirstDay(),
             end_date:getDate(0),
             page_no:1,
-            page_size:2,
+            page_size:20,
             is_gmt:0,
             campaign_id:null
         };
@@ -59,7 +59,7 @@ export default class CampiagnReport extends PureComponent {
     componentDidMount() {
         this.props.dispatch({
             type: 'report/fetch',
-            payload:{"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
+            payload:{"page_no":1,"page_size":20,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
         })
     }
 
@@ -228,7 +228,7 @@ export default class CampiagnReport extends PureComponent {
                     'pageSize':pageSize,
                     'onChange':this.pageChange,
                     'showSizeChanger':true,
-                    'pageSizeOptions':['2','5','10', '15', '20'],
+                    'pageSizeOptions':['10', '20', '30', '50','100'],
                     'onShowSizeChange':this.onShowSizeChange
                 }}
             />

@@ -49,7 +49,7 @@ export default class SubPublisherWise extends PureComponent {
             start_date:getTheFirstDay(),
             end_date:getDate(0),
             page_no:1,
-            page_size:2,
+            page_size:20,
             is_gmt:0,
             campaign_id:null,
             campaignNameAndId:""
@@ -65,13 +65,13 @@ export default class SubPublisherWise extends PureComponent {
             },function(){
                 this.props.dispatch({
                     type: 'report/fetch',
-                    payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0,"campaign_id":this.state.campaign_id}
+                    payload:{'is_sub':1,"page_no":1,"page_size":20,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0,"campaign_id":this.state.campaign_id}
                 })
             })
         }else{
             this.props.dispatch({
                 type: 'report/fetch',
-                payload:{'is_sub':1,"page_no":1,"page_size":2,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
+                payload:{'is_sub':1,"page_no":1,"page_size":20,"start_date":getTheFirstDay(),"end_date":getDate(0),"is_gmt":0}
             })
         }
     }
@@ -254,7 +254,7 @@ export default class SubPublisherWise extends PureComponent {
                     'pageSize':pageSize,
                     'onChange':this.pageChange,
                     'showSizeChanger':true,
-                    'pageSizeOptions':['2','5','10', '15', '20'],
+                    'pageSizeOptions':['10', '20', '30', '50','100'],
                     'onShowSizeChange':this.onShowSizeChange
                 }}
             />

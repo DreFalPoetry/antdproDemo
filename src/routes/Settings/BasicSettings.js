@@ -52,7 +52,7 @@ export default class BasicSettings extends Component {
                             sessionStorage.removeItem('loginUserInfo');
                             setAuthority('guest');
                             reloadAuthorized();
-                            routerRedux.push('/user/login');
+                            this.props.history.push('/user/login');
                         }else{
                             message.error(json.info);
                         }

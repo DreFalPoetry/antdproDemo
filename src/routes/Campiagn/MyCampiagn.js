@@ -46,7 +46,7 @@ export default class MyCampiagn extends Component {
         super(props);
         this.state = {
             page_no:1,
-            page_size:2,
+            page_size:20,
             value:[],
             keywords:''
         };
@@ -58,7 +58,7 @@ export default class MyCampiagn extends Component {
         });
         this.props.dispatch({
             type: 'campaign/filterCampaigns',
-            payload:{'page_no':1,'page_size':2}
+            payload:{'page_no':1,'page_size':20}
         });
 
         //获取下拉框的list数据信息
@@ -168,7 +168,7 @@ export default class MyCampiagn extends Component {
             pageSize: pageSize,
             total: total,
             current:this.state.page_no,
-            pageSizeOptions:['2', '5', '10', '15','20'],
+            pageSizeOptions:['10', '20', '30', '50','100'],
             onChange:this.pageChange,
             onShowSizeChange:this.onShowSizeChange
         };

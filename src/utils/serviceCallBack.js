@@ -2,12 +2,14 @@ import { setAuthority } from './authority';
 import { reloadAuthorized } from './Authorized';
 import { notification  } from 'antd';
 import { routerRedux } from 'dva/router';
+import store from '../index';
 
 export function sessionInvalid(){
+    const { dispatch } = store;
     sessionStorage.removeItem('loginUserInfo');
     setAuthority('guest');
     reloadAuthorized();
-    this.props.history.push('/user/login');
+    dispatch(routerRedux.push('/user/login'));
     // routerRedux.push('/user/login')
 }
 
@@ -23,10 +25,12 @@ export function callbackDeal(response){
         if (response.code == 0) {
             return 'successCallBack';
         }else if(response.code == 1){
+            const { dispatch } = store;
             sessionStorage.removeItem('loginUserInfo');
             setAuthority('guest');
             reloadAuthorized();
-            routerRedux.push('/dashboard/analysis')
+            dispatch(routerRedux.push('/user/login'));
+            // routerRedux.push('/user/login');
             // this.props.history.push('/user/login');
         }else{
             notification.error({

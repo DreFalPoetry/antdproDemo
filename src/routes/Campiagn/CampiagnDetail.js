@@ -90,7 +90,7 @@ export default class MyCampiagnDetail extends Component {
                     sessionStorage.removeItem('loginUserInfo');
                     setAuthority('guest');
                     reloadAuthorized();
-                    routerRedux.push('/dashboard/analysis')
+                    this.props.dispatch(routerRedux.push('/user/login'));
                 }else{
                     notification.error({
                         message: 'Request an error',
@@ -139,7 +139,7 @@ export default class MyCampiagnDetail extends Component {
                     sessionStorage.removeItem('loginUserInfo');
                     setAuthority('guest');
                     reloadAuthorized();
-                    routerRedux.push('/dashboard/analysis')
+                    this.props.dispatch(routerRedux.push('/user/login'));
                 }else{
                     notification.error({
                         message: 'Request an error',
